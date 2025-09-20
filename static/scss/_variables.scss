@@ -1,0 +1,56 @@
+// Project variables (global overrides for Bootstrap and site components)
+// Add new variables here to control colors, spacing, and component theming.
+
+// ------------------
+// Font family (Bootstrap override)
+// Set the site's sans-serif stack to prefer Manrope, then fall back to system fonts.
+// This must be defined before importing Bootstrap so the variable is picked up.
+$font-family-sans-serif: "Manrope", system-ui, -apple-system, "Segoe UI", Roboto, Arial, sans-serif !default;
+$font-family-base: $font-family-sans-serif !default;
+// ------------------
+
+// Tokens
+
+// Promo banner CTA color (used by the promo banner component)
+$promo-cta-color: #ff6b9a !default;
+
+// Box-shadow used by the promo CTA in its normal state
+$promo-cta-box-shadow: 0 2px 6px rgba(0, 0, 0, 0.12) !default;
+
+// Elevated box-shadow used on hover/focus for the CTA
+$promo-cta-hover-shadow: 0 8px 18px rgba(0, 0, 0, 0.12) !default;
+
+// Generic button variables (for consistent UI across components)
+$btn-border-radius: 1rem !default;
+$btn-font-weight: 900 !default;
+$btn-font-size: 1.05rem !default;
+$btn-color: #fff !default;
+$btn-bg: $promo-cta-color !default; // default CTA background falls back to promo color
+$btn-box-shadow: $promo-cta-box-shadow !default;
+$btn-hover-shadow: $promo-cta-hover-shadow !default;
+
+// ------------------------------------------------------------
+// Site Banner Variables
+// Tokens for the global sticky site banner (search bar)
+// Centralizing here allows future reuse / theming without editing component partial.
+// ------------------------------------------------------------
+// Background + base colors
+$site-banner-bg: #000 !default; // solid black background
+$site-banner-border-color: rgba(255, 255, 255, 0.05) !default;
+
+// Search input / button colors
+$site-banner-input-bg: #2f3438 !default; // dark gray input background
+$site-banner-input-placeholder: #d1d5db !default; // light gray placeholder text
+$site-banner-icon-color: #d1d5db !default; // default icon color (search, buttons)
+$site-banner-icon-hover: #22d3ee !default; // accent hover/focus icon color
+
+// Heights / sizing
+$site-banner-input-height: 40px !default;
+// Logo heights (oversized visual asset that may overflow banner's min-height)
+$site-banner-logo-height-desktop: 175px !default; // large desktop visual
+$site-banner-logo-height-mobile: 150px !default; // slightly smaller on mobile for space
+
+// Focus overrides (remove default Bootstrap glow for inputs inside banner)
+$input-focus-box-shadow: none !default; // removes Bootstrap's default focus shadow (applies globally)
+
+

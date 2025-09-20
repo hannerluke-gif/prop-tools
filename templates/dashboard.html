@@ -1,0 +1,60 @@
+{% extends 'base.html' %}
+
+{% block title %}{% endblock %}
+
+{% block promo %}
+<section class="promo-banner" id="promoBanner" aria-label="Promotional rotating banner">
+	<div class="promo-banner__slides">
+		<div class="promo-banner__slide is-active" data-index="0" style="background-image: url('{{ url_for('static', filename='img/banner/banner_apex.jpg') }}');"></div>
+		<div class="promo-banner__slide" data-index="1" style="background-image: url('{{ url_for('static', filename='img/banner/banner_tpt.jpg') }}');"></div>
+		<div class="promo-banner__slide" data-index="2" style="background-image: url('{{ url_for('static', filename='img/banner/banner_tradeify.jpg') }}');"></div>
+	</div>
+	<div class="promo-banner__content" aria-hidden="false">
+ 		<span class="promo-banner__line promo-banner__line--primary">&nbsp;</span>
+ 		<span class="promo-banner__line promo-banner__line--secondary">&nbsp;</span>
+	</div>
+    <!-- CTA button: populated/linked by JS. Visible on mobile (lower-right) and desktop (right)
+	    Uses `data-href` initially to avoid `#` navigation; JS will set real `href` and manage semantics. -->
+	<a class="promo-banner__cta" id="promoBannerCta" aria-label="Start Trading" data-href="" aria-hidden="true">Start Trading</a>
+</section>
+{% endblock %}
+
+{% block main_class %}{% endblock %}
+{% block content %}
+	<section class="hero">
+		<div class="container-fluid p-0">
+			<div class="hero-slide" data-slide-id="top-pick">
+				<div class="hero-slide-inner">
+					<h2 class="hero-headline"></h2>
+					<p class="hero-subline"></p>
+					<a class="btn btn-primary hero-cta" href=""></a>
+				</div>
+			</div>
+			<div class="hero-slide" data-slide-id="accounts">
+				<div class="hero-slide-inner">
+					<h2 class="hero-headline"></h2>
+					<p class="hero-subline"></p>
+					<a class="btn btn-primary hero-cta" href=""></a>
+				</div>
+			</div>
+			<div class="hero-slide" data-slide-id="discount">
+				<div class="hero-slide-inner">
+					<h2 class="hero-headline"></h2>
+					<p class="hero-subline"></p>
+					<a class="btn btn-primary hero-cta" href=""></a>
+				</div>
+			</div>
+
+			<!-- Carousel UI: arrows moved inside dots container so mobile layout can show them inline -->
+			<div class="hero__dots" role="tablist" aria-label="Hero Slides">
+				<button class="hero__arrow hero__arrow--prev" type="button" aria-label="Previous slide">&lt;</button>
+				<!-- dots are injected here by JS -->
+				<button class="hero__arrow hero__arrow--next" type="button" aria-label="Next slide">&gt;</button>
+			</div>
+		</div>
+	</section>
+	{# DEBUG: temporary spacer below the hero to allow scrolling during layout debugging. Remove before production. #}
+	<div class="debug-spacer" style="height:1400px;background:linear-gradient(180deg, rgba(255,255,255,0.02), rgba(255,255,255,0));border-top:1px dashed rgba(255,255,255,0.08);">
+		<!-- spacer: visually subtle but tall so you can scroll past the hero -->
+	</div>
+{% endblock %}

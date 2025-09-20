@@ -1,0 +1,221 @@
+// Promo Banner Component
+// -----------------------
+// Requirements implemented:
+// * Fixed height: 60px default, 72px on very small screens (<=430px)
+// * Three slides (structure in HTML) with fading cross-fade
+// * Background images left-aligned; cover to fill width while keeping left side (logo) visible
+// * Hover pause handled in JS (desktop only) – we only add a helper class here
+
+.promo-banner {
+	position: relative;
+	width: 100%;
+	height: 60px; // default height
+	overflow: hidden;
+	background: transparent;
+	// Prevent layout shift while images load
+	display: block;
+
+	// Slide wrapper
+	@media (max-width: 540px) {
+		height: 72px; // taller on extra-small/medium devices
+	}
+
+	&__slides {
+		position: relative;
+		width: 100%;
+		height: 100%;
+	}
+
+	&__slide {
+		position: absolute;
+		inset: 0;
+		width: 100%;
+		height: 100%;
+		background-repeat: no-repeat;
+		background-position: left center; // keep embedded logo visible
+		background-size: cover; // fill while cropping on the right if needed
+		opacity: 0;
+		transition: opacity 0.9s ease-in-out; // smooth fade
+		pointer-events: none; // allow click to be captured by wrapper
+	}
+
+	&__slide.is-active {
+		opacity: 1;
+		z-index: 2;
+	}
+
+		// Content overlay (text)
+		&__content {
+			position: absolute;
+			left: 0;
+			top: 0;
+			height: 100%;
+			display: flex;
+			flex-direction: column;
+			justify-content: flex-start;
+			z-index: 4; // above slides and optional overlay
+			color: #fff;
+			pointer-events: none; // we want clicks to go to the banner wrapper
+			text-shadow: 0 1px 2px rgba(0,0,0,0.6);
+			padding-left: 100px; // indented to avoid embedded logo; adjust if needed
+			padding-right: 1rem;
+			padding-top: 8px;
+		}
+
+		// Text lines (primary and secondary)
+		.promo-banner__line {
+			display: block;
+			line-height: 1;
+		}
+
+		.promo-banner__line--primary {
+			font-weight: 600;
+			font-size: 0.95rem;
+            margin-bottom: 5px; // small gap between primary and secondary lines
+		}
+
+		.promo-banner__line--secondary {
+			font-weight: 500;
+			font-size: 0.8rem;
+			opacity: 0.95;
+		}
+
+	// CTA button (Start Evaluation) — positioned relative to .promo-banner root
+	&__cta {
+		/* Positioning: absolute so CTA does not move with slide content */
+		position: absolute;
+		right: 18px;
+		top: 50%;
+		transform: translateY(-50%);
+
+		/* Visuals */
+		display: inline-flex;
+		align-items: center;
+		justify-content: center;
+		background: $promo-cta-color;
+		color: $btn-color;
+		padding: 0.45rem 0.9rem;
+		border-radius: $btn-border-radius;
+		font-weight: 600;
+		font-size: 0.95rem;
+		text-decoration: none;
+		box-shadow: $btn-box-shadow;
+		pointer-events: auto; // enable clicks
+		z-index: 6;
+
+		/* Hidden state until JS populates the href */
+		&[aria-hidden="true"] {
+			opacity: 0;
+			pointer-events: none;
+			transition: opacity 0.15s ease-in-out;
+		}
+
+		/* Mobile: lower-right corner inside banner */
+		@media (max-width: 540px) {
+			bottom: 8px;
+			right: 8px;
+			top: auto;
+			transform: none;
+			padding: 0.5rem 0.9rem;
+			font-size: 0.95rem;
+			border-radius: $btn-border-radius;
+		}
+
+		/* Focus styles for keyboard users */
+		&:focus {
+			outline: 3px solid rgba(255,255,255,0.12);
+			outline-offset: 2px;
+		}
+	}
+
+// Desktop-only CTA hover/lift effect
+@media (min-width: 768px) {
+	.promo-banner {
+		&__cta {
+			transition: transform 0.25s ease, box-shadow 0.25s ease;
+
+			&:hover,
+			&:focus {
+				/* preserve the vertical centering translateY(-50%) while lifting 3px */
+				transform: translateY(calc(-50% - 3px));
+					box-shadow: $promo-cta-hover-shadow;
+			}
+		}
+	}
+}
+
+	// (Optional) progressive enhancement: if user prefers reduced motion, disable fade
+	@media (prefers-reduced-motion: reduce) {
+		&__slide {
+			transition: none;
+		}
+	}
+
+	// Cursor indicates interactivity (click to advance)
+	cursor: pointer;
+}
+
+// Responsive adjustments: desktop single-line layout
+@media (min-width: 768px) {
+	.promo-banner {
+		&__content {
+			flex-direction: row;
+			align-items: center;
+			/* center content horizontally in the viewport instead of large left padding */
+			left: 50%;
+			transform: translateX(-50%);
+			padding-left: 0;
+			gap: 0.5rem;
+			/* avoid colliding with CTA on the right */
+			max-width: calc(100% - 220px);
+			text-align: center;
+
+			// Slightly larger text on desktop
+			.promo-banner__line--primary {
+				font-size: 1rem;
+			}
+
+			.promo-banner__line--secondary {
+				font-size: 0.95rem;
+			}
+		}
+	}
+}
+
+// Utility modifier if we ever need a dark overlay (not used yet but low-risk helper)
+.promo-banner--with-overlay {
+	&::after {
+		content: "";
+		position: absolute;
+		inset: 0;
+		background: linear-gradient(to right, rgba(0,0,0,0.4), rgba(0,0,0,0));
+		pointer-events: none;
+		z-index: 3;
+	}
+}
+
+// Desktop-only, side-weighted gradient overlay for promo banner slides
+// Note: the project uses BEM naming `.promo-banner__slide` (not `-slide`).
+// We add a ::after pseudo-element to each slide so the gradient sits above
+// the background image but below the content/CTA. This is intentionally
+// wrapped in a desktop-only media query so mobile views are unaffected.
+@media (min-width: 992px) {
+	.promo-banner {
+		&__slide {
+			&::after {
+				content: "";
+				position: absolute;
+				inset: 0;
+				pointer-events: none;
+				z-index: 1; /* sits above the slide background but below .promo-banner__content (z-index:4) and CTA (z-index:6) */
+				/* Side-weighted: transparent left so embedded logos remain visible, gradually darker toward the right */
+				background: linear-gradient(90deg,
+					rgba(0,0,0,0) 0%,
+					rgba(0,0,0,0) 18%,
+					rgba(0,0,0,0.18) 55%,
+					rgba(0,0,0,0.58) 100%);
+			}
+		}
+	}
+}
+

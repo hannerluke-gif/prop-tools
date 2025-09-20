@@ -1,0 +1,29 @@
+// main.scss
+
+// 0) Bootstrap core SASS prerequisites for variable/mapping customization
+@import "bootstrap/scss/functions";
+
+// 1) Your overrides BEFORE Bootstrap
+@import "variables";  // $body-bg, $font-family-base, colors, etc.
+@import "bootstrap/scss/variables"; // bring in Bootstrap's defaults so maps exist
+@import "maps";       // map-merge for $theme-colors, utilities API
+@import "mixins";     // your mixins (if Bootstrap uses them, define first)
+
+// 2) Bootstrap source
+@import "bootstrap/scss/bootstrap"; // installed via npm (no CDN CSS)
+
+// 3) Your app styles AFTER Bootstrap
+// Layout
+@import "layout/header";
+@import "layout/footer";
+
+// Components
+@import "components/promo-banner";
+@import "components/hero";
+@import "components/dashboard";
+@import "components/site-banner";
+
+// NOTE: Generic button variables are available in `_variables.scss` for consistent
+// button styling across components: `$btn-border-radius`, `$btn-font-weight`,
+// `$btn-font-size`, `$btn-color`, `$btn-bg`, `$btn-box-shadow`, `$btn-hover-shadow`.
+// Use these in component partials to keep CTAs/buttons consistent site-wide.

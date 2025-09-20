@@ -1,0 +1,42 @@
+﻿{
+  "meta": {
+    "imageBasePath": "/static/img/",
+    "preloadFirstImage": true,
+    "vignette": "enabled"
+  },
+  "slides": [
+    {
+      "id": "top-pick",
+  "image": "slide/hero_slide1.png",
+      "imageAlt": "Stylized candlestick wave background",
+      "gradient": "hero-bg-top-pick",
+      "headline": "Skip the Research. Start Trading.",
+      "subline": "We compared drawdowns, targets, and fees—these picks win today.",
+      "ctaLabel": "See Top Picks",
+      "ctaHref": "",
+      "zoom": "in"
+    },
+    {
+      "id": "accounts",
+  "image": "slide/hero_slide2.png",
+      "imageAlt": "Teal-to-warm grid blend background",
+      "gradient": "hero-bg-accounts",
+      "headline": "Find the Account Built for You",
+      "subline": "Match drawdown, profit target, & rules to your style.",
+      "ctaLabel": "Find My Match",
+      "ctaHref": "",
+      "zoom": "out"
+    },
+    {
+      "id": "discount",
+  "image": "slide/hero_slide3.png",
+      "imageAlt": "Discount and percent icons on soft blur",
+      "gradient": "hero-bg-discount",
+      "headline": "Today's Best Promotions",
+      "subline": "Save on evaluation or straight-to-funded accounts.",
+      "ctaLabel": "See Discounts",
+      "ctaHref": "",
+      "zoom": "in"
+    }
+  ]
+}

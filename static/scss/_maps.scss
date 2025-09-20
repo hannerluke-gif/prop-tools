@@ -1,0 +1,16 @@
+// Site color tokens map
+// Define named color tokens here and merge them into Bootstrap's `$theme-colors`
+// so utilities like `bg-promo`, `text-promo`, and `.btn-promo` are available.
+$site-color-tokens: (
+  "promo": $promo-cta-color,
+) !default;
+
+// Merge site tokens into Bootstrap's $theme-colors map so utilities are generated.
+// `main.scss` imports this file before importing Bootstrap, so this will take effect.
+@if variable-exists(theme-colors) {
+  $theme-colors: map-merge($theme-colors, $site-color-tokens);
+} @else {
+  // If Bootstrap hasn't defined $theme-colors yet (unlikely here), create it.
+  $theme-colors: $site-color-tokens;
+}
+

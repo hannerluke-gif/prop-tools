@@ -1,0 +1,13 @@
+{
+  "name": "propfirm_bootstrap",
+  "version": "1.0.0",
+  "private": true,
+  "scripts": {
+    "sass:build": "sass static/scss:static/css --style=compressed --load-path=node_modules",
+    "sass:watch": "sass --watch static/scss:static/css --no-source-map --load-path=node_modules"
+  },
+  "devDependencies": {
+    "bootstrap": "^5.3.8",
+    "sass": "^1.92.1"
+  }
+}

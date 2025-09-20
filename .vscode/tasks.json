@@ -1,0 +1,40 @@
+{
+  "version": "2.0.0",
+  "tasks": [
+    {
+      "label": "Sass Watch",
+      "type": "shell",
+      "command": "sass",
+      "args": [
+        "--watch",
+        "static/scss:static/css",
+        "--no-source-map",
+        "--load-path=node_modules"
+      ],
+      "isBackground": true,
+      "group": "build",
+      "problemMatcher": [],
+      "presentation": { "reveal": "always", "panel": "dedicated" }
+    },
+    {
+      "label": "Flask Dev",
+      "type": "shell",
+      "command": "${workspaceFolder}\\.venv\\Scripts\\python.exe",
+      "args": ["app.py"],
+      "options": { "cwd": "${workspaceFolder}" },
+      "isBackground": true,
+      "group": "build",
+      "problemMatcher": [],
+      "presentation": { "reveal": "always", "panel": "dedicated" }
+    },
+    {
+      "label": "Dev: Flask + Sass",
+      "type": "shell",
+      "command": "echo Dev stack running...",
+      "dependsOn": ["Sass Watch", "Flask Dev"],
+      "dependsOrder": "parallel",
+      "runOptions": { "runOn": "folderOpen" },
+      "problemMatcher": []
+    }
+  ]
+}

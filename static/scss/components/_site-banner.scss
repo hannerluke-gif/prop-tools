@@ -1,0 +1,281 @@
+// Site Banner Component
+// Styles are scoped under .site-banner
+// BEM elements: &__inner, &__search, &__search-form, &__input, &__search-btn, &__mobile-btn, &__mobile-bar, &__mobile-search
+
+.site-banner {
+  position: sticky;
+  top: 0;
+  z-index: 1020; // Above standard content; Bootstrap navbar uses 1000
+  width: 100%;
+  background: $site-banner-bg; // solid background (token)
+  color: #fff;
+  min-height: 40px;
+  // Keep banner visually constrained to 40px while allowing child logo to overflow
+  overflow: visible;
+  line-height: 1.2;
+  font-size: 0.875rem; // Slightly small for compact bar
+  border-bottom: 1px solid $site-banner-border-color;
+
+  // Transition for height changes when entering search mode on mobile
+  transition: background-color 0.25s ease, box-shadow 0.25s ease;
+
+  &.is-searching {
+    box-shadow: 0 2px 8px -2px rgba(0,0,0,0.55);
+  }
+
+  &__inner {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 1rem;
+    padding: 0.35rem 0.75rem; // compact vertical spacing
+  }
+
+  // Logo container (visible on all breakpoints)
+  &__logo {
+    flex: 0 0 auto;
+    position: relative; // Needed for absolutely positioned oversized img
+    height: 40px; // Fixed clickable/logo container height (banner height)
+    /* Allow the large image to visually exceed 40px without increasing banner height */
+    
+    a {
+      display: inline-block; // Simpler block-level anchor sized by container
+      height: 100%;
+      text-decoration: none;
+      
+      img {
+        position: absolute;
+        left: 0;
+        top: 50%;
+        transform: translateY(-50%);
+        height: $site-banner-logo-height-desktop; // Oversized visual logo (desktop default)
+        width: auto;
+        display: block;
+      } 
+    }
+  }
+
+  // Search container (desktop) uses position-relative for button placement
+  &__search {
+    flex: 0 0 auto;
+    width: 100%;
+    max-width: 380px;
+  }
+
+  // The search form wrapper for desktop
+  &__search-form {
+    position: relative;
+  }
+
+  // Shared input style (desktop + mobile search mode)
+  &__input {
+    background: $site-banner-input-bg;
+    border: 1px solid transparent;
+    color: #ffffff;
+    border-radius: $btn-border-radius;
+    padding-right: 2.5rem;
+    padding-left: 0.9rem;
+    font-size: 0.875rem;
+    height: $site-banner-input-height;
+
+    &::placeholder {
+      color: $site-banner-input-placeholder;
+      opacity: 0.85;
+    }
+
+    &:focus {
+      outline: none;
+      box-shadow: none;
+      border-color: transparent;
+      /* Keep the input background consistent on focus (override Bootstrap's .form-control:focus) */
+      background: $site-banner-input-bg;
+      /* Ensure caret and entered text are white on focus */
+      color: #fff;
+      caret-color: #fff;
+    }
+  }
+
+  // Search button inside input (desktop + search mode)
+  &__search-btn {
+    position: absolute;
+    top: 50%;
+    right: 0.4rem;
+    transform: translateY(-50%);
+    border: 0;
+    background: transparent;
+    padding: 0.25rem;
+    line-height: 1;
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    color: $site-banner-icon-color;
+    cursor: pointer;
+
+  // button icons inherit sizing from .site-banner svg
+  svg { stroke: currentColor; }
+
+    &:hover, &:focus { color: $site-banner-icon-hover; }
+  }
+
+  // Mobile baseline bar (default state < md)
+  &__mobile-bar {
+  display: flex;
+  align-items: center;
+  justify-content: flex-end;
+  width: 100%;
+  gap: 0.5rem;
+  }
+
+  // Mobile button to open search mode (inside mobile bar)
+  &__mobile-btn {
+    background: transparent;
+    border: 1px solid rgba(255,255,255,0.12);
+    color: $site-banner-icon-color;
+    border-radius: $btn-border-radius;
+    width: 40px;
+    height: 40px;
+    padding: 0;
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    cursor: pointer;
+
+    // button icons inherit sizing from .site-banner svg
+    svg { stroke: currentColor; }
+
+    &:hover, &:focus {
+      color: $site-banner-icon-hover;
+      outline: none;
+      box-shadow: none;
+      border: none;
+    }
+  }
+
+  // Mobile logo removed; keep mobile bar layout unchanged
+
+  // Mobile search mode overlay (replaces bar)
+  &__mobile-search {
+    display: none;
+    width: 100%;
+  }
+
+  // Searching state: visual treatment applied per-breakpoint below.
+  /* .is-searching state handled per-breakpoint (mobile overlay defined below) */
+
+  // Breakpoints
+  @media (min-width: 768px) { // md and up
+    &__inner { 
+      padding: 0.4rem 1rem;
+      justify-content: flex-start; // Allow logo to stay left, search to move right
+    }
+    &__mobile-bar, &__mobile-search { display: none; }
+    &__search { display: block; }
+
+    // Desktop: align the search to the right side of the banner
+    // Keep mobile behavior unchanged; only applies at md and up
+    &__search {
+      width: auto; /* avoid full-width on desktop so margin-left:auto works */
+      margin-left: auto;
+      /* Allow a wider input on desktop so users can type longer sentences */
+      max-width: 720px; /* larger but bounded so it doesn't overflow very wide screens */
+      min-width: 280px; /* don't collapse too small on narrow desktops */
+    }
+
+    /* Ensure the input expands to the container width on desktop */
+    &__search-form {
+      & .site-banner__input { width: 100%; }
+    }
+
+    // Desktop: remove focus shadows/borders per user request
+    &__input:focus { outline: none; box-shadow: none; border-color: transparent; }
+  }
+
+  @media (max-width: 767.98px) {
+    &__search { display: none; }
+    // When `.site-banner` has the `.is-searching` state on mobile, show the
+    // mobile search overlay as an absolute element that sits above the
+    // mobile-bar/icon. The mobile-bar is kept in the DOM underneath so the
+    // icon can be revealed again when search is closed.
+    &.is-searching {
+      .site-banner__mobile-search {
+        display: block;
+        position: absolute;
+        left: 0;
+        right: 0;
+        top: 0;
+        z-index: 4; /* above the mobile bar/icon */
+        padding: 0.25rem 0.75rem; /* align with .site-banner__inner padding */
+        background: transparent; /* search input provides visible surface */
+      }
+
+      .site-banner__mobile-bar {
+        display: flex; /* keep present but visually underneath */
+        z-index: 3; /* lower than overlay */
+      }
+    }
+    // Mobile logo: center in the viewport horizontally using fixed positioning
+    // so the logo visually sits centered regardless of container width.
+    // This removes the image from flow so it won't affect the search icon/button.
+  // Ensure the inner wrapper is the positioning context for the
+  // absolutely positioned logo so centering calculations use the
+  // full banner width rather than the small logo container.
+  /* Make the banner itself the positioning context so the logo centers
+    across the full banner width (prevents left-clipping). */
+  &__inner { position: static; }
+
+  // Remove positioning from the small logo container so the image's
+    // absolute positioning is calculated relative to the `.site-banner`
+    // (the sticky element). This allows true center alignment across the
+    // full banner width instead of centering within the small logo box.
+    &__logo {
+      position: static;
+
+      a img {
+        /* Use absolute positioning so the logo is positioned relative to
+           the sticky `.site-banner` (stays attached during scroll) while
+           remaining visually centered. Keep z-index lower than the mobile
+           button so the button remains tappable above the logo. */
+      position: absolute;
+      /* Center the logo within the banner so it's visually centered
+        on the screen. Using the banner as the containing block
+        prevents the logo from being constrained by the small logo
+        container and avoids left-clipping. */
+      left: 50%;
+      top: 50%; /* center vertically within the banner */
+      transform: translate(-50%, -50%); /* center horizontally and vertically */
+      height: $site-banner-logo-height-mobile;
+      width: auto;
+      /* Limit width so the logo can't overflow the banner. The calc
+        leaves room for action buttons (roughly two 40px buttons
+        plus gaps). */
+      max-width: calc(100% - 96px);
+        z-index: 2; // keep above default content but below the mobile button
+      }
+    }
+    // Make sure the mobile action button sits above the fixed logo so it's always clickable
+    &__mobile-bar { z-index: 3; position: relative; }
+    // Mobile overrides: adjust mobile button + input inside mobile search container
+    &__mobile-btn {
+      border: 0;
+      box-shadow: none;
+      background: transparent;
+      padding: 0.25rem;
+      color: $site-banner-icon-color;
+    }
+    &__mobile-btn:hover, &__mobile-btn:focus { color: $site-banner-icon-hover; }
+
+    // Mobile search mode overlay (replaces bar)
+    &__mobile-search {
+      & .site-banner__input {
+        border: 0;
+        box-shadow: none;
+        background: $site-banner-input-bg;
+        padding-right: 2.5rem;
+      }
+      & .site-banner__input:focus { outline: none; box-shadow: none; border: none; }
+    }
+  }
+}
+
+  // Make all SVG icons inside the site-banner uniform size
+  .site-banner svg { width: 22px; height: 22px; stroke: currentColor; }

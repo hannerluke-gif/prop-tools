@@ -1,0 +1,385 @@
+{
+  "accounts": [
+    {
+      "phase": "evaluation",
+  "label": "$25k Account",
+      "bullets": [
+        "Low-cost entry to test prop firms",
+        "Great for building consistency"
+      ],
+      "offers": [
+        {
+          "firm": "Apex",
+          "price": 167,
+          "activation_fee": 150,
+          "badge": false,
+          "drawdown": 1500,
+          "daily_loss_limit": null,
+          "drawdown_type": "intraday",
+          "profit_target": 1500,
+          "profit_split": "100% first $25k, 90% after",
+          "reset_fee": 100,
+          "min_days": 7,
+          "min_withdraw_days": 8,
+          "consistency_eval": null,
+          "consistency_funded": 30
+          ,"max_contracts": "4 Minis (40 Micros)"
+        },
+        {
+          "firm": "Take Profit Trader",
+          "price": 150,
+          "activation_fee": 130,
+          "badge": true,
+          "drawdown": 1500,
+          "daily_loss_limit": null,
+          "drawdown_type": "end_of_day",
+          "drawdown_type_funded": "intraday",
+          "profit_target": 1500,
+          "profit_split": "80/20",
+          "reset_fee": 100,
+          "min_days": 5,
+          "min_withdraw_days": 1,
+          "consistency_eval": 50,
+          "consistency_funded": null
+          ,"max_contracts": "3 Minis (30 Micros)"
+        }
+      ]
+    },
+    {
+      "phase": "evaluation",
+  "label": "$50k Account",
+      "bullets": [
+        "Balance of cost and flexibility",
+        "More room for growth than 25K"
+      ],
+      "offers": [
+        {
+          "firm": "Apex",
+          "price": 187,
+          "activation_fee": 160,
+          "badge": false,
+          "drawdown": 2500,
+          "daily_loss_limit": null,
+          "drawdown_type": "intraday",
+          "profit_target": 3000,
+          "profit_split": "100% first $25k, 90% after",
+          "reset_fee": 100,
+          "min_days": 7,
+          "min_withdraw_days": 8,
+          "consistency_eval": null,
+          "consistency_funded": 30
+          ,"max_contracts": "10 Minis (100 Micros)"
+        },
+        {
+          "firm": "Take Profit Trader",
+          "price": 170,
+          "activation_fee": 130,
+          "badge": true,
+          "drawdown": 2000,
+          "daily_loss_limit": null,
+          "drawdown_type": "end_of_day",
+          "profit_target": 3000,
+          "profit_split": "80/20",
+          "reset_fee": 100,
+          "min_days": 5,
+          "min_withdraw_days": 1,
+          "consistency_eval": 50,
+          "consistency_funded": null
+          ,"max_contracts": "6 Minis (60 Micros)"
+        },
+        {
+          "firm": "Tradeify Advanced",
+          "price": 69,
+          "activation_fee": 125,
+          "badge": false,
+          "drawdown": 2000,
+          "daily_loss_limit": null,
+          "drawdown_type": "intraday",
+          "profit_target": 3000,
+          "profit_split": "90/10",
+          "reset_fee": 45,
+          "min_days": 1,
+          "min_withdraw_days": 7,
+          "consistency_eval": null,
+          "consistency_funded": 35
+          ,"max_contracts": "5 Minis (50 Micros)"
+        },
+        {
+          "firm": "Tradeify Growth",
+          "price": 139,
+          "activation_fee": 0,
+          "badge": false,
+          "drawdown": 2000,
+          "daily_loss_limit": 1250,
+          "drawdown_type": "end_of_day",
+          "profit_target": 3000,
+          "profit_split": "90/10",
+          "reset_fee": 85,
+          "min_days": 1,
+          "min_withdraw_days": 7,
+          "consistency_eval": null,
+          "consistency_funded": 35,
+          "max_contracts": "5 Minis (50 Micros)",
+          "website": "https://app-f.tradeify.co/select-broker?plan_id=7ebc4961-f8c7-4369-b709-05b29e23ffcb"
+        }
+      ]
+    },
+    {
+      "phase": "evaluation",
+  "label": "$75k Account",
+      "bullets": [
+        "Middle ground for risk and sizing",
+        "Larger drawdown than smaller accounts"
+      ],
+      "offers": [
+        {
+          "firm": "Take Profit Trader",
+          "price": 245,
+          "activation_fee": 130,
+          "badge": true,
+          "drawdown": 2500,
+          "daily_loss_limit": null,
+          "drawdown_type": "end_of_day",
+          "drawdown_type_funded": "intraday",
+          "profit_target": 4500,
+          "profit_split": "80/20",
+          "reset_fee": 100,
+          "min_days": 5,
+          "min_withdraw_days": 1,
+          "consistency_eval": 50,
+          "consistency_funded": null
+          ,"max_contracts": "9 Minis (90 Micros)"
+        }
+      ]
+    },
+    {
+      "phase": "evaluation",
+  "label": "$100k Account",
+      "bullets": [
+        "Popular choice for serious traders",
+        "Ample drawdown + position sizing room"
+      ],
+      "offers": [
+        {
+          "firm": "Take Profit Trader",
+          "price": 330,
+          "activation_fee": 130,
+          "badge": true,
+          "drawdown": 3000,
+          "daily_loss_limit": null,
+          "drawdown_type": "end_of_day",
+          "drawdown_type_funded": "intraday",
+          "profit_target": 6000,
+          "profit_split": "80/20",
+          "reset_fee": 100,
+          "min_days": 5,
+          "min_withdraw_days": 1,
+          "consistency_eval": 50,
+          "consistency_funded": null
+          ,"max_contracts": "12 Minis (120 Micros)"
+        },
+        {
+          "firm": "Tradeify Advanced",
+          "price": 109,
+          "activation_fee": 125,
+          "badge": false,
+          "drawdown": 3000,
+          "daily_loss_limit": null,
+          "drawdown_type": "intraday",
+          "profit_target": 6000,
+          "profit_split": "90/10",
+          "reset_fee": 69,
+          "min_days": 1,
+          "min_withdraw_days": 7,
+          "consistency_eval": null,
+          "consistency_funded": 35
+          ,"max_contracts": "10 Minis (100 Micros)"
+        },
+        {
+          "firm": "Tradeify Growth",
+          "price": 249,
+          "activation_fee": 0,
+          "badge": false,
+          "drawdown": 3500,
+          "daily_loss_limit": 2500,
+          "drawdown_type": "end_of_day",
+          "profit_target": 6000,
+          "profit_split": "90/10",
+          "reset_fee": 169,
+          "min_days": 1,
+          "min_withdraw_days": 7,
+          "consistency_eval": null,
+          "consistency_funded": 35
+          ,"max_contracts": "10 Minis (100 Micros)"
+        },
+        {
+          "firm": "Apex",
+          "price": 297,
+          "activation_fee": 240,
+          "badge": false,
+          "drawdown": 3000,
+          "daily_loss_limit": null,
+          "drawdown_type": "intraday",
+          "profit_target": 6000,
+          "profit_split": "100% first $25k, 90% after",
+          "reset_fee": 100,
+          "min_days": 7,
+          "min_withdraw_days": 8,
+          "consistency_eval": null,
+          "consistency_funded": 30
+          ,"max_contracts": "14 Minis (140 Micros)"
+        },
+        {
+          "firm": "Apex Static",
+          "price": 157,
+          "activation_fee": 240,
+          "badge": false,
+          "drawdown": 625,
+          "daily_loss_limit": null,
+          "drawdown_type": "end_of_day",
+          "profit_target": 2000,
+          "profit_split": "100% first $25k, 90% after",
+          "reset_fee": 100,
+          "min_days": 7,
+          "min_withdraw_days": 8,
+          "consistency_eval": null,
+          "consistency_funded": 30
+          ,"max_contracts": "2 Minis (20 Micros)"
+        }
+      ]
+    },
+    {
+      "phase": "evaluation",
+  "label": "$150k Account",
+      "bullets": [
+        "Increased buying power & drawdown",
+        "Ideal for scaling up contracts"
+      ],
+      "offers": [
+        {
+          "firm": "Apex",
+          "price": 397,
+          "activation_fee": 280,
+          "badge": false,
+          "drawdown": 5000,
+          "daily_loss_limit": null,
+          "drawdown_type": "intraday",
+          "profit_target": 9000,
+          "profit_split": "100% first $25k, 90% after",
+          "reset_fee": 100,
+          "min_days": 7,
+          "min_withdraw_days": 8,
+          "consistency_eval": null,
+          "consistency_funded": 30
+          ,"max_contracts": "17 Minis (170 Micros)"
+        },
+        {
+          "firm": "Take Profit Trader",
+          "price": 360,
+          "activation_fee": 130,
+          "badge": true,
+          "drawdown": 4500,
+          "daily_loss_limit": null,
+          "drawdown_type": "end_of_day",
+          "drawdown_type_funded": "intraday",
+          "profit_target": 9000,
+          "profit_split": "80/20",
+          "reset_fee": 100,
+          "min_days": 5,
+          "min_withdraw_days": 1,
+          "consistency_eval": 50,
+          "consistency_funded": null
+          ,"max_contracts": "15 Minis (150 Micros)"
+        },
+        {
+          "firm": "Tradeify Advanced",
+          "price": 129,
+          "activation_fee": 125,
+          "badge": false,
+          "drawdown": 4500,
+          "daily_loss_limit": null,
+          "drawdown_type": "intraday",
+          "profit_target": 9000,
+          "profit_split": "90/10",
+          "reset_fee": 79,
+          "min_days": 1,
+          "min_withdraw_days": 7,
+          "consistency_eval": null,
+          "consistency_funded": 35
+          ,"max_contracts": "15 Minis (150 Micros)"
+        },
+        {
+          "firm": "Tradeify Growth",
+          "price": 339,
+          "activation_fee": 0,
+          "badge": false,
+          "drawdown": 5000,
+          "daily_loss_limit": 3750,
+          "drawdown_type": "end_of_day",
+          "profit_target": 9000,
+          "profit_split": "90/10",
+          "reset_fee": 197,
+          "min_days": 1,
+          "min_withdraw_days": 7,
+          "consistency_eval": null,
+          "consistency_funded": 35
+          ,"max_contracts": "15 Minis (150 Micros)"
+        }
+      ]
+    },
+    {
+      "phase": "evaluation",
+  "label": "$250k Account",
+      "bullets": [
+        "Maximum flexibility & payouts",
+        "Higher profit potential"
+      ],
+      "offers": [
+        {
+          "firm": "Apex",
+          "price": 497,
+          "activation_fee": 320,
+          "badge": false,
+          "drawdown": 6500,
+          "daily_loss_limit": null,
+          "drawdown_type": "intraday",
+          "profit_target": 15000,
+          "profit_split": "100% first $25k, 90% after",
+          "reset_fee": 100,
+          "min_days": 7,
+          "min_withdraw_days": 8,
+          "consistency_eval": null,
+          "consistency_funded": 30
+          ,"max_contracts": "27 Minis (270 Micros)"
+        }
+      ]
+    },
+    {
+      "phase": "evaluation",
+  "label": "$300k Account",
+      "bullets": [
+        "Tailored for professionals",
+        "Capital-efficient with large payouts"
+      ],
+      "offers": [
+        {
+          "firm": "Apex",
+          "price": 597,
+          "activation_fee": 360,
+          "badge": false,
+          "drawdown": 7500,
+          "daily_loss_limit": null,
+          "drawdown_type": "intraday",
+          "profit_target": 20000,
+          "profit_split": "100% first $25k, 90% after",
+          "reset_fee": 100,
+          "min_days": 7,
+          "min_withdraw_days": 8,
+          "consistency_eval": null,
+          "consistency_funded": 30
+          ,"max_contracts": "35 Minis (350 Micros)"
+        }
+      ]
+    }
+  ]
+}

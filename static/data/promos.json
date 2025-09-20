@@ -1,0 +1,26 @@
+[
+  {
+    "firm": "Apex",
+    "promo_text": "🔹 80% OFF Any Size Evaluations 🔹 $50 Resets – Across the Board! 🔹 ONE Day to Pass! 🔹 Lifetime PA Fees – $140 Across the Board!",
+    "discount_pct": "80%",
+    "code": "SAVENOW",
+    "details_url": null,
+    "source": "https://apextraderfunding.com"
+  },
+  {
+    "firm": "Take Profit Trader",
+    "promo_text": "Get 40% Off For Life + Never Pay An Activation Fee!",
+    "discount_pct": "40%",
+    "code": "NOFEE40",
+    "details_url": null,
+    "source": "https://takeprofittrader.com"
+  },
+  {
+    "firm": "Tradeify",
+    "promo_text": "35% off all accounts",
+    "discount_pct": "35%",
+    "code": "AUG",
+    "details_url": null,
+    "source": "https://tradeify.co"
+  }
+]
