@@ -39,14 +39,12 @@
     {
       "label": "Heroku Deploy",
       "type": "shell",
-      "command": "cmd",
+      "command": "powershell",
       "args": [
-        "/d", "/c",
-        "git add . && git commit -m \"auto-deploy\" || echo No changes to commit && git push heroku main"
+        "-NoProfile","-Command",
+        "git add .; git commit -m 'auto-deploy'; if (!$?) { Write-Host 'No changes to commit'; } git push heroku main"
       ],
-      "options": {
-        "cwd": "${workspaceFolder}"
-      },
+      "options": { "cwd": "${workspaceFolder}" },
       "problemMatcher": []
     }
   ]
