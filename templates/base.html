@@ -3,7 +3,35 @@
 <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1" />
-    <title>{{ title or "Propfirm Bootstrap" }}</title>
+    <title>Prop Tools – Futures Prop Firms. Compare. Match. Save.</title>
+    <meta name="description" content="Compare top futures prop firms. Match with the right account and save with Prop Tools. Compare. Match. Save.">
+   
+    <!-- Open Graph / Facebook / LinkedIn / Discord -->
+    <meta property="og:title" content="Prop Tools – Futures Prop Firms. Compare. Match. Save.">
+    <meta property="og:description" content="Compare top futures prop firms. Match with the right evaluation and save with Prop Tools. Compare. Match. Save.">
+    <meta property="og:type" content="website">
+    <meta property="og:url" content="https://www.proptradetools.com/">
+    <meta property="og:image" content="{{ url_for('static', filename='img/logos/site/prop_tools_social_banner.png', _external=True) }}">
+
+    <!-- Twitter Card -->
+    <meta name="twitter:card" content="summary_large_image">
+    <meta name="twitter:title" content="Prop Tools – Futures Prop Firms. Compare. Match. Save.">
+    <meta name="twitter:description" content="Compare top futures prop firms. Match with the right evaluation and save with Prop Tools.">
+    <meta name="twitter:image" content="{{ url_for('static', filename='img/logos/site/prop_tools_social_banner.png', _external=True) }}">
+    <meta name="twitter:site" content="@YourTwitterHandle">
+
+    <!-- Favicons: modern browsers will pick the best available size -->
+    <link rel="icon" type="image/png" sizes="16x16" href="{{ url_for('static', filename='img/logos/site/pt_favicon-16.png') }}">
+    <link rel="icon" type="image/png" sizes="32x32" href="{{ url_for('static', filename='img/logos/site/pt_favicon-32.png') }}">
+    <link rel="icon" type="image/png" sizes="48x48" href="{{ url_for('static', filename='img/logos/site/pt_favicon-48.png') }}">
+    <link rel="icon" type="image/png" sizes="64x64" href="{{ url_for('static', filename='img/logos/site/pt_favicon-64.png') }}">
+    <!-- iOS / Apple touch icon -->
+    <link rel="apple-touch-icon" sizes="180x180" href="{{ url_for('static', filename='img/logos/site/pt_favicon-180.png') }}">
+    <!-- Fallback shortcut icon and ICO bundle -->
+    <link rel="shortcut icon" href="{{ url_for('static', filename='img/logos/site/favicon.ico') }}">
+    <link rel="icon" href="{{ url_for('static', filename='img/logos/site/favicon.ico') }}">
+    <link rel="manifest" href="{{ url_for('static', filename='manifest.json') }}">
+    <meta name="theme-color" content="#0d6efd">
     <link rel="canonical" href="https://www.proptradetools.com{{ request.path }}">
     {% block head %}{% endblock %}
 
@@ -25,7 +53,7 @@
             <div class="site-banner__inner">
             <!-- Logo (visible on all breakpoints) -->
             <div class="site-banner__logo">
-                <a href="{{ url_for('dashboard') }}" aria-label="Propfirm Bootstrap Home">
+                <a href="{{ url_for('dashboard') }}" aria-label="Prop Tools Home">
                     <img src="{{ url_for('static', filename='img/logos/site/site_logo.png') }}">
                 </a>
             </div>

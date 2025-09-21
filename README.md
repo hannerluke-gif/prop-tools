@@ -1,6 +1,6 @@
-# Propfirm Bootstrap (Flask + Bootstrap Starter)
+# Prop Tools (Flask + Bootstrap Starter)
 
-A minimal Flask project scaffolded with Bootstrap 5, ready for rapid prototyping or extension into a larger application.
+A minimal Flask project scaffolded with Bootstrap 5, ready for rapid prototyping or extension into a larger application. The project files live in the `propfirm_bootstrap/` folder.
 
 ## Features
 - Flask app with a single route (`/`)
