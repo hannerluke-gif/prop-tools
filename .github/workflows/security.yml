@@ -132,8 +132,9 @@ jobs:
         run: |
           echo "Checking ${PROD_URL}"
           curl -sI "${PROD_URL}" | tee headers.txt
-          # Expect these headers (tune to your policy)
-          grep -E "Strict-Transport|Content-Security|X-Content-Type|X-Frame-Options|Referrer-Policy|Permissions-Policy|Cross-Origin-" headers.txt
+          # Case-insensitive search so lowercase/uppercase headers both pass
+          grep -Ei "strict-transport-security|content-security-policy|x-content-type-options|x-frame-options|referrer-policy|permissions-policy|cross-origin-" headers.txt
+
 
       - name: Upload headers
         if: steps.gate.outputs.skip != 'true'
