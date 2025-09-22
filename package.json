@@ -10,7 +10,7 @@
     "heroku-postbuild": "npm run build"
   },
   "devDependencies": {
-    "bootstrap": "^5.3.8",
+    "bootstrap": "^5.3.3",
     "sass": "^1.92.1"
   }
 }

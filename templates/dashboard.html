@@ -5,9 +5,9 @@
 {% block promo %}
 <section class="promo-banner" id="promoBanner" aria-label="Promotional rotating banner">
 	<div class="promo-banner__slides">
-		<div class="promo-banner__slide is-active" data-index="0" style="background-image: url('{{ url_for('static', filename='img/banner/banner_apex.jpg') }}');"></div>
-		<div class="promo-banner__slide" data-index="1" style="background-image: url('{{ url_for('static', filename='img/banner/banner_tpt.jpg') }}');"></div>
-		<div class="promo-banner__slide" data-index="2" style="background-image: url('{{ url_for('static', filename='img/banner/banner_tradeify.jpg') }}');"></div>
+	<div class="promo-banner__slide promo-banner__slide--apex is-active" data-index="0"></div>
+	<div class="promo-banner__slide promo-banner__slide--tpt" data-index="1"></div>
+	<div class="promo-banner__slide promo-banner__slide--tradeify" data-index="2"></div>
 	</div>
 	<div class="promo-banner__content" aria-hidden="false">
  		<span class="promo-banner__line promo-banner__line--primary">&nbsp;</span>
@@ -54,7 +54,7 @@
 		</div>
 	</section>
 	{# DEBUG: temporary spacer below the hero to allow scrolling during layout debugging. Remove before production. #}
-	<div class="debug-spacer" style="height:1400px;background:linear-gradient(180deg, rgba(255,255,255,0.02), rgba(255,255,255,0));border-top:1px dashed rgba(255,255,255,0.08);">
-		<!-- spacer: visually subtle but tall so you can scroll past the hero -->
+	<div class="debug-spacer">
+	<!-- spacer: visually subtle but tall so you can scroll past the hero -->
 	</div>
 {% endblock %}

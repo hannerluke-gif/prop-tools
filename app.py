@@ -1,8 +1,20 @@
+# Stdlib
 import os
-from flask import Flask, render_template, request, redirect
+import secrets
+
+# Third-party
+from flask import Flask, render_template, request, redirect, g
 from werkzeug.middleware.proxy_fix import ProxyFix
 
 app = Flask(__name__)
+
+@app.before_request
+def _csp_nonce():
+    g.csp_nonce = secrets.token_urlsafe(16)
+
+@app.context_processor
+def _inject_csp_nonce():
+    return {"csp_nonce": getattr(g, "csp_nonce", "")}
 
 # -------- Environment & base config --------
 # Set APP_ENV=production on Heroku (Config Vars). Anything else = dev.
@@ -47,12 +59,15 @@ def _security_headers(resp):
         resp.headers["Cross-Origin-Opener-Policy"] = "same-origin"
         resp.headers["Cross-Origin-Resource-Policy"] = "same-origin"
 
-        # Content Security Policy (tight, local-only). Relax if you use CDNs.
-        # If you load Bootstrap/JS via CDN, add those hosts and (ideally) nonces/SRI.
+        # CSP: adjust as needed
+        # Note: using 'nonce-{nonce}' for styles to allow inline styles with nonce
+        nonce = getattr(g, "csp_nonce", "")
         csp = (
             "default-src 'self'; "
             "script-src 'self'; "
-            "style-src 'self' 'unsafe-inline' https://fonts.googleapis.com; "
+            "script-src-elem 'self'; "
+            "script-src-attr 'none'; "
+            f"style-src 'self' 'nonce-{nonce}' https://fonts.googleapis.com; "
             "img-src 'self' data:; "
             "font-src 'self' https://fonts.gstatic.com data:; "
             "connect-src 'self'; "

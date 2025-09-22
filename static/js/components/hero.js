@@ -17,6 +17,54 @@ export function initHero() {
   const prevArrow = hero.querySelector('.hero__arrow--prev');
   const nextArrow = hero.querySelector('.hero__arrow--next');
 
+  // Dynamic (nonced) stylesheet for CSP-safe background-image injection
+  const dynStyleEl = document.getElementById('dyn-styles');
+  const dynSheet = dynStyleEl?.sheet;
+  const insertedRules = new Set();
+
+  function ensureRule(selector, declarations) {
+    if (!dynSheet) return; // fail-soft if stylesheet missing
+    const cleaned = declarations.trim().replace(/\s+/g, ' ');
+    const sig = `${selector}{${cleaned}}`;
+    if (insertedRules.has(sig)) return;
+    try {
+      dynSheet.insertRule(sig, dynSheet.cssRules.length);
+      insertedRules.add(sig);
+    } catch (err) {
+      // eslint-disable-next-line no-console
+      console.warn('Failed to insert rule', sig, err);
+    }
+  }
+
+  function toClassToken(str) {
+    return String(str).toLowerCase().replace(/[^a-z0-9_-]+/g, '-');
+  }
+
+  function cssUrl(u) {
+    const safe = String(u).replace(/"/g, '\\"');
+    return `"${safe}"`;
+  }
+
+  function applyHeroBackground(slideEl, slideId, imagePath) {
+    if (!imagePath) return;
+    const token = toClassToken(slideId || 'slide');
+    const cls = `hero-bg-${token}`;
+    slideEl.classList.add(cls);
+    const decl = `background-image: url(${cssUrl(imagePath)}),\n                           linear-gradient(180deg, rgba(0,0,0,0.1) 0%, rgba(0,0,0,0.85) 88%),\n                           ${getGradientForSlide(slideId)};`;
+    ensureRule(`.hero .hero-slide.${cls}`, decl);
+  }
+
+  // Optional: programmatic arbitrary zoom percentages (only if needed by data-zoom numeric values)
+  function ensureZoomRule(zoom) {
+    if (!zoom) return;
+    // accept either numeric like 1.12 or string tokens
+    const num = parseFloat(zoom);
+    if (!isFinite(num)) return;
+    const pct = Math.round(num * 100);
+    ensureRule(`.hero .hero-slide[data-zoom="${zoom}"]::not(.legacy)`, `/* zoom preset */`); // placeholder no-op to mark presence
+    ensureRule(`.hero .hero-slide[data-zoom="${zoom}"].is-active`, `background-size: ${pct}% auto;`);
+  }
+
   if (slides.length === 0) return;
 
   let slidesData = {};
@@ -86,33 +134,18 @@ export function initHero() {
       if (slideData.image) {
         const img = String(slideData.image);
         if (img.startsWith('/') || img.startsWith('http')) {
-          // image already an absolute path or URL
-          imagePath = img;
+          imagePath = img; // absolute path or URL
         } else {
-          // strip trailing slashes from base and leading slashes from image name
           const base = String(imageBasePath).replace(/\/+$|\/+/g, '/').replace(/\/$/, '');
           const name = img.replace(/^\/+/, '');
           imagePath = `${base}/${name}`;
         }
       }
-      const zoom = slideData.zoom || 'in'; // default to 'in' if not specified
-      
+      const zoom = slideData.zoom || 'in';
       if (imagePath) {
-        // Set background image
-        slideEl.style.backgroundImage = `
-          url("${imagePath}"),
-          linear-gradient(180deg, rgba(0,0,0,0.1) 0%, rgba(0,0,0,0.85) 88%),
-          ${getGradientForSlide(slideId)}
-        `;
-        
-        // Apply zoom effect
+        applyHeroBackground(slideEl, slideId, imagePath);
         slideEl.setAttribute('data-zoom', zoom);
-        
-        // Set background properties for zoom animation
-        // Do NOT set background-size inline — that overrides the CSS transition
-        // which animates background-size based on `[data-zoom]` and `.is-active`.
-        slideEl.style.backgroundRepeat = 'no-repeat';
-        slideEl.style.backgroundPosition = 'center center';
+        ensureZoomRule(zoom); // optional generation of zoom rule for numeric zoom values
       }
     }
   }

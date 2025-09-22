@@ -31,29 +31,7 @@
     padding: 0.35rem 0.75rem; // compact vertical spacing
   }
 
-  // Logo container (visible on all breakpoints)
-  &__logo {
-    flex: 0 0 auto;
-    position: relative; // Needed for absolutely positioned oversized img
-    height: 40px; // Fixed clickable/logo container height (banner height)
-    /* Allow the large image to visually exceed 40px without increasing banner height */
-    
-    a {
-      display: inline-block; // Simpler block-level anchor sized by container
-      height: 100%;
-      text-decoration: none;
-      
-      img {
-        position: absolute;
-        left: 0;
-        top: 50%;
-        transform: translateY(-50%);
-        height: $site-banner-logo-height-desktop; // Oversized visual logo (desktop default)
-        width: auto;
-        display: block;
-      } 
-    }
-  }
+  // Logo styles removed — logo markup deleted from template
 
   // Search container (desktop) uses position-relative for button placement
   &__search {
@@ -213,46 +191,7 @@
         z-index: 3; /* lower than overlay */
       }
     }
-    // Mobile logo: center in the viewport horizontally using fixed positioning
-    // so the logo visually sits centered regardless of container width.
-    // This removes the image from flow so it won't affect the search icon/button.
-  // Ensure the inner wrapper is the positioning context for the
-  // absolutely positioned logo so centering calculations use the
-  // full banner width rather than the small logo container.
-  /* Make the banner itself the positioning context so the logo centers
-    across the full banner width (prevents left-clipping). */
-  &__inner { position: static; }
-
-  // Remove positioning from the small logo container so the image's
-    // absolute positioning is calculated relative to the `.site-banner`
-    // (the sticky element). This allows true center alignment across the
-    // full banner width instead of centering within the small logo box.
-    &__logo {
-      position: static;
-
-      a img {
-        /* Use absolute positioning so the logo is positioned relative to
-           the sticky `.site-banner` (stays attached during scroll) while
-           remaining visually centered. Keep z-index lower than the mobile
-           button so the button remains tappable above the logo. */
-      position: absolute;
-      /* Center the logo within the banner so it's visually centered
-        on the screen. Using the banner as the containing block
-        prevents the logo from being constrained by the small logo
-        container and avoids left-clipping. */
-      left: 50%;
-      top: 50%; /* center vertically within the banner */
-      transform: translate(-50%, -50%); /* center horizontally and vertically */
-      height: $site-banner-logo-height-mobile;
-      width: auto;
-      /* Limit width so the logo can't overflow the banner. The calc
-        leaves room for action buttons (roughly two 40px buttons
-        plus gaps). */
-      max-width: calc(100% - 96px);
-        z-index: 2; // keep above default content but below the mobile button
-      }
-    }
-    // Make sure the mobile action button sits above the fixed logo so it's always clickable
+    // Mobile layout: ensure the mobile action button sits above the mobile bar
     &__mobile-bar { z-index: 3; position: relative; }
     // Mobile overrides: adjust mobile button + input inside mobile search container
     &__mobile-btn {

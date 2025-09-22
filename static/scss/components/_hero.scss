@@ -64,33 +64,23 @@
   will-change: transform, opacity;
   backface-visibility: hidden;
 
-    /* Background image zoom animation based on data-zoom attribute */
-    background-size: cover;
-    background-repeat: no-repeat;
-    background-position: center center;
+  /* Static background properties now defined here (CSP-safe) */
+  background-repeat: no-repeat;
+  background-position: center center;
+  /* Base size; zoom states adjust via data-zoom & active classes */
+  background-size: 100% auto;
+  /* Provide a baseline transition for background-size so JS doesn't inline styles */
+  transition: transform 520ms cubic-bezier(.2,.9,.25,1), opacity 320ms ease, background-size 7000ms ease;
     
     /* Zoom in: start larger and scale down when active */
+    /* Retain legacy semantic zoom directions (optional) */
     &[data-zoom="in"] {
       background-size: 120% auto;
-      transition: transform 520ms cubic-bezier(.2,.9,.25,1), 
-                  opacity 320ms ease, 
-                  background-size 7000ms ease-out;
-      
-      &.is-active {
-        background-size: 100% auto;
-      }
+      &.is-active { background-size: 100% auto; }
     }
-    
-    /* Zoom out: start smaller and scale up when active */
     &[data-zoom="out"] {
       background-size: 100% auto;
-      transition: transform 520ms cubic-bezier(.2,.9,.25,1), 
-                  opacity 320ms ease, 
-                  background-size 7000ms ease-out;
-      
-      &.is-active {
-        background-size: 120% auto;
-      }
+      &.is-active { background-size: 120% auto; }
     }
 
     &.is-active {
@@ -110,6 +100,13 @@
       z-index: 2;
     }
   }
+
+  /* Optional discrete zoom percentage presets (arbitrary numeric factors) */
+  .hero-slide.is-active[data-zoom="1.04"] { background-size: 104% auto; }
+  .hero-slide.is-active[data-zoom="1.08"] { background-size: 108% auto; }
+  .hero-slide.is-active[data-zoom="1.12"] { background-size: 112% auto; }
+  .hero-slide.is-active[data-zoom="1.16"] { background-size: 116% auto; }
+  .hero-slide.is-active[data-zoom="1.20"] { background-size: 120% auto; }
 
   .hero-slide-inner {
     position: relative;

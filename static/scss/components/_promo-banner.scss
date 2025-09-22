@@ -153,6 +153,17 @@
 
 	// Cursor indicates interactivity (click to advance)
 	cursor: pointer;
+
+  // === Background variants (moved from inline) ===
+  &__slide--apex {
+    background-image: url("/static/img/banner/banner_apex.jpg");
+  }
+  &__slide--tpt {
+    background-image: url("/static/img/banner/banner_tpt.jpg");
+  }
+  &__slide--tradeify {
+    background-image: url("/static/img/banner/banner_tradeify.jpg");
+  }
 }
 
 // Responsive adjustments: desktop single-line layout
@@ -179,18 +190,6 @@
 				font-size: 0.95rem;
 			}
 		}
-	}
-}
-
-// Utility modifier if we ever need a dark overlay (not used yet but low-risk helper)
-.promo-banner--with-overlay {
-	&::after {
-		content: "";
-		position: absolute;
-		inset: 0;
-		background: linear-gradient(to right, rgba(0,0,0,0.4), rgba(0,0,0,0));
-		pointer-events: none;
-		z-index: 3;
 	}
 }
 

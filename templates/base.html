@@ -42,6 +42,7 @@
 
     <!-- Custom CSS -->
     <link rel="stylesheet" href="{{ url_for('static', filename='css/main.css') }}">
+    <style nonce="{{ csp_nonce }}" id="dyn-styles"></style>
 </head>
 <body>
     {# Optional promo banner included by specific pages (e.g., dashboard) via block #}
@@ -51,12 +52,7 @@
     <header class="site-banner" role="banner">
         <div class="container-fluid p-0">
             <div class="site-banner__inner">
-            <!-- Logo (visible on all breakpoints) -->
-            <div class="site-banner__logo">
-                <a href="{{ url_for('dashboard') }}" aria-label="Prop Tools Home">
-                    <img src="{{ url_for('static', filename='img/logos/site/site_logo.png') }}">
-                </a>
-            </div>
+            <!-- Logo removed -->
             
             <!-- Mobile baseline bar -->
             <div class="site-banner__mobile-bar d-md-none px-2 position-relative w-100">
@@ -104,7 +100,7 @@
     </main>
 
     <!-- Bootstrap JS (via CDN) -->
-    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js" integrity="sha384-YvpcrYf0tY3lHB60NNkmXc5s9fDVZLESaAA55NDzOxhy9GkcIdslK1eN7N6jIeHz" crossorigin="anonymous"></script>
+    <script src="{{ url_for('static', filename='vendor/bootstrap/bootstrap.bundle.min.js') }}" defer></script>
     <script type="module" src="{{ url_for('static', filename='js/main.js') }}"></script>
     {% block scripts %}{% endblock %}
 </body>
