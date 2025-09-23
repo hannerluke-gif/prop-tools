@@ -32,6 +32,22 @@
     position: relative; // for absolutely positioned mobile logo
   }
 
+  // Tagline next to the logo (desktop only)
+  &__tagline {
+    flex: 0 0 auto;
+    color: rgba(255,255,255,0.9);
+    font-size: 0.875rem;
+    line-height: 1;
+
+    &-text {
+      display: inline-block;
+      white-space: nowrap;
+      opacity: 0.95;
+      font-weight: 500;
+      color: rgba(255,255,255,0.92);
+    }
+  }
+
   // (Logo container removed - wordmark is handled in template markup)
   // Search container (desktop) uses position-relative for button placement
   &__search {
@@ -146,6 +162,8 @@
       padding: 0.4rem 1rem;
       justify-content: flex-start; // Allow logo to stay left, search to move right
     }
+    /* Ensure the tagline is visible and placed after the logo */
+    .site-banner__tagline { display: inline-flex !important; margin-left: 0.5rem; }
     &__mobile-bar, &__mobile-search { display: none; }
     &__search { display: block; }
 

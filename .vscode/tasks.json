@@ -40,26 +40,29 @@
       "problemMatcher": []
     },
 
-    /* --- New commit + dual push deploy pipeline --- */
+    /* --- Commit + dual push deploy pipeline --- */
     {
       "label": "Git: Commit (if changes)",
       "type": "shell",
-      "command": "cmd",
-      "args": ["/d","/c","git diff-index --quiet HEAD -- || (git add -A && git commit -m \"${input:commitMessage}\")"],
+      "command": "powershell",
+      "args": [
+        "-NoProfile","-Command",
+        "git diff-index --quiet HEAD --; if ($LASTEXITCODE -ne 0) { git add -A; git commit -m \"${input:commitMessage}\" } else { Write-Host 'No changes to commit' }"
+      ],
       "options": { "cwd": "${workspaceFolder}" }
     },
     {
       "label": "Push: GitHub (origin)",
       "type": "shell",
-      "command": "cmd",
-      "args": ["/d","/c","git push origin main"],
+      "command": "powershell",
+      "args": ["-NoProfile","-Command","git push origin main"],
       "options": { "cwd": "${workspaceFolder}" }
     },
     {
       "label": "Push: Heroku",
       "type": "shell",
-      "command": "cmd",
-      "args": ["/d","/c","git push heroku main"],
+      "command": "powershell",
+      "args": ["-NoProfile","-Command","git push heroku main"],
       "options": { "cwd": "${workspaceFolder}" }
     },
     {
