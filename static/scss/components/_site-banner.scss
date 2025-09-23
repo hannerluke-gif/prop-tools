@@ -29,10 +29,10 @@
     justify-content: space-between;
     gap: 1rem;
     padding: 0.35rem 0.75rem; // compact vertical spacing
+    position: relative; // for absolutely positioned mobile logo
   }
 
-  // Logo styles removed — logo markup deleted from template
-
+  // (Logo container removed - wordmark is handled in template markup)
   // Search container (desktop) uses position-relative for button placement
   &__search {
     flex: 0 0 auto;
@@ -181,7 +181,7 @@
         left: 0;
         right: 0;
         top: 0;
-        z-index: 4; /* above the mobile bar/icon */
+        z-index: 15; /* above the mobile bar/icon and centered logo */
         padding: 0.25rem 0.75rem; /* align with .site-banner__inner padding */
         background: transparent; /* search input provides visible surface */
       }
@@ -216,5 +216,11 @@
   }
 }
 
-  // Make all SVG icons inside the site-banner uniform size
-  .site-banner svg { width: 22px; height: 22px; stroke: currentColor; }
+  // Limit icon sizing to the mobile/search control SVGs only so a future
+  // inline SVG logo or other artwork in the banner isn't affected.
+  .site-banner__mobile-icon,
+  .site-banner__search-btn svg {
+    width: 22px;
+    height: 22px;
+    stroke: currentColor;
+  }

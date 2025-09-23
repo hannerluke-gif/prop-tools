@@ -128,3 +128,35 @@
       * ❌ Bootstrap class modifications: `.my-component .form-control` (use custom classes)
 
    **Legacy Exception**: The existing `.hero` component predates these standards and uses global selectors for historical reasons. Do not replicate this pattern in new components.
+
+---
+
+### 📌 Debug Code & Cleanup Guidelines
+
+**Debug and development-only code must be removed before production:**
+
+1. **Debug Components**
+   * Never commit debug-specific SCSS files (like `_debug.scss`) to production branches
+   * Remove debug imports from `main.scss` before production deployment
+   * Use clear naming conventions for debug files (prefix with `debug-` or `_debug`)
+
+2. **HTML Debug Elements**
+   * Remove all debug spacers, test content, and temporary elements from templates
+   * Use HTML comments to mark debug sections: `{# DEBUG: description #}`
+   * Always clean up debug comments before production
+
+3. **CSS Debug Styles**
+   * Debug styles should be in separate files, not mixed with production components
+   * Use obvious class names like `.debug-spacer`, `.debug-outline`
+   * Never leave debug styles in production CSS builds
+
+4. **JavaScript Debug Code**
+   * Remove `console.log()` statements except for legitimate error logging
+   * Clean up test functions and temporary event handlers
+   * Use `// DEBUG:` comments for easy identification and removal
+
+5. **Pre-deployment Checklist**
+   * Search codebase for `DEBUG`, `debug-`, `console.log`
+   * Verify no debug imports in `main.scss`
+   * Run `npm run build` to ensure clean compilation
+   * Test production build without debug assets

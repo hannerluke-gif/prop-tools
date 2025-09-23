@@ -1,16 +1,19 @@
 {
   "version": "2.0.0",
+  "inputs": [
+    {
+      "id": "commitMessage",
+      "type": "promptString",
+      "description": "Git commit message",
+      "default": "deploy: site update"
+    }
+  ],
   "tasks": [
     {
       "label": "Sass Watch",
       "type": "shell",
       "command": "sass",
-      "args": [
-        "--watch",
-        "static/scss:static/css",
-        "--no-source-map",
-        "--load-path=node_modules"
-      ],
+      "args": ["--watch","static/scss:static/css","--no-source-map","--load-path=node_modules"],
       "isBackground": true,
       "group": "build",
       "problemMatcher": [],
@@ -36,16 +39,37 @@
       "runOptions": { "runOn": "folderOpen" },
       "problemMatcher": []
     },
+
+    /* --- New commit + dual push deploy pipeline --- */
     {
-      "label": "Heroku Deploy",
+      "label": "Git: Commit (if changes)",
       "type": "shell",
-      "command": "powershell",
-      "args": [
-        "-NoProfile","-Command",
-        "git add .; git commit -m 'auto-deploy'; if (!$?) { Write-Host 'No changes to commit'; } git push heroku main"
-      ],
-      "options": { "cwd": "${workspaceFolder}" },
-      "problemMatcher": []
+      "command": "cmd",
+      "args": ["/d","/c","git diff-index --quiet HEAD -- || (git add -A && git commit -m \"${input:commitMessage}\")"],
+      "options": { "cwd": "${workspaceFolder}" }
+    },
+    {
+      "label": "Push: GitHub (origin)",
+      "type": "shell",
+      "command": "cmd",
+      "args": ["/d","/c","git push origin main"],
+      "options": { "cwd": "${workspaceFolder}" }
+    },
+    {
+      "label": "Push: Heroku",
+      "type": "shell",
+      "command": "cmd",
+      "args": ["/d","/c","git push heroku main"],
+      "options": { "cwd": "${workspaceFolder}" }
+    },
+    {
+      "label": "Deploy: GitHub + Heroku",
+      "type": "shell",
+      "command": "echo Deploy complete",
+      "dependsOn": ["Git: Commit (if changes)", "Push: GitHub (origin)", "Push: Heroku"],
+      "dependsOrder": "sequence",
+      "problemMatcher": [],
+      "presentation": { "reveal": "always", "panel": "dedicated" }
     }
   ]
 }

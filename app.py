@@ -82,6 +82,14 @@ def _security_headers(resp):
 def dashboard():
     return render_template("dashboard.html", title="Dashboard")
 
+@app.route("/robots.txt")
+def robots_txt():
+    return app.send_static_file("robots.txt")
+
+@app.route("/.well-known/security.txt")
+def security_txt():
+    return app.send_static_file(".well-known/security.txt")
+
 # -------- Error handling --------
 @app.errorhandler(500)
 def _500(e):
