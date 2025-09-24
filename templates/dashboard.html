@@ -54,3 +54,17 @@
         </div>
     </section>
 {% endblock %}
+
+{# Temporary guide links (to be removed once navigation is in place) #}
+{% block extra_footer %}
+<section class="container py-4" aria-label="Temporary guide links">
+    <div class="border-top pt-3 mt-5">
+        <p class="small text-secondary mb-2">Guides (temporary links)</p>
+        <ul class="list-inline small mb-0">
+            <li class="list-inline-item me-3">
+                <a href="{{ url_for('guide_what_is_a_prop_firm') }}">What is a Prop Firm?</a>
+            </li>
+        </ul>
+    </div>
+</section>
+{% endblock %}

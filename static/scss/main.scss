@@ -16,13 +16,29 @@
 // Layout
 @import "layout/header";
 @import "layout/footer";
+@import "layout/prose"; // long-form article typography
+@import "layout/guides";
+
+// Global button styles (ensure site tokens are applied to Bootstrap buttons)
+@import "components/buttons";
 
 // Components
 @import "components/promo-banner";
+@import "components/site-banner";
+@import "components/brand";
 @import "components/hero";
 @import "components/dashboard";
-@import "components/brand";
-@import "components/site-banner";
+
+// Global layout/base document styles
+// Uses $base-html-bg defined in _variables.scss
+.app-body {
+	background-color: $base-html-bg;
+	min-height: 100vh;
+	// Improve font rendering on dark background
+	-webkit-font-smoothing: antialiased;
+	-moz-osx-font-smoothing: grayscale;
+}
+
 
 // NOTE: Generic button variables are available in `_variables.scss` for consistent
 // button styling across components: `$btn-border-radius`, `$btn-font-weight`,

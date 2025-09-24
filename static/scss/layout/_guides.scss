@@ -1,0 +1,89 @@
+.guide {
+  color: $guide-text-color;
+  
+  // Ensure all text elements are white unless specifically overridden
+  *, *:before, *:after {
+    color: inherit;
+  }
+  
+  // Headings
+  .guide__title { font-weight: 800; letter-spacing: -0.01em; color: $guide-text-color; }
+  h1, h2, h3, h4, h5, h6 { color: $guide-text-color; }
+  
+  // Paragraphs and text elements
+  p { color: $guide-text-color; }
+  
+  // Lists
+  .guide__steps { counter-reset: step; padding-left: 1rem; }
+  .guide__steps > li { margin-bottom: .5rem; color: $guide-text-color; }
+  .guide__bullets > li { margin-bottom: .4rem; color: $guide-text-color; }
+  ul li, ol li { color: $guide-text-color; }
+  
+  // CTA card - make more visible on dark background
+  .guide__cta { 
+    background: rgba(255,255,255,.06); 
+    border: 1px solid rgba(255,255,255,.15); 
+    color: $guide-text-color;
+    h3, h4, h5, p { color: $guide-text-color; }
+  }
+  
+  // FAQ styling
+  .guide__faq {
+    border: 1px solid rgba(255,255,255,.15);
+    border-radius: .75rem; padding: .9rem 1rem; margin-bottom: .75rem;
+    background: rgba(255,255,255,.03);
+    color: $guide-text-color;
+    summary { 
+      cursor: pointer; 
+      font-weight: 600; 
+      color: $guide-text-color;
+      
+      // Hover effect
+      &:hover {
+        color: #22d3ee;
+      }
+    }
+    summary::marker { content: ""; }
+    div { color: $guide-text-color; } // FAQ answer content
+    
+    // Change summary text color when expanded
+    &[open] summary {
+      color: #22d3ee;
+    }
+    
+    // Add space between summary and content when expanded
+    &[open] div {
+      margin-top: 0.75rem;
+    }
+  }
+  
+  // Horizontal rules - make more visible
+  hr { 
+    border-color: rgba(255,255,255,.25); 
+    opacity: 1; 
+  }
+  
+  // Override Bootstrap secondary text to be white unless it's the disclosure
+  .text-secondary { 
+    color: $guide-text-color !important; 
+  }
+  
+  // Lead text should be fully white (like the subtitle)
+  .text-secondary.lead {
+    color: $guide-text-color !important;
+  }
+  
+  // Links should be visible
+  a:not(.btn) { 
+    color: #22d3ee; // Using your site's accent color
+    &:hover { color: #67e8f9; }
+  }
+  
+  // Buttons are controlled globally via `components/_buttons.scss` to keep
+  // button styles consistent across the site. No local overrides here.
+  
+  // Preserve disclosure/fine print styling - keep it muted
+  .small.text-secondary {
+    color: rgba(255,255,255,.5) !important; // Keep disclosure dimmer
+  }
+}

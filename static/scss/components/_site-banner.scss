@@ -19,6 +19,26 @@
   // Transition for height changes when entering search mode on mobile
   transition: background-color 0.25s ease, box-shadow 0.25s ease;
 
+  // Subtle right-edge brightening gradient overlay.
+  // Uses a pseudo-element so the base background token remains unchanged.
+  // Design intent: invisible across ~72% of width, then a gentle luminous build.
+  &::after {
+    content: "";
+    position: absolute;
+    inset: 0; // cover full banner
+    pointer-events: none;
+    // Right-edge accent gradient using consistent token
+    // Design intent: invisible across ~72% of width, then a gentle luminous build.
+    background: linear-gradient(to right,
+      rgba($site-banner-icon-hover, 0) 0%,
+      rgba($site-banner-icon-hover, 0) 65%,
+      rgba($site-banner-icon-hover, 0.045) 76%,
+      rgba($site-banner-icon-hover, 0.09) 86%,
+      rgba($site-banner-icon-hover, 0.14) 93%,
+      rgba($site-banner-icon-hover, 0.20) 100%);
+    z-index: 0; // above base background but below content
+  }
+
   &.is-searching {
     box-shadow: 0 2px 8px -2px rgba(0,0,0,0.55);
   }
@@ -30,25 +50,9 @@
     gap: 1rem;
     padding: 0.35rem 0.75rem; // compact vertical spacing
     position: relative; // for absolutely positioned mobile logo
+    z-index: 1; // ensure content sits above gradient overlay pseudo-element
   }
 
-  // Tagline next to the logo (desktop only)
-  &__tagline {
-    flex: 0 0 auto;
-    color: rgba(255,255,255,0.9);
-    font-size: 0.875rem;
-    line-height: 1;
-
-    &-text {
-      display: inline-block;
-      white-space: nowrap;
-      opacity: 0.95;
-      font-weight: 500;
-      color: rgba(255,255,255,0.92);
-    }
-  }
-
-  // (Logo container removed - wordmark is handled in template markup)
   // Search container (desktop) uses position-relative for button placement
   &__search {
     flex: 0 0 auto;
@@ -105,19 +109,19 @@
     color: $site-banner-icon-color;
     cursor: pointer;
 
-  // button icons inherit sizing from .site-banner svg
-  svg { stroke: currentColor; }
+    // button icons inherit sizing from .site-banner svg
+    svg { stroke: currentColor; }
 
     &:hover, &:focus { color: $site-banner-icon-hover; }
   }
 
   // Mobile baseline bar (default state < md)
   &__mobile-bar {
-  display: flex;
-  align-items: center;
-  justify-content: flex-end;
-  width: 100%;
-  gap: 0.5rem;
+    display: flex;
+    align-items: center;
+    justify-content: flex-end;
+    width: 100%;
+    gap: 0.5rem;
   }
 
   // Mobile button to open search mode (inside mobile bar)
@@ -145,16 +149,13 @@
     }
   }
 
-  // Mobile logo removed; keep mobile bar layout unchanged
-
   // Mobile search mode overlay (replaces bar)
   &__mobile-search {
     display: none;
     width: 100%;
   }
 
-  // Searching state: visual treatment applied per-breakpoint below.
-  /* .is-searching state handled per-breakpoint (mobile overlay defined below) */
+  // Searching state: show mobile search overlay on mobile, keep desktop unchanged
 
   // Breakpoints
   @media (min-width: 768px) { // md and up
@@ -162,8 +163,7 @@
       padding: 0.4rem 1rem;
       justify-content: flex-start; // Allow logo to stay left, search to move right
     }
-    /* Ensure the tagline is visible and placed after the logo */
-    .site-banner__tagline { display: inline-flex !important; margin-left: 0.5rem; }
+    
     &__mobile-bar, &__mobile-search { display: none; }
     &__search { display: block; }
 
@@ -182,16 +182,18 @@
       & .site-banner__input { width: 100%; }
     }
 
-    // Desktop: remove focus shadows/borders per user request
-    &__input:focus { outline: none; box-shadow: none; border-color: transparent; }
+    // Desktop: remove focus shadows/borders
+    &__input:focus { 
+      outline: none; 
+      box-shadow: none; 
+      border-color: transparent; 
+    }
   }
 
   @media (max-width: 767.98px) {
     &__search { display: none; }
-    // When `.site-banner` has the `.is-searching` state on mobile, show the
-    // mobile search overlay as an absolute element that sits above the
-    // mobile-bar/icon. The mobile-bar is kept in the DOM underneath so the
-    // icon can be revealed again when search is closed.
+
+    // Mobile search overlay: shows when .is-searching class is active
     &.is-searching {
       .site-banner__mobile-search {
         display: block;
@@ -199,27 +201,34 @@
         left: 0;
         right: 0;
         top: 0;
-        z-index: 15; /* above the mobile bar/icon and centered logo */
-        padding: 0.25rem 0.75rem; /* align with .site-banner__inner padding */
-        background: transparent; /* search input provides visible surface */
+        z-index: 15; // above the mobile bar/icon
+        padding: 0.25rem 0.75rem; // align with .site-banner__inner padding
+        background: transparent; // search input provides visible surface
       }
 
       .site-banner__mobile-bar {
-        display: flex; /* keep present but visually underneath */
-        z-index: 3; /* lower than overlay */
+        display: flex; // keep present but visually underneath
+        z-index: 3; // lower than overlay
       }
     }
-    // Mobile layout: ensure the mobile action button sits above the mobile bar
-    &__mobile-bar { z-index: 3; position: relative; }
-    // Mobile overrides: adjust mobile button + input inside mobile search container
+
+    // Mobile layout adjustments
+    &__mobile-bar { 
+      z-index: 3; 
+      position: relative; 
+    }
+    // Mobile button overrides
     &__mobile-btn {
       border: 0;
       box-shadow: none;
       background: transparent;
       padding: 0.25rem;
       color: $site-banner-icon-color;
+
+      &:hover, &:focus { 
+        color: $site-banner-icon-hover; 
+      }
     }
-    &__mobile-btn:hover, &__mobile-btn:focus { color: $site-banner-icon-hover; }
 
     // Mobile search mode overlay (replaces bar)
     &__mobile-search {
@@ -229,7 +238,11 @@
         background: $site-banner-input-bg;
         padding-right: 2.5rem;
       }
-      & .site-banner__input:focus { outline: none; box-shadow: none; border: none; }
+      & .site-banner__input:focus { 
+        outline: none; 
+        box-shadow: none; 
+        border: none; 
+      }
     }
   }
 }

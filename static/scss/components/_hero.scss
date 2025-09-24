@@ -1,11 +1,9 @@
 .hero {
   color: $white;
-  /* Fallback background color to avoid white/transparent flashing during
-     slide transitions. Keep it dark so layered gradients blend in while
-     images/gradients load or during transform animations. */
-  background-color: #121217; /* dark neutral fallback */
-  /* Anchor absolutely-positioned UI (dots/arrows) to the hero container so
-     their `bottom`/`left` values align with the hero on all viewports. */
+  // Fallback background to avoid white/transparent flash during slide transitions.
+  // Dark neutral so gradients + images blend while loading / animating.
+  background-color: #121217; // dark neutral fallback
+  // Anchor absolutely-positioned UI (dots/arrows) to hero for stable positioning.
   position: relative;
   overflow: hidden; // hide off-screen slides for sliding animation
 
@@ -20,34 +18,33 @@
     }
   }
 
-  /* 1) Make height stable on mobile with svh (fallback to dvh) */
+  // 1) Make height stable on mobile with svh (fallback to dvh)
   min-height: 50svh;
   @supports not (height: 100svh) { min-height: 50dvh; }
 
   width: 100%;
 
-  /* Desktop/tablet: fixed height that’s stable */
+  // Desktop/tablet: fixed height that’s stable
   @include media-breakpoint-up(xl) {
     height: calc(100svh - 100px);
     min-height: calc(100svh - 100px); // ensure min-height exists at xl too
     @supports not (height: 100svh) { height: calc(100dvh - 100px); }
   }
 
-  /* Slides are positioned absolutely and animated via transform so
-     they can slide in from the right. We keep their internal layout
-     as flex to preserve the existing content alignment. */
+  // Slides absolutely positioned + animated with transform (slide in from right)
+  // Keep internal layout flex for existing content alignment.
   .hero-slide {
     position: absolute;
-    inset: 0 0 0 0; /* fill the hero container */
+  inset: 0 0 0 0; // fill the hero container
     display: flex;
-    align-items: flex-end;       /* bottom-anchored */
-    justify-content: flex-start; /* left-aligned */
-    pointer-events: none; /* prevent interaction with non-active slides */
+  align-items: flex-end;       // bottom-anchored
+  justify-content: flex-start; // left-aligned
+  pointer-events: none; // prevent interaction when inactive
 
-    /* Ensure the slide fills the hero’s computed height */
+  // Ensure the slide fills hero’s computed height
     min-height: inherit;
 
-    /* Bottom-only padding so content sits above the edge consistently */
+  // Bottom-only padding so content sits above edge consistently
     padding: 0 0.5rem 3.5rem; // mobile: small padding
 
     @include media-breakpoint-up(xl) {
@@ -56,24 +53,24 @@
       min-height: 100%;
     }
 
-  /* Initial/off-screen state: positioned to the right */
-    transform: translateX(100%);
-    opacity: 0;
-    transition: transform 520ms cubic-bezier(.2,.9,.25,1), opacity 320ms ease;
-  /* GPU hint to reduce flicker during transforms */
+  // Initial/off-screen state: positioned to the right
+  transform: translateX(100%);
+  opacity: 0;
+  // Single consolidated transition declared below (includes background-size)
+  // GPU hint to reduce flicker during transforms
   will-change: transform, opacity;
   backface-visibility: hidden;
 
-  /* Static background properties now defined here (CSP-safe) */
+  // Static background properties (CSP-safe)
   background-repeat: no-repeat;
   background-position: center center;
-  /* Base size; zoom states adjust via data-zoom & active classes */
+  // Base size; zoom states adjust via data-zoom & active classes
   background-size: 100% auto;
-  /* Provide a baseline transition for background-size so JS doesn't inline styles */
+  // Baseline transition for background-size (avoid JS inline mutation)
   transition: transform 520ms cubic-bezier(.2,.9,.25,1), opacity 320ms ease, background-size 7000ms ease;
     
-    /* Zoom in: start larger and scale down when active */
-    /* Retain legacy semantic zoom directions (optional) */
+  // Zoom in: start larger and scale down when active
+  // Retain legacy semantic zoom directions (optional)
     &[data-zoom="in"] {
       background-size: 120% auto;
       &.is-active { background-size: 100% auto; }
@@ -86,14 +83,11 @@
     &.is-active {
       transform: translateX(0%);
       opacity: 1;
-      pointer-events: auto; /* allow interaction for the active slide */
+  pointer-events: auto; // allow interaction for the active slide
       z-index: 3;
     }
 
-    /* When a slide is leaving (optional class) we could push it leftwards
-       to create a full sliding effect. If JS adds `.is-exiting` during
-       transitions we can use this; otherwise the entering slide alone
-       provides a clean slide-in-up animation from the right. */
+  // Optional exit state: push left for full sliding effect
     &.is-exiting {
       transform: translateX(-30%);
       opacity: 0;
@@ -111,10 +105,12 @@
   .hero-slide-inner {
     position: relative;
     z-index: 2;
-    max-width: 560px;
+  max-width: 560px; // base content width (mobile ~560px)
     padding-bottom: 0;
     margin-block-end: env(safe-area-inset-bottom, 0);
     overflow: visible;
+    // Responsive wider container for large screens
+    @include media-breakpoint-up(lg) { max-width: 56rem; }
   }
 
   .hero-headline {
@@ -127,6 +123,23 @@
     display: inline-block;
     color: #fff;
     max-width: 15ch;
+  // Text clamping (2 lines mobile, 3 desktop)
+    display: -webkit-box;
+    -webkit-line-clamp: 2;
+    line-clamp: 2;
+    -webkit-box-orient: vertical;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    @include media-breakpoint-up(lg) {
+      -webkit-line-clamp: 3;
+      line-clamp: 3;
+    }
+    @supports not (-webkit-line-clamp: 2) {
+      max-height: 2.2em; // approx 2 lines
+      line-height: 1.1;
+      overflow: hidden;
+      @include media-breakpoint-up(lg) { max-height: 3.3em; }
+    }
   }
 
   .hero-subline {
@@ -151,14 +164,14 @@
     box-shadow: $btn-box-shadow;
     transition: transform 0.25s ease, box-shadow 0.25s ease;
 
-    /* Mobile: slightly rounded, match promo banner's mobile adjustments */
+  // Mobile: slightly reduced padding to match promo banner
     @media (max-width: 540px) {
   padding: 0.5rem 0.9rem;
   font-size: $btn-font-size;
   border-radius: $btn-border-radius;
     }
 
-    /* Desktop hover/focus lift preserved from promo banner */
+  // Desktop hover/focus lift preserved from promo banner
     @media (min-width: 768px) {
       &:hover,
       &:focus {
@@ -167,117 +180,59 @@
       }
     }
 
-    /* Remove Bootstrap's default focus/active ring and active background color
-       which use the Bootstrap primary (#0d6efd). Use the project's focus styling
-       to keep consistent visuals and accessibility. */
+  // Remove Bootstrap default focus/active ring + primary background
+  // Use project focus styling for consistency + a11y
     &:focus {
-      /* Reset bootstrap outline/box-shadow */
+  // Reset bootstrap outline/box-shadow
       outline: none;
       box-shadow: 0 0 0 3px rgba(255,255,255,0.06); /* subtle white ring */
     }
 
     &:active,
     &.active {
-      /* Keep background stable on press; don't inherit bootstrap active color */
+  // Keep background stable on press; don't inherit bootstrap active color
       background: $promo-cta-color;
       box-shadow: $btn-box-shadow;
       transform: none; /* avoid jump on active */
     }
 
-   /* Override Bootstrap button CSS variables locally so generic
-     `.btn:focus-visible` / `.btn.active` rules don't apply the
-     default blue focus/active colors to this instance. */
+   // Override Bootstrap button CSS vars so generic rules don't apply default blue
    --bs-btn-focus-box-shadow: 0 0 0 0.15rem rgba(255,255,255,0.06);
    --bs-btn-focus-shadow-rgb: 255,255,255;
    --bs-btn-active-bg: #{$promo-cta-color};
    --bs-btn-bg: #{$promo-cta-color};
    --bs-btn-border-color: transparent;
-   /* Also ensure hover/hover-border resolve to our promo color so
-     the Bootstrap `:focus-visible` state doesn't swap colors. */
+   // Ensure hover variables resolve to promo color (focus-visible consistency)
    --bs-btn-hover-bg: #{$promo-cta-color};
    --bs-btn-hover-border-color: transparent;
    --bs-btn-hover-color: #{$btn-color};
   }
 
-  /* Ensure focus-visible (used by Bootstrap) is explicitly handled so
-    the browser picks our neutral ring instead of the theme blue. */
-  .hero-cta:focus-visible {
-   outline: none;
-  box-shadow: 0 0 0 0.25rem rgba(255,255,255,0.14);
-  }
-
-  /* Specific rule for Bootstrap's focus-visible selector to ensure
-    background/border/box-shadow remain consistent for hero CTA */
+  // Explicit custom focus-visible style (neutral ring, not theme blue)
+  // Consolidated focus + active states
+  .hero-cta:focus-visible,
   .btn.hero-cta:focus-visible {
-   background-color: var(--bs-btn-bg);
-   border-color: var(--bs-btn-border-color);
-   box-shadow: var(--bs-btn-focus-box-shadow);
-   outline: none;
+    outline: none;
+    box-shadow: 0 0 0 0.25rem rgba(255,255,255,0.14);
+    background-color: var(--bs-btn-bg);
+    border-color: var(--bs-btn-border-color);
   }
 
-  /* Stronger override: remove any blue ring or border coming from
-     Bootstrap or the browser focus ring. This uses a more specific
-     selector (two classes + parent) and comes after Bootstrap in the
-     compiled CSS so it wins without needing `!important`. */
-  .btn.hero-cta:focus,
-  .btn.hero-cta:focus-visible {
-    outline: none !important;
-    box-shadow: none !important;
-    border-color: transparent !important;
-    background-color: var(--bs-btn-bg) !important;
-  }
+  .btn.hero-cta:focus { outline: none; box-shadow: 0 0 0 0.25rem rgba(255,255,255,0.14); }
 
-  /* Make sure active/pressed states don't switch to Bootstrap primary */
   .btn.hero-cta:active,
   .btn.hero-cta.active,
   .btn.hero-cta.show {
-    background-color: var(--bs-btn-bg) !important;
-    border-color: var(--bs-btn-border-color) !important;
-    box-shadow: none !important;
+    background-color: var(--bs-btn-bg);
+    border-color: var(--bs-btn-border-color);
+    box-shadow: none;
   }
 
-  /* === CAROUSEL EXTENSIONS === */
+  // === CAROUSEL EXTENSIONS ===
 
-  /* Multiple slides are handled by the absolute-positioned transform
-     rules above — we avoid using `display: none` so transitions on
-     `transform` can run smoothly when `.is-active` is toggled. */
+  // Multiple slides handled by absolute transforms (avoid display:none for smoothness)
 
-  /* Enhanced text containers with responsive max-widths */
-  .hero-slide-inner {
-    max-width: 36rem; /* mobile: ~576px */
 
-    @include media-breakpoint-up(lg) {
-      max-width: 56rem; /* desktop: ~896px */
-    }
-  }
-
-  /* Text clamping for headlines */
-  .hero-headline {
-    /* Mobile: clamp to 2 lines */
-    display: -webkit-box;
-    -webkit-line-clamp: 2;
-    line-clamp: 2;
-    -webkit-box-orient: vertical;
-    overflow: hidden;
-    text-overflow: ellipsis;
-
-    /* Desktop: allow 3 lines */
-    @include media-breakpoint-up(lg) {
-      -webkit-line-clamp: 3;
-      line-clamp: 3;
-    }
-
-    /* Fallback for browsers without webkit-line-clamp */
-    @supports not (-webkit-line-clamp: 2) {
-      max-height: 2.2em; /* approximate 2 lines */
-      line-height: 1.1;
-      overflow: hidden;
-
-      @include media-breakpoint-up(lg) {
-        max-height: 3.3em; /* approximate 3 lines */
-      }
-    }
-  }
 
   /* Text clamping for sublines: 2 lines on all sizes */
   .hero-subline {
@@ -295,20 +250,16 @@
     }
   }
 
-  /* Disabled CTA state
-     Keep the CTA visually prominent (retain background/text colors) while
-     disabling interaction. Previously opacity + grayscale were used which
-     produced a "dimmed" look; remove those to preserve emphasis.
-  */
+  // Disabled CTA state: preserve visual emphasis while disabling interaction
   .hero-cta.is-disabled {
     /* Disable interaction but preserve visuals for consistency */
     pointer-events: none;
     cursor: not-allowed;
   }
 
-  /* === CAROUSEL UI === */
+  // === CAROUSEL UI ===
 
-  /* Dots container - always centered with inline arrows and dots */
+  // Dots container - centered with inline arrows and dots
   .hero__dots {
     position: absolute;
     bottom: 1rem;
@@ -326,9 +277,9 @@
     }
   }
 
-  /* Navigation arrows - always inline within dots container */
+  // Navigation arrows - inline within dots container
   .hero__arrow {
-    /* Minimal text-only arrows: no background, no pseudo-elements */
+  // Minimal text-only arrows: no background, no pseudo-elements
     background: transparent;
     border: none;
     border-radius: 0;
@@ -347,7 +298,7 @@
     padding: 0.25rem 0.5rem;
     line-height: 1;
     
-    /* Remove any CSS triangles */
+  // Remove any CSS triangles
     &::before { content: none; }
   
     &:focus-visible {
@@ -356,13 +307,13 @@
       border-radius: 2px;
     }
     
-    /* Larger arrows on desktop */
+  // Larger arrows on desktop
     @include media-breakpoint-up(lg) {
       font-size: 2rem;
     }
   }
 
-  /* Individual dots */
+  // Individual dots
   .hero__dot {
     width: 8px;
     height: 8px;

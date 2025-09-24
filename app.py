@@ -90,6 +90,17 @@ def robots_txt():
 def security_txt():
     return app.send_static_file(".well-known/security.txt")
 
+# --- Guides / SEO pages ---
+from flask import render_template
+
+@app.route("/guides/what-is-a-prop-firm")
+def guide_what_is_a_prop_firm():
+    return render_template(
+        "guides/what-is-a-prop-firm.html",
+        title="What is a Prop Firm? (Beginner’s Guide)",
+        meta_desc="A quick beginner’s guide: how prop firms work, how evaluations and sim-funded accounts differ, and how to choose your first account.",
+    )
+
 # -------- Error handling --------
 @app.errorhandler(500)
 def _500(e):

@@ -20,14 +20,38 @@ $promo-cta-box-shadow: 0 2px 6px rgba(0, 0, 0, 0.12) !default;
 // Elevated box-shadow used on hover/focus for the CTA
 $promo-cta-hover-shadow: 0 8px 18px rgba(0, 0, 0, 0.12) !default;
 
-// Generic button variables (for consistent UI across components)
+// Generic button tokens (also intentionally share names with Bootstrap's button
+// variables so Bootstrap components inherit these values automatically). The
+// previous version duplicated assignments (token -> same named variable) which
+// was redundant; simplified here with clearer intent.
 $btn-border-radius: 1rem !default;
 $btn-font-weight: 900 !default;
 $btn-font-size: 1.05rem !default;
 $btn-color: #fff !default;
 $btn-bg: $promo-cta-color !default; // default CTA background falls back to promo color
-$btn-box-shadow: $promo-cta-box-shadow !default;
-$btn-hover-shadow: $promo-cta-hover-shadow !default;
+$btn-box-shadow: $promo-cta-box-shadow !default; // Bootstrap also reads $btn-box-shadow
+$btn-hover-shadow: $promo-cta-hover-shadow !default; // used in custom button partial
+
+// Custom outline secondary button tokens (added)
+// Thicker white outline variant with cyan hover text (no background fill)
+$btn-outline-secondary-color: #fff !default; // base text + border color
+$btn-outline-secondary-border-color: #fff !default; // explicit for clarity
+$btn-outline-secondary-border-width: 1px !default; // reverted to default thinner width
+// Hover/active text (and optional border) accent color re-uses site banner accent for consistency
+$btn-outline-secondary-hover-color: #22d3ee !default; // accent (duplicated literal to avoid forward reference ordering issues)
+
+// Primary (btn-primary) token mapping
+$btn-primary-bg: $btn-bg !default;
+$btn-primary-color: $btn-color !default;
+$btn-primary-border-color: $btn-bg !default;
+
+// Box shadow mapping note: Bootstrap v5 defines $btn-box-shadow; already set above.
+
+// ------------------------------------------------------------
+// Base Layout
+// Background color used for the overall page (base.html wrapper/body)
+// Centralize here so it can be swapped thematically in one place.
+$base-html-bg: #0b0b12 !default;
 
 // ------------------------------------------------------------
 // Site Banner Variables
@@ -52,5 +76,10 @@ $site-banner-logo-height-mobile: 150px !default; // slightly smaller on mobile f
 
 // Focus overrides (remove default Bootstrap glow for inputs inside banner)
 $input-focus-box-shadow: none !default; // removes Bootstrap's default focus shadow (applies globally)
+
+// ------------------------------------------------------------
+// Guide/Landing Page Variables
+// Text color for guide pages and similar landing page content
+$guide-text-color: #ffffff !default; // white text for landing pages
 
 

@@ -1,0 +1,78 @@
+// Unified article / long-form content typography
+// Apply to any container with class .prose to normalize spacing, headings,
+// lists, and inline elements for readable guide content.
+
+.prose {
+  // Base text inherits page color unless overridden; guides set $guide-text-color
+  line-height: 1.65;
+  font-size: 1.02rem;
+  color: inherit; // Ensure prose inherits color from parent (guide sets white)
+
+  // Headings
+  h1, h2, h3, h4, h5, h6 {
+    font-weight: 700;
+    line-height: 1.25;
+    scroll-margin-top: 6rem; // better anchor offset below sticky header
+  }
+  h1 { font-size: clamp(1.9rem, 2.2vw + 1.2rem, 2.6rem); margin-bottom: .75rem; }
+  h2 { font-size: clamp(1.35rem, 1.2vw + .9rem, 1.75rem); margin-top: 2.2rem; margin-bottom: .85rem; }
+  h3 { font-size: 1.25rem; margin-top: 1.8rem; margin-bottom: .6rem; }
+  h4 { font-size: 1.1rem; margin-top: 1.6rem; margin-bottom: .5rem; }
+
+  p { margin-bottom: 1.1rem; }
+  p.lead { font-size: 1.15rem; line-height: 1.55; }
+
+  // Lists
+  ul, ol { padding-left: 1.2rem; margin-bottom: 1.2rem; }
+  li { margin-bottom: .4rem; }
+  ol { counter-reset: item; }
+
+  // Horizontal rule spacing
+  hr { margin: 2.2rem 0; opacity: .25; }
+
+  // Links: keep underlines for body readability & accessibility. Buttons (a.btn) already remove via button partial.
+  a {
+    text-decoration: underline;
+    text-underline-offset: 2px;
+    transition: color .18s ease, text-decoration-color .18s ease;
+  }
+  a:hover {
+    text-decoration-color: currentColor;
+  }
+  a:focus-visible {
+    outline: 0;
+    box-shadow: 0 0 0 3px rgba($btn-bg, 0.4);
+    text-decoration: underline;
+  }
+  // If a link is styled as a button ensure underline is not forced back
+  a.btn { text-decoration: none; }
+
+  // Emphasis
+  strong { font-weight: 600; }
+  em { font-style: italic; }
+
+  // Small / meta text
+  small, .small { font-size: .82em; line-height: 1.4; }
+
+  // FAQ details formatting inside prose
+  details { margin-bottom: 1rem; }
+  details > summary { font-weight: 600; cursor: pointer; transition: color .18s ease; }
+  // FAQ summary accent hover + open state persistence
+  details > summary .h6 { color: inherit; }
+  // Hover/focus accent (when closed)
+  details:not([open]) > summary:hover .h6,
+  details:not([open]) > summary:focus-visible .h6 { color: #22d3ee; }
+  // Open state keeps accent color
+  details[open] > summary .h6 { color: #22d3ee; }
+  // Keyboard focus ring on summary (focus-visible only)
+  details > summary:focus-visible { outline: 0; box-shadow: 0 0 0 3px rgba($btn-bg, 0.4); border-radius: .25rem; }
+
+  // Utility overrides: keep secondary text from getting too dim in dark guides
+  .text-secondary, .text-muted { opacity: .9; }
+
+  // Buttons inside prose blocks: tighten top margin when following text
+  p + .btn, p + .btn-group, p + .d-flex { margin-top: .4rem; }
+
+  // Last child adjustments
+  > :last-child { margin-bottom: 0 !important; }
+}

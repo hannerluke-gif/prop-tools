@@ -7,6 +7,11 @@
 // * Hover pause handled in JS (desktop only) – we only add a helper class here
 
 .promo-banner {
+	// z-index map:
+	// 1: slide gradient ::after (desktop)
+	// 2: active slide
+	// 4: text content overlay
+	// 6: CTA button
 	position: relative;
 	width: 100%;
 	height: 60px; // default height
@@ -37,11 +42,11 @@
 		opacity: 0;
 		transition: opacity 0.9s ease-in-out; // smooth fade
 		pointer-events: none; // allow click to be captured by wrapper
-	}
 
-	&__slide.is-active {
-		opacity: 1;
-		z-index: 2;
+		&.is-active {
+			opacity: 1;
+			z-index: 2;
+		}
 	}
 
 		// Content overlay (text)
@@ -82,13 +87,13 @@
 
 	// CTA button (Start Evaluation) — positioned relative to .promo-banner root
 	&__cta {
-		/* Positioning: absolute so CTA does not move with slide content */
+		// Positioning: absolute so CTA does not move with slide content
 		position: absolute;
 		right: 18px;
 		top: 50%;
 		transform: translateY(-50%);
 
-		/* Visuals */
+		// Visuals
 		display: inline-flex;
 		align-items: center;
 		justify-content: center;
@@ -103,14 +108,14 @@
 		pointer-events: auto; // enable clicks
 		z-index: 6;
 
-		/* Hidden state until JS populates the href */
+		// Hidden state until JS populates the href
 		&[aria-hidden="true"] {
 			opacity: 0;
 			pointer-events: none;
 			transition: opacity 0.15s ease-in-out;
 		}
 
-		/* Mobile: lower-right corner inside banner */
+		// Mobile: lower-right corner inside banner
 		@media (max-width: 540px) {
 			bottom: 8px;
 			right: 8px;
@@ -121,49 +126,46 @@
 			border-radius: $btn-border-radius;
 		}
 
-		/* Focus styles for keyboard users */
+		// Focus styles for keyboard users
 		&:focus {
 			outline: 3px solid rgba(255,255,255,0.12);
 			outline-offset: 2px;
 		}
-	}
 
-// Desktop-only CTA hover/lift effect
-@media (min-width: 768px) {
-	.promo-banner {
-		&__cta {
+		// Desktop-only hover/lift effect (inlined from separate media block)
+		@media (min-width: 768px) {
 			transition: transform 0.25s ease, box-shadow 0.25s ease;
-
 			&:hover,
 			&:focus {
-				/* preserve the vertical centering translateY(-50%) while lifting 3px */
+				// preserve translateY(-50%) while lifting 3px
 				transform: translateY(calc(-50% - 3px));
-					box-shadow: $promo-cta-hover-shadow;
+				box-shadow: $promo-cta-hover-shadow;
 			}
 		}
 	}
-}
 
-	// (Optional) progressive enhancement: if user prefers reduced motion, disable fade
+	// Reduced motion: disable fade transition
 	@media (prefers-reduced-motion: reduce) {
 		&__slide {
 			transition: none;
 		}
 	}
 
-	// Cursor indicates interactivity (click to advance)
+	// Cursor indicates interactivity (JS: clicking banner may advance slide)
 	cursor: pointer;
 
-  // === Background variants (moved from inline) ===
-  &__slide--apex {
-    background-image: url("/static/img/banner/banner_apex.jpg");
-  }
-  &__slide--tpt {
-    background-image: url("/static/img/banner/banner_tpt.jpg");
-  }
-  &__slide--tradeify {
-    background-image: url("/static/img/banner/banner_tradeify.jpg");
-  }
+	// Background variants (generated via map loop below)
+}
+
+// Slide background image variants (Sass map for scalability)
+$promo-banner-slide-images: (
+	apex: "/static/img/banner/banner_apex.jpg",
+	tpt: "/static/img/banner/banner_tpt.jpg",
+	tradeify: "/static/img/banner/banner_tradeify.jpg",
+);
+
+@each $name, $url in $promo-banner-slide-images {
+	.promo-banner__slide--#{$name} { background-image: url(#{$url}); }
 }
 
 // Responsive adjustments: desktop single-line layout

@@ -1,0 +1,195 @@
+// Buttons partial - enforce site-wide button tokens and remove underline on anchor buttons
+
+// Internal placeholder for active/pressed style reuse
+%btn-active-base {
+  background-color: $btn-bg;
+  border-color: $btn-bg;
+  color: $btn-color;
+  box-shadow: $btn-hover-shadow;
+  text-decoration: none;
+}
+
+.btn {
+  // Use site tokens to ensure consistent buttons across the app
+  border-radius: $btn-border-radius;
+  font-weight: $btn-font-weight;
+  font-size: $btn-font-size;
+  color: $btn-color;
+  box-shadow: $btn-box-shadow;
+  text-decoration: none; // ensure anchor-based buttons don't show underlines by default
+  -webkit-tap-highlight-color: transparent; // avoid mobile blue flash
+  position: relative; // anchor for focus outline pseudo if needed
+  outline: 0; // we substitute with :focus-visible ring
+
+  &:hover,
+  &:focus {
+    box-shadow: $btn-hover-shadow;
+    text-decoration: none; // explicitly remove underline on interactive states
+  }
+
+  // Visible focus ring only when keyboard focusing
+  &:focus-visible {
+    box-shadow: $btn-hover-shadow, 0 0 0 3px rgba($btn-bg, 0.4);
+  }
+
+  &.active,
+  &:active {
+    @extend %btn-active-base;
+  }
+
+  &.btn-lg { font-size: $btn-font-size; }
+
+  &.btn-sm {
+    font-size: calc(#{$btn-font-size} * 0.85);
+    padding: 0.25rem 0.5rem;
+  }
+
+  // High contrast / forced colors mode: rely on system colors but keep shape
+  @media (forced-colors: active) {
+    & {
+      forced-color-adjust: auto;
+      background: ButtonFace;
+      color: ButtonText;
+      border: 1px solid ButtonText;
+      box-shadow: none;
+    }
+    &:hover,
+    &:focus-visible {
+      background: Highlight;
+      color: HighlightText;
+    }
+    &.active,
+    &:active { background: Highlight; color: HighlightText; }
+  }
+}
+
+// Make sure primary button uses site CTA tokens
+.btn-primary {
+  background-color: $btn-bg;
+  border-color: $btn-bg;
+  color: $btn-color;
+
+  &:hover,
+  &:focus,
+  &:active { @extend %btn-active-base; }
+
+  // Stronger active selectors to override Bootstrap's active styles
+  &:not(.disabled):not(:disabled).active,
+  &:not(.disabled):not(:disabled):active { @extend %btn-active-base; }
+}
+
+// Extra specificity to override prose link hover underline inside long-form content
+.prose a.btn,
+.guide a.btn {
+  text-decoration: none;
+
+  &:hover, &:focus, &:active {
+    text-decoration: none;
+  }
+}
+
+// Outline primary variant - ensure it uses site tokens and doesn't flash default bootstrap colors
+.btn-outline-primary {
+  color: $btn-bg;
+  border-color: $btn-bg;
+  background-color: transparent;
+
+  &:hover,
+  &:focus { @extend %btn-active-base; }
+
+  &:not(.disabled):not(:disabled).active,
+  &:not(.disabled):not(:disabled):active { @extend %btn-active-base; }
+}
+
+// Guide/prose-specific override: treat outline-primary buttons inside guides
+// as filled CTAs so small inline CTAs match the rest of the site's CTAs.
+.prose .btn-outline-primary,
+.guide .btn-outline-primary {
+  // Fill immediately (not just on hover) and use token colors
+  @extend %btn-active-base;
+
+  &.btn-sm {
+    font-size: calc(#{$btn-font-size} * 0.85);
+    padding: 0.25rem 0.5rem;
+  }
+
+  &:hover,
+  &:focus,
+  &:active { @extend %btn-active-base; }
+}
+
+// ---------------------------------------------
+// Custom outline secondary variant overrides
+// Requirements:
+//  - White text
+//  - White border, slightly thicker than default
+//  - Hover: keep transparent background, change text (and border) to accent (#22d3ee)
+//  - No background fill on hover/active
+//  - Works for size modifier .btn-sm
+// ---------------------------------------------
+.btn-outline-secondary {
+  color: $btn-outline-secondary-color;
+  background-color: transparent;
+  border: $btn-outline-secondary-border-width solid $btn-outline-secondary-border-color;
+  box-shadow: none; // keep flat outline look
+  text-decoration: none;
+
+  &:hover,
+  &:focus {
+    color: $btn-outline-secondary-hover-color;
+    border-color: $btn-outline-secondary-hover-color;
+    background-color: transparent; // explicitly keep transparent
+    box-shadow: none;
+  }
+
+  &:focus-visible {
+    // Use subtle focus ring (re-use cyan accent with transparency)
+    box-shadow: 0 0 0 3px rgba($btn-outline-secondary-hover-color, 0.35);
+  }
+
+  &:active,
+  &.active {
+    color: $btn-outline-secondary-hover-color;
+    border-color: $btn-outline-secondary-hover-color;
+    background-color: transparent;
+    box-shadow: none;
+  }
+
+  // High contrast mode: rely on system colors but keep thicker border
+  @media (forced-colors: active) {
+    & {
+      forced-color-adjust: auto;
+      color: ButtonText;
+      border: $btn-outline-secondary-border-width solid ButtonText;
+    }
+    &:hover,
+    &:focus-visible,
+    &:active {
+      color: HighlightText;
+      border-color: Highlight;
+    }
+  }
+}
+
+// Inside prose/guide content we currently fill outline-primary; for outline-secondary
+// we intentionally keep it an outline (transparent) per requirements.
+
+// Desktop-only subtle hover/lift animation for all buttons
+@media (min-width: 768px) {
+  .btn {
+    transition: transform 0.22s cubic-bezier(.2,.9,.2,1), box-shadow 0.22s ease;
+
+    &:hover, &:focus {
+      transform: translateY(-3px);
+      box-shadow: $btn-hover-shadow;
+    }
+  }
+}
+
+// Respect reduced motion preferences
+@media (prefers-reduced-motion: reduce) {
+  .btn {
+    transition: none !important;
+    transform: none !important;
+  }
+}
