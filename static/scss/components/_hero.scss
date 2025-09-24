@@ -150,33 +150,49 @@
     max-width: 28ch;
   }
 
+  // Base hero CTA styles (do NOT hard-force background so variants work)
   .hero-cta {
     display: inline-flex;
     align-items: center;
     justify-content: center;
-    background: $promo-cta-color;
-    color: $btn-color;
     padding: 1rem 1.55rem;
-  border-radius: $btn-border-radius;
-  font-weight: $btn-font-weight;
-  font-size: $btn-font-size;
+    border-radius: $btn-border-radius;
+    font-weight: $btn-font-weight;
+    font-size: $btn-font-size;
     text-decoration: none;
-    box-shadow: $btn-box-shadow;
-    transition: transform 0.25s ease, box-shadow 0.25s ease;
+    transition: none; // keep flat look
+
+    // Primary variant (explicit only). No legacy fallback.
+    &.btn-primary {
+      background: $promo-cta-color;
+      color: $btn-color;
+      border: 1px solid $promo-cta-color;
+    }
+
+    // Secondary variant already has its own styles from global buttons, but tweak spacing if needed
+    &.btn-secondary {
+      // Ensure padding matches hero scale without clobbering color/background
+      padding: 1rem 1.55rem;
+    }
+
+    // Tertiary variant keeps dark background from global definition; ensure consistent padding
+    &.btn-tertiary {
+      padding: 1rem 1.55rem;
+    }
 
   // Mobile: slightly reduced padding to match promo banner
     @media (max-width: 540px) {
-  padding: 0.5rem 0.9rem;
-  font-size: $btn-font-size;
-  border-radius: $btn-border-radius;
+      padding: 0.5rem 0.9rem;
+      font-size: $btn-font-size;
+      border-radius: $btn-border-radius;
     }
 
   // Desktop hover/focus lift preserved from promo banner
     @media (min-width: 768px) {
       &:hover,
       &:focus {
-        transform: translateY(-3px);
-        box-shadow: $promo-cta-hover-shadow;
+        transform: none; // no movement on hover
+        // no box-shadow on hover to keep visuals flat
       }
     }
 
@@ -190,22 +206,21 @@
 
     &:active,
     &.active {
-  // Keep background stable on press; don't inherit bootstrap active color
-      background: $promo-cta-color;
-      box-shadow: $btn-box-shadow;
       transform: none; /* avoid jump on active */
     }
 
-   // Override Bootstrap button CSS vars so generic rules don't apply default blue
-   --bs-btn-focus-box-shadow: 0 0 0 0.15rem rgba(255,255,255,0.06);
-   --bs-btn-focus-shadow-rgb: 255,255,255;
-   --bs-btn-active-bg: #{$promo-cta-color};
-   --bs-btn-bg: #{$promo-cta-color};
-   --bs-btn-border-color: transparent;
-   // Ensure hover variables resolve to promo color (focus-visible consistency)
-   --bs-btn-hover-bg: #{$promo-cta-color};
-   --bs-btn-hover-border-color: transparent;
-   --bs-btn-hover-color: #{$btn-color};
+    // CSS var overrides for primary style only
+    &.btn-primary,
+    &:not(.btn-secondary):not(.btn-tertiary):not(.btn-outline-secondary) {
+      --bs-btn-focus-box-shadow: 0 0 0 0.15rem rgba(255,255,255,0.06);
+      --bs-btn-focus-shadow-rgb: 255,255,255;
+      --bs-btn-active-bg: #{$promo-cta-color};
+      --bs-btn-bg: #{$promo-cta-color};
+      --bs-btn-border-color: #{$promo-cta-color};
+      --bs-btn-hover-bg: #{$btn-primary-hover-bg};
+      --bs-btn-hover-border-color: #{$btn-primary-hover-bg};
+      --bs-btn-hover-color: #{$btn-color};
+    }
   }
 
   // Explicit custom focus-visible style (neutral ring, not theme blue)
@@ -214,8 +229,7 @@
   .btn.hero-cta:focus-visible {
     outline: none;
     box-shadow: 0 0 0 0.25rem rgba(255,255,255,0.14);
-    background-color: var(--bs-btn-bg);
-    border-color: var(--bs-btn-border-color);
+    // Do not force background; rely on variant-specific variables
   }
 
   .btn.hero-cta:focus { outline: none; box-shadow: 0 0 0 0.25rem rgba(255,255,255,0.14); }
@@ -223,8 +237,6 @@
   .btn.hero-cta:active,
   .btn.hero-cta.active,
   .btn.hero-cta.show {
-    background-color: var(--bs-btn-bg);
-    border-color: var(--bs-btn-border-color);
     box-shadow: none;
   }
 
@@ -250,12 +262,7 @@
     }
   }
 
-  // Disabled CTA state: preserve visual emphasis while disabling interaction
-  .hero-cta.is-disabled {
-    /* Disable interaction but preserve visuals for consistency */
-    pointer-events: none;
-    cursor: not-allowed;
-  }
+  // (Removed disabled state styles; hero CTAs are always enabled now.)
 
   // === CAROUSEL UI ===
 

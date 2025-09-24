@@ -29,9 +29,9 @@
   
   // FAQ styling
   .guide__faq {
-    border: 1px solid rgba(255,255,255,.15);
-    border-radius: .75rem; padding: .9rem 1rem; margin-bottom: .75rem;
-    background: rgba(255,255,255,.03);
+    border-bottom: 1px solid rgba(255,255,255,.25);
+    padding: .9rem 0; margin-bottom: .75rem;
+    background: transparent;
     color: $guide-text-color;
     summary { 
       cursor: pointer; 
@@ -40,7 +40,7 @@
       
       // Hover effect
       &:hover {
-        color: #22d3ee;
+  color: $accent-cyan;
       }
     }
     summary::marker { content: ""; }
@@ -48,7 +48,7 @@
     
     // Change summary text color when expanded
     &[open] summary {
-      color: #22d3ee;
+  color: $accent-cyan;
     }
     
     // Add space between summary and content when expanded
@@ -73,17 +73,57 @@
     color: $guide-text-color !important;
   }
   
-  // Links should be visible
-  a:not(.btn) { 
-    color: #22d3ee; // Using your site's accent color
-    &:hover { color: #67e8f9; }
-  }
-  
   // Buttons are controlled globally via `components/_buttons.scss` to keep
   // button styles consistent across the site. No local overrides here.
   
   // Preserve disclosure/fine print styling - keep it muted
   .small.text-secondary {
     color: rgba(255,255,255,.5) !important; // Keep disclosure dimmer
+  }
+  
+  // Keep learning section styling
+  .guide__next {
+    .text-secondary {
+      font-weight: 700; // Make "Keep learning" bold
+      font-size: 1.1rem; // Make text bigger
+      border-bottom: 1px solid rgba(255,255,255,.15); // Add divider line
+      padding-bottom: 0.75rem; // Space above the line
+      margin-bottom: 1.25rem !important; // Space below the line (override Bootstrap)
+    }
+  }
+  
+  // Guide navigation list styling
+  .guide__next-list {
+    list-style: none;
+    padding: 0;
+    margin: 0;
+    
+    li {
+      margin-bottom: 0.75rem;
+      color: $guide-text-color;
+      
+      &:last-child {
+        margin-bottom: 0;
+      }
+    }
+  }
+  
+  // Simple text links for guide navigation
+  .guide__next-link {
+    color: $guide-text-color;
+    text-decoration: none;
+    font-weight: 400;
+    transition: color 0.2s ease;
+    
+    &:hover {
+      color: $accent-cyan;
+      text-decoration: none;
+    }
+    
+    &:focus {
+      color: $accent-cyan;
+      outline: 2px solid rgba(34, 211, 238, 0.3);
+      outline-offset: 2px;
+    }
   }
 }

@@ -82,6 +82,12 @@ def _security_headers(resp):
 def dashboard():
     return render_template("dashboard.html", title="Dashboard")
 
+@app.route("/not-found")
+def not_found_placeholder():
+    # Temporary placeholder target for hero CTAs until real pages exist.
+    # Returns a 404 status intentionally so analytics can distinguish visits.
+    return ("<h1>Not Found</h1><p>This destination page has not been built yet.</p>", 404, {"Content-Type": "text/html; charset=utf-8"})
+
 @app.route("/robots.txt")
 def robots_txt():
     return app.send_static_file("robots.txt")

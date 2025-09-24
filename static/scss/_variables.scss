@@ -14,11 +14,23 @@ $font-family-base: $font-family-sans-serif !default;
 // Promo banner CTA color (used by the promo banner component)
 $promo-cta-color: #ff6b9a !default;
 
-// Box-shadow used by the promo CTA in its normal state
-$promo-cta-box-shadow: 0 2px 6px rgba(0, 0, 0, 0.12) !default;
+// Global accent (cyan) extracted from repeated literals (#22d3ee)
+$accent-cyan: #22d3ee !default;
 
-// Elevated box-shadow used on hover/focus for the CTA
-$promo-cta-hover-shadow: 0 8px 18px rgba(0, 0, 0, 0.12) !default;
+// Extended button design tokens
+// Primary button hover (slightly brighter than base pink); adjust value if brand updates
+$btn-primary-hover-bg: #ff7fad !default;
+
+// Secondary button (white bg, black text -> cyan hover bg retains black text)
+$btn-secondary-bg: #ffffff !default;
+$btn-secondary-color: #000000 !default;
+$btn-secondary-hover-bg: $accent-cyan !default;
+
+// Tertiary button (black bg, white text; hover: text + border shift to cyan while bg stays black)
+$btn-tertiary-bg: #000000 !default;
+$btn-tertiary-color: #ffffff !default;
+$btn-tertiary-hover-color: $accent-cyan !default;
+
 
 // Generic button tokens (also intentionally share names with Bootstrap's button
 // variables so Bootstrap components inherit these values automatically). The
@@ -29,8 +41,7 @@ $btn-font-weight: 900 !default;
 $btn-font-size: 1.05rem !default;
 $btn-color: #fff !default;
 $btn-bg: $promo-cta-color !default; // default CTA background falls back to promo color
-$btn-box-shadow: $promo-cta-box-shadow !default; // Bootstrap also reads $btn-box-shadow
-$btn-hover-shadow: $promo-cta-hover-shadow !default; // used in custom button partial
+// Box-shadow tokens removed (flat button design); if reintroducing shadows, add new tokens here.
 
 // Custom outline secondary button tokens (added)
 // Thicker white outline variant with cyan hover text (no background fill)
@@ -38,14 +49,14 @@ $btn-outline-secondary-color: #fff !default; // base text + border color
 $btn-outline-secondary-border-color: #fff !default; // explicit for clarity
 $btn-outline-secondary-border-width: 1px !default; // reverted to default thinner width
 // Hover/active text (and optional border) accent color re-uses site banner accent for consistency
-$btn-outline-secondary-hover-color: #22d3ee !default; // accent (duplicated literal to avoid forward reference ordering issues)
+$btn-outline-secondary-hover-color: $accent-cyan !default; // accent
 
 // Primary (btn-primary) token mapping
 $btn-primary-bg: $btn-bg !default;
 $btn-primary-color: $btn-color !default;
 $btn-primary-border-color: $btn-bg !default;
 
-// Box shadow mapping note: Bootstrap v5 defines $btn-box-shadow; already set above.
+// (Shadow tokens removed; Bootstrap's $btn-box-shadow intentionally unused for flat design.)
 
 // ------------------------------------------------------------
 // Base Layout
@@ -66,7 +77,7 @@ $site-banner-border-color: rgba(255, 255, 255, 0.05) !default;
 $site-banner-input-bg: #2f3438 !default; // dark gray input background
 $site-banner-input-placeholder: #d1d5db !default; // light gray placeholder text
 $site-banner-icon-color: #d1d5db !default; // default icon color (search, buttons)
-$site-banner-icon-hover: #22d3ee !default; // accent hover/focus icon color
+$site-banner-icon-hover: $accent-cyan !default; // accent hover/focus icon color
 
 // Heights / sizing
 $site-banner-input-height: 40px !default;

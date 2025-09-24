@@ -13,7 +13,7 @@
       "headline": "Skip the Research. Start Trading.",
       "subline": "We compared drawdowns, targets, and fees—these picks win today.",
       "ctaLabel": "See Top Picks",
-      "ctaHref": "",
+  "ctaHref": "/not-found",
       "zoom": "in"
     },
     {
@@ -24,7 +24,7 @@
       "headline": "Find the Account Built for You",
       "subline": "Match drawdown, profit target, & rules to your style.",
       "ctaLabel": "Find My Match",
-      "ctaHref": "",
+  "ctaHref": "/not-found",
       "zoom": "out"
     },
     {
@@ -35,7 +35,7 @@
       "headline": "Today's Best Promotions",
       "subline": "Save on evaluation or straight-to-funded accounts.",
       "ctaLabel": "See Discounts",
-      "ctaHref": "",
+  "ctaHref": "/not-found",
       "zoom": "in"
     }
   ]

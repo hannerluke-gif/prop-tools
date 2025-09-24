@@ -110,20 +110,12 @@ export function initHero() {
     }
     if (ctaEl) {
       ctaEl.textContent = slideData?.ctaLabel || fallback.ctaLabel || 'Learn More';
-      
-      // Handle CTA state based on ctaHref
-      const ctaHref = slideData?.ctaHref || '';
-      if (ctaHref && ctaHref.trim() !== '') {
-        ctaEl.href = ctaHref;
-        ctaEl.removeAttribute('aria-disabled');
-        ctaEl.removeAttribute('tabindex');
-        ctaEl.classList.remove('is-disabled');
-      } else {
-        ctaEl.removeAttribute('href');
-        ctaEl.setAttribute('aria-disabled', 'true');
-        ctaEl.setAttribute('tabindex', '-1');
-        ctaEl.classList.add('is-disabled');
-      }
+      // Always enable CTA; default to /not-found if missing
+      const ctaHref = (slideData?.ctaHref && String(slideData.ctaHref).trim() !== '') ? slideData.ctaHref : '/not-found';
+      ctaEl.href = ctaHref;
+      ctaEl.removeAttribute('aria-disabled');
+      ctaEl.removeAttribute('tabindex');
+      ctaEl.classList.remove('is-disabled');
     }
 
     // Handle dynamic background image and zoom effect

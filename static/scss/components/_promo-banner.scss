@@ -104,7 +104,6 @@
 		font-weight: 600;
 		font-size: 0.95rem;
 		text-decoration: none;
-		box-shadow: $btn-box-shadow;
 		pointer-events: auto; // enable clicks
 		z-index: 6;
 
@@ -134,12 +133,12 @@
 
 		// Desktop-only hover/lift effect (inlined from separate media block)
 		@media (min-width: 768px) {
-			transition: transform 0.25s ease, box-shadow 0.25s ease;
+			// Remove translate/animation: provide immediate visual feedback only.
+			transition: none;
 			&:hover,
 			&:focus {
-				// preserve translateY(-50%) while lifting 3px
-				transform: translateY(calc(-50% - 3px));
-				box-shadow: $promo-cta-hover-shadow;
+				transform: translateY(-50%); // preserve centered position, no movement
+				// No box-shadow change on hover/focus to keep visuals static
 			}
 		}
 	}
