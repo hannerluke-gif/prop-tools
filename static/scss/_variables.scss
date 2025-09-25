@@ -92,17 +92,17 @@ $guide-next-link-hover-bg: $guide-background-subtle !default;
 // Comprehensive tokens for inline text links (body content, guides, etc.)
 // ============================================================
 
-// Option 1: Default text links (body color + underline -> cyan on hover, underline stays)
+// Option 1: Default text links (cyan text, no underline -> add underline on hover)
 $text-link-color: $guide-text-color !default; // Default text color (#f5f5f5)
-$text-link-decoration: underline !default;
+$text-link-decoration: none !default; // No underline by default
 $text-link-hover-color: $accent-cyan !default; // Cyan on hover
-$text-link-hover-decoration: underline !default; // Keep underline
+$text-link-hover-decoration: underline !default; // Add underline on hover
 
-// Option 2: Accent text links (cyan text, no underline -> add underline on hover)
-$text-link-accent-color: $accent-cyan !default; // Cyan by default
-$text-link-accent-decoration: none !default; // No underline by default
-$text-link-accent-hover-color: $guide-text-color !default; // Change to guide text color on hover
-$text-link-accent-hover-decoration: underline !default; // Add underline on hover
+// Option 2: Inline text links (body color + underline -> cyan on hover, underline stays)
+$text-link-inline-color: $accent-cyan !default; // Cyan by default
+$text-link-inline-decoration: none !default; // No underline by default
+$text-link-inline-hover-color: $accent-cyan !default; // Cyan on hover
+$text-link-inline-hover-decoration: underline !default; // Add underline on hover
 
 // ============================================================
 // BUTTON SYSTEM

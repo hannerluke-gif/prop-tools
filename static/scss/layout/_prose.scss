@@ -30,19 +30,20 @@
   // Horizontal rule spacing
   hr { margin: 2.2rem 0; opacity: .25; }
 
-  // Links: keep underlines for body readability & accessibility. Buttons (a.btn) already remove via button partial.
+  // Links: use the text link system variables instead of forcing underlines
   a {
-    text-decoration: underline;
+    text-decoration: $text-link-inline-decoration;
     text-underline-offset: 2px;
     transition: color .18s ease, text-decoration-color .18s ease;
   }
   a:hover {
+    text-decoration: $text-link-inline-hover-decoration;
     text-decoration-color: currentColor;
   }
   a:focus-visible {
     outline: 0;
     box-shadow: 0 0 0 3px rgba($btn-bg, 0.4);
-    text-decoration: underline;
+    text-decoration: $text-link-inline-hover-decoration;
   }
   // If a link is styled as a button ensure underline is not forced back
   a.btn { text-decoration: none; }

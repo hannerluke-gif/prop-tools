@@ -3,110 +3,92 @@
 // Strict BEM structure for reusable guide/landing page layouts
 // All guide pages use this component for consistent styling
 // ============================================================
-
 .guide {
   color: $guide-text-color;
   font-size: $guide-body-size;
   line-height: $guide-body-line-height;
-  
   // Ensure all text elements inherit guide color unless specifically overridden
   *, *:before, *:after {
     color: inherit;
   }
-  
   // ============================================================
   // HEADER SECTION
   // ============================================================
-  
   &__header {
     margin-bottom: $guide-content-spacing;
   }
-  
-  &__title { 
-    font-weight: 800; 
-    letter-spacing: -0.01em; 
+  &__title {
+    font-weight: 800;
+    letter-spacing: -0.01em;
   }
-  
   &__subtitle {
     font-size: 1.15rem;
     line-height: 1.55;
   }
-  
   // ============================================================
   // CONTENT SECTIONS
   // ============================================================
-  
   &__section {
     margin-top: $guide-section-spacing;
-    
     &:first-of-type {
       margin-top: 0;
     }
   }
-  
   &__section-title {
     font-size: $guide-headline-size;
     font-weight: 700;
     margin-bottom: $guide-content-spacing;
   }
-  
   // ============================================================
   // CONTENT LISTS
   // ============================================================
-  
   &__steps {
     counter-reset: step;
     padding-left: 1rem;
     margin-bottom: $guide-content-spacing;
-    
     > li {
       margin-bottom: 0.5rem;
     }
   }
-  
   &__bullets {
     padding-left: 1.2rem;
     margin-bottom: $guide-content-spacing;
-    
     > li {
       margin-bottom: 0.4rem;
     }
   }
-  
   // ============================================================
   // CTA CARD COMPONENT
   // ============================================================
-  
   &__cta {
     background: $guide-cta-bg;
     border: 1px solid $guide-cta-border;
     border-radius: 0.75rem;
     padding: 1.5rem;
     margin: $guide-cta-spacing 0;
-    
     &__title {
       margin-bottom: 0.25rem;
     }
-    
     &__text {
       margin-bottom: 0;
     }
   }
-  
   // ============================================================
   // FAQ SECTION COMPONENT
   // ============================================================
-  
   &__faq-section {
     margin-top: $guide-section-spacing;
+    // Modifier: add extra breathing room before FAQ section when needed
+    &--spacious {
+      // Double the default section spacing for clearer visual separation
+      margin-top: $guide-section-spacing * 2;
+    }
   }
-  
   &__faq {
     border-bottom: 1px solid $guide-faq-divider;
     padding: $guide-faq-padding 0;
     margin-bottom: $guide-faq-spacing;
     background: transparent;
-    
     &__summary {
       cursor: pointer;
       font-weight: 600;
@@ -114,12 +96,10 @@
       display: flex;
       align-items: center;
       gap: 0.75rem;
-      
       // Remove default marker
       &::marker {
         content: "";
       }
-      
       // Add disclosure arrow
       &::before {
         content: "▶";
@@ -127,73 +107,58 @@
         transition: transform 0.2s ease, color 0.2s ease;
         flex-shrink: 0;
       }
-      
       // Hover state
       &:hover {
         color: $guide-faq-hover-color;
         --bs-heading-color: #{$guide-faq-hover-color};
-        
-        .h6 { 
-          color: $guide-faq-hover-color; 
+        .h6 {
+          color: $guide-faq-hover-color;
         }
-        
         &::before {
           color: $guide-faq-hover-color;
         }
       }
     }
-    
     &__content {
       margin-top: 0.75rem;
     }
-    
     // Open state styling
     &[open] &__summary {
       color: $guide-faq-hover-color;
       --bs-heading-color: #{$guide-faq-hover-color};
-      
-      .h6 { 
-        color: $guide-faq-hover-color; 
+      .h6 {
+        color: $guide-faq-hover-color;
       }
-      
       &::before {
         transform: rotate(90deg);
         color: $guide-faq-hover-color;
       }
     }
-    
     &:last-of-type {
       margin-bottom: $guide-section-spacing;
     }
   }
-  
   // ============================================================
   // KEEP LEARNING SECTION COMPONENT
   // ============================================================
-  
   &__next {
     margin-top: $guide-next-spacing-top;
-    
     &__title {
       font-weight: 700;
       font-size: $guide-headline-size;
       margin-bottom: $guide-next-spacing-bottom;
     }
-    
     &__list {
       list-style: none;
       padding: 0;
       margin: 0;
     }
-    
     &__item {
       margin-bottom: 0.75rem;
-      
       &:last-child {
         margin-bottom: 0;
       }
     }
-    
     &__link {
       text-decoration: none;
       font-weight: 400;
@@ -201,20 +166,17 @@
       display: block;
       padding: $guide-next-link-padding;
       border-radius: $guide-next-link-radius;
-      
       // Allow text-link classes to override default styling
       &.text-link--accent {
-        color: $text-link-accent-color;
-        text-decoration: $text-link-accent-decoration;
-        
+        color: $text-link-color;
+        text-decoration: $text-link-decoration;
         &:hover,
         &:focus {
-          color: $text-link-accent-hover-color;
-          text-decoration: $text-link-accent-hover-decoration;
+          color: $text-link-hover-color;
+          text-decoration: $text-link-hover-decoration;
           background: $guide-next-link-hover-bg;
         }
       }
-      
       // Default hover/focus states
       &:hover,
       &:focus {
@@ -222,58 +184,48 @@
         text-decoration: none;
         background: $guide-next-link-hover-bg;
       }
-      
       &:focus {
         outline: 2px solid rgba($accent-cyan, 0.3);
         outline-offset: 2px;
       }
     }
   }
-  
   // ============================================================
   // UTILITY ELEMENTS
   // ============================================================
-  
   &__divider {
     border-color: $guide-divider-color;
     opacity: 1;
     margin: 2.2rem 0;
   }
-  
   &__disclosure {
     color: rgba(255, 255, 255, 0.5) !important; // Intentionally override inherited color
     font-size: 0.82em;
     line-height: 1.4;
     margin-top: $guide-content-spacing;
   }
-  
   // ============================================================
   // LEGACY SUPPORT
   // Support for existing markup patterns that don't use BEM structure
   // TODO: Remove once all guides use strict BEM naming conventions
   // ============================================================
-  
   // Override Bootstrap text colors for guide context
   h1, h2, h3, h4, h5, h6,
   p,
-  ul li, 
-  ol li { 
-    color: $guide-text-color; 
+  ul li,
+  ol li {
+    color: $guide-text-color;
   }
-  
-  .text-secondary { 
-    color: $guide-text-color !important; 
-    
+  .text-secondary {
+    color: $guide-text-color !important;
     &.lead {
       color: $guide-text-color !important;
     }
-    
     // Special case: small secondary text should be muted
     &.small {
       color: rgba(255, 255, 255, 0.5) !important;
     }
   }
-  
   hr {
     border-color: $guide-divider-color;
     opacity: 1;

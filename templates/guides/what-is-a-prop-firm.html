@@ -52,31 +52,34 @@ A prop firm gives traders access to company capital. After passing an evaluation
   </div>
 {% endblock %}
 
-{% block faq_content %}
-  <details class="guide__faq" role="group">
+{% block guide_faq %}
+<div class="guide__faq-section guide__faq-section--spacious">
+  <h2 class="guide__section-title">Common questions</h2>
+  <details class="guide__faq" role="group" open>
     <summary class="guide__faq__summary">
       <span class="h6 mb-0 d-inline-block">What's the difference between evaluation and straight-to-sim funded?</span>
     </summary>
     <div class="guide__faq__content">
       Straight-to-sim funded skips the evaluation target but still enforces rules and payout thresholds. It's faster to payouts but often costs more up front.
       <div class="mt-3">
-        <a href="/compare?filter=straight-to-funded" class="btn btn-sm btn-secondary">View STF Accounts</a>
+        <a href="/compare?filter=straight-to-funded" class="btn btn-sm btn-secondary">See Accounts</a>
       </div>
     </div>
   </details>
   
-  <details class="guide__faq" role="group">
+  <details class="guide__faq" role="group" open>
     <summary class="guide__faq__summary">
       <span class="h6 mb-0 d-inline-block">Personal account vs. prop account—where should I start?</span>
     </summary>
     <div class="guide__faq__content">
       Many beginners start with prop evaluations to practice rule-based risk at lower initial capital. If you already have a tested edge and risk plan, a personal futures account offers full control but full risk.
       <div class="mt-3 d-flex flex-wrap gap-2">
-        <a href="/compare?filter=prop" class="btn btn-sm btn-secondary">View Prop Accounts</a>
-        <a href="/compare?filter=personal" class="btn btn-sm btn-tertiary">View Brokerage Accounts</a>
+        <a href="/compare?filter=prop" class="btn btn-sm btn-secondary">Prop Accounts</a>
+        <a href="/compare?filter=personal" class="btn btn-sm btn-tertiary">Brokerage Accounts</a>
       </div>
     </div>
   </details>
+</div>
 {% endblock %}
 
 {% block next_links %}

@@ -187,9 +187,27 @@
 
 // Default text link: body color + underline -> cyan hover (underline stays)
 .text-link {
+  color: $text-link-inline-color;
+  text-decoration: $text-link-inline-decoration;
+  transition: color 0.2s ease;
+
+  &:hover,
+  &:focus {
+    color: $text-link-inline-hover-color;
+    text-decoration: $text-link-inline-hover-decoration;
+  }
+
+  &:focus-visible {
+    outline: 2px solid rgba($text-link-inline-hover-color, 0.4);
+    outline-offset: 2px;
+  }
+}
+
+// Accent text link: cyan text (no underline) -> add underline on hover
+.text-link--accent {
   color: $text-link-color;
   text-decoration: $text-link-decoration;
-  transition: color 0.2s ease;
+  transition: text-decoration 0.2s ease;
 
   &:hover,
   &:focus {
@@ -198,25 +216,7 @@
   }
 
   &:focus-visible {
-    outline: 2px solid rgba($text-link-hover-color, 0.4);
-    outline-offset: 2px;
-  }
-}
-
-// Accent text link: cyan text (no underline) -> add underline on hover
-.text-link--accent {
-  color: $text-link-accent-color;
-  text-decoration: $text-link-accent-decoration;
-  transition: text-decoration 0.2s ease;
-
-  &:hover,
-  &:focus {
-    color: $text-link-accent-hover-color;
-    text-decoration: $text-link-accent-hover-decoration;
-  }
-
-  &:focus-visible {
-    outline: 2px solid rgba($text-link-accent-color, 0.4);
+    outline: 2px solid rgba($text-link-color, 0.4);
     outline-offset: 2px;
   }
 }
