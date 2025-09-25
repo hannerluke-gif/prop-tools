@@ -60,12 +60,17 @@
         <div class="guide__cta">
           <div class="d-flex flex-column flex-md-row align-items-md-center gap-3">
             <div class="flex-grow-1">
-              <h3 class="guide__cta__title h5">{% block cta_title %}Ready to compare firms?{% endblock %}</h3>
-              <p class="guide__cta__text">{% block cta_text %}See rules, account sizes, and live promos side-by-side.{% endblock %}</p>
+              <h3 class="guide__cta__title h5">{% block cta_title %}Ready to Start?{% endblock %}</h3>
+              <p class="guide__cta__text">{% block cta_text %}Jump right in or explore the best firms first.{% endblock %}</p>
             </div>
-            <a href="{% block cta_link %}/compare{% endblock %}" class="btn btn-primary btn-lg">
-              {% block cta_button %}Compare Firms{% endblock %}
-            </a>
+            <div class="d-flex flex-column flex-sm-row gap-2">
+              <a href="{% block cta_link %}/compare{% endblock %}" class="btn btn-primary btn-lg">
+                {% block cta_button %}Get Started{% endblock %}
+              </a>
+              <a href="{% block cta_secondary_link %}/{% endblock %}" class="btn btn-secondary btn-lg">
+                {% block cta_secondary_button %}Best Firms{% endblock %}
+              </a>
+            </div>
           </div>
         </div>
       </div>

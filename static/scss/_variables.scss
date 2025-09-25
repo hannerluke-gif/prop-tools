@@ -122,15 +122,15 @@ $btn-primary-color: $btn-color !default;
 $btn-primary-border-color: $btn-bg !default;
 $btn-primary-hover-bg: #ff7fad !default; // Slightly brighter on hover
 
-// Secondary button (white bg, black text -> cyan hover)
-$btn-secondary-bg: #ffffff !default;
-$btn-secondary-color: #000000 !default;
-$btn-secondary-hover-bg: $accent-cyan !default;
+// Secondary button (black bg, white text -> cyan text on hover)
+$btn-secondary-bg: #000000 !default;
+$btn-secondary-color: #ffffff !default;
+$btn-secondary-hover-color: $accent-cyan !default;
+$btn-secondary-border-color: $btn-secondary-color !default;
 
-// Tertiary button (black bg, white text -> cyan text on hover)
-$btn-tertiary-bg: #000000 !default;
-$btn-tertiary-color: #ffffff !default;
-$btn-tertiary-hover-color: $accent-cyan !default;
-$btn-tertiary-border-color: $btn-tertiary-color !default;
+// Tertiary button (white bg, black text -> cyan background on hover)
+$btn-tertiary-bg: #ffffff !default;
+$btn-tertiary-color: #000000 !default;
+$btn-tertiary-hover-bg: $accent-cyan !default;
 
 // Note: Box shadows removed for flat button design

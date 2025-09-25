@@ -92,50 +92,50 @@
   }
 }
 
-// Secondary: white background, black text; hover background becomes cyan, text remains black
+// Secondary: black background, white text; hover changes text + border to cyan (bg stays black)
 .btn-secondary {
   background-color: $btn-secondary-bg;
-  border: 1px solid $btn-secondary-bg; // maintain white edge; could use transparent if desired
+  border: 1px solid $btn-secondary-border-color;
   color: $btn-secondary-color;
 
   &:hover,
   &:focus {
-    background-color: $btn-secondary-hover-bg;
-    border-color: $btn-secondary-hover-bg;
-    color: $btn-secondary-color;
+    background-color: $btn-secondary-bg; // unchanged
+    border-color: $btn-secondary-hover-color;
+    color: $btn-secondary-hover-color;
   }
 
   &:active,
   &.active {
-    background-color: $btn-secondary-hover-bg;
-    border-color: $btn-secondary-hover-bg;
-    color: $btn-secondary-color;
+    background-color: $btn-secondary-bg;
+    border-color: $btn-secondary-hover-color;
+    color: $btn-secondary-hover-color;
   }
 
-  &:focus-visible { box-shadow: 0 0 0 3px rgba($btn-secondary-hover-bg, 0.35); }
+  &:focus-visible { box-shadow: 0 0 0 3px rgba($btn-secondary-hover-color, 0.35); }
 }
 
-// Tertiary: black background, white text; hover changes text + border to cyan (bg stays black)
+// Tertiary: white background, black text; hover background becomes cyan, text remains black
 .btn-tertiary {
   background-color: $btn-tertiary-bg;
-  border: 1px solid $btn-tertiary-border-color; // white border per requirement
+  border: 1px solid $btn-tertiary-bg;
   color: $btn-tertiary-color;
 
   &:hover,
   &:focus {
-    background-color: $btn-tertiary-bg; // unchanged
-    border-color: $btn-tertiary-hover-color;
-    color: $btn-tertiary-hover-color;
+    background-color: $btn-tertiary-hover-bg;
+    border-color: $btn-tertiary-hover-bg;
+    color: $btn-tertiary-color;
   }
 
   &:active,
   &.active {
-    background-color: $btn-tertiary-bg;
-    border-color: $btn-tertiary-hover-color;
-    color: $btn-tertiary-hover-color;
+    background-color: $btn-tertiary-hover-bg;
+    border-color: $btn-tertiary-hover-bg;
+    color: $btn-tertiary-color;
   }
 
-  &:focus-visible { box-shadow: 0 0 0 3px rgba($btn-tertiary-hover-color, 0.35); }
+  &:focus-visible { box-shadow: 0 0 0 3px rgba($btn-tertiary-hover-bg, 0.35); }
 }
 
 // Extra specificity to override prose link hover underline inside long-form content
