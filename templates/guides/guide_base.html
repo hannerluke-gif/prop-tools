@@ -1,0 +1,109 @@
+{% extends "base.html" %}
+
+{# Base template for all guide pages - provides consistent structure and SEO #}
+
+{% block head %}
+  <meta name="description" content="{% block meta_desc %}{% endblock %}">
+  
+  {# FAQ Schema - child templates can override mainEntity #}
+  {% block faq_schema %}
+  <script type="application/ld+json" nonce="{{ g.csp_nonce|default('') }}">
+  {
+    "@context": "https://schema.org",
+    "@type": "FAQPage",
+    "mainEntity": {% block faq_items %}[]{% endblock %}
+  }
+  </script>
+  {% endblock %}
+
+  {# Breadcrumb Schema - uses same title as main heading #}
+  {% set page_title = self.guide_title() %}
+  <script type="application/ld+json" nonce="{{ g.csp_nonce|default('') }}">
+  {
+    "@context": "https://schema.org",
+    "@type": "BreadcrumbList",
+    "itemListElement": [{
+      "@type": "ListItem", "position": 1,
+      "name": "Guides", "item": "{{ request.url_root.rstrip('/') }}/guides"
+    },{
+      "@type": "ListItem", "position": 2,
+      "name": "{{ page_title }}",
+      "item": "{{ request.url }}"
+    }]
+  }
+  </script>
+{% endblock %}
+
+{% block content %}
+<section class="container guide py-4 py-md-5">
+  <div class="row justify-content-center">
+    <article class="col-12 col-lg-9 prose">
+      
+      {# Guide Header #}
+      <header class="guide__header">
+        <h1 class="guide__title">{% block guide_title %}{% endblock %}</h1>
+        <p class="guide__subtitle">
+          {% block guide_subtitle %}{% endblock %}
+        </p>
+      </header>
+
+      <hr class="guide__divider">
+
+      {# Main Content Sections #}
+      {% block guide_content %}
+        {# Child templates define their content sections here #}
+      {% endblock %}
+
+      {# CTA Section - can be overridden or hidden #}
+      {% block guide_cta %}
+      <div class="guide__section">
+        <div class="guide__cta">
+          <div class="d-flex flex-column flex-md-row align-items-md-center gap-3">
+            <div class="flex-grow-1">
+              <h3 class="guide__cta__title h5">{% block cta_title %}Ready to compare firms?{% endblock %}</h3>
+              <p class="guide__cta__text">{% block cta_text %}See rules, account sizes, and live promos side-by-side.{% endblock %}</p>
+            </div>
+            <a href="{% block cta_link %}/compare{% endblock %}" class="btn btn-primary btn-lg">
+              {% block cta_button %}Compare Firms{% endblock %}
+            </a>
+          </div>
+        </div>
+      </div>
+      {% endblock %}
+
+      {# FAQ Section #}
+      {% block guide_faq %}
+      <div class="guide__faq-section">
+        <h2 class="guide__section-title">Common questions</h2>
+        {% block faq_content %}
+          {# Child templates define FAQ items here #}
+        {% endblock %}
+      </div>
+      {% endblock %}
+
+      {# Keep Learning Section #}
+      {% block guide_next %}
+      <nav class="guide__next" aria-label="Related guide links">
+        <h2 class="guide__next__title">Keep learning</h2>
+        <ul class="guide__next__list">
+          {% block next_links %}
+            {# Child templates define related links here #}
+          {% endblock %}
+        </ul>
+      </nav>
+      {% endblock %}
+
+      {# Disclosure #}
+      {% block guide_disclosure %}
+      <p class="guide__disclosure">
+        {% block disclosure_text %}
+          Disclosure: Prop Tools partners with select firms. We may earn a commission when you use our links. 
+          We review rules and costs independently to keep recommendations objective.
+        {% endblock %}
+      </p>
+      {% endblock %}
+
+    </article>
+  </div>
+</section>
+{% endblock %}

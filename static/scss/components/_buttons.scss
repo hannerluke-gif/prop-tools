@@ -65,22 +65,22 @@
 // Make sure primary button uses site CTA tokens
 .btn-primary {
   // Primary: bright pink background, white text
-  background-color: $btn-bg; // maps to $promo-cta-color (#ff6b9a)
-  border-color: $btn-bg;
-  color: $btn-color;
+  background-color: $btn-primary-bg; // maps to $brand-primary (#ff6b9a)
+  border-color: $btn-primary-border-color;
+  color: $btn-primary-color;
 
   &:hover,
   &:focus {
     background-color: $btn-primary-hover-bg;
     border-color: $btn-primary-hover-bg;
-    color: $btn-color;
+    color: $btn-primary-color;
   }
 
   &:active,
   &.active {
     background-color: $btn-primary-hover-bg;
     border-color: $btn-primary-hover-bg;
-    color: $btn-color;
+    color: $btn-primary-color;
   }
 
   // Stronger selectors retain hover color on active
@@ -88,7 +88,7 @@
   &:not(.disabled):not(:disabled):active {
     background-color: $btn-primary-hover-bg;
     border-color: $btn-primary-hover-bg;
-    color: $btn-color;
+    color: $btn-primary-color;
   }
 }
 
@@ -118,7 +118,7 @@
 // Tertiary: black background, white text; hover changes text + border to cyan (bg stays black)
 .btn-tertiary {
   background-color: $btn-tertiary-bg;
-  border: 1px solid $btn-tertiary-bg; // start with black border for seamless block
+  border: 1px solid $btn-tertiary-border-color; // white border per requirement
   color: $btn-tertiary-color;
 
   &:hover,
@@ -178,61 +178,54 @@
   &:active { @extend %btn-active-base; }
 }
 
-// ---------------------------------------------
-// Custom outline secondary variant overrides
-// Requirements:
-//  - White text
-//  - White border, slightly thicker than default
-//  - Hover: keep transparent background, change text (and border) to accent ($accent-cyan)
-//  - No background fill on hover/active
-//  - Works for size modifier .btn-sm
-// ---------------------------------------------
-.btn-outline-secondary {
-  color: $btn-outline-secondary-color;
-  background-color: transparent;
-  border: $btn-outline-secondary-border-width solid $btn-outline-secondary-border-color;
-  box-shadow: none; // keep flat outline look
-  text-decoration: none;
+// Outline secondary variant removed
+
+// ============================================================
+// TEXT LINK VARIANTS
+// Utility classes for consistent inline text link styling
+// ============================================================
+
+// Default text link: body color + underline -> cyan hover (underline stays)
+.text-link {
+  color: $text-link-color;
+  text-decoration: $text-link-decoration;
+  transition: color 0.2s ease;
 
   &:hover,
   &:focus {
-    color: $btn-outline-secondary-hover-color;
-    border-color: $btn-outline-secondary-hover-color;
-    background-color: transparent; // explicitly keep transparent
-    box-shadow: none;
+    color: $text-link-hover-color;
+    text-decoration: $text-link-hover-decoration;
   }
 
   &:focus-visible {
-    // Use subtle focus ring (re-use cyan accent with transparency)
-    box-shadow: 0 0 0 3px rgba($btn-outline-secondary-hover-color, 0.35);
-  }
-
-  &:active,
-  &.active {
-    color: $btn-outline-secondary-hover-color;
-    border-color: $btn-outline-secondary-hover-color;
-    background-color: transparent;
-    box-shadow: none;
-  }
-
-  // High contrast mode: rely on system colors but keep thicker border
-  @media (forced-colors: active) {
-    & {
-      forced-color-adjust: auto;
-      color: ButtonText;
-      border: $btn-outline-secondary-border-width solid ButtonText;
-    }
-    &:hover,
-    &:focus-visible,
-    &:active {
-      color: HighlightText;
-      border-color: Highlight;
-    }
+    outline: 2px solid rgba($text-link-hover-color, 0.4);
+    outline-offset: 2px;
   }
 }
 
-// Inside prose/guide content we currently fill outline-primary; for outline-secondary
-// we intentionally keep it an outline (transparent) per requirements.
+// Accent text link: cyan text (no underline) -> add underline on hover
+.text-link--accent {
+  color: $text-link-accent-color;
+  text-decoration: $text-link-accent-decoration;
+  transition: text-decoration 0.2s ease;
+
+  &:hover,
+  &:focus {
+    color: $text-link-accent-hover-color;
+    text-decoration: $text-link-accent-hover-decoration;
+  }
+
+  &:focus-visible {
+    outline: 2px solid rgba($text-link-accent-color, 0.4);
+    outline-offset: 2px;
+  }
+}
+
+// Global link defaults for prose/guide content
+.prose a:not(.btn):not(.text-link):not(.text-link--accent),
+.guide a:not(.btn):not(.text-link):not(.text-link--accent) {
+  @extend .text-link;
+}
 
 // Remove lift/translate hover animation across viewports: keep static (no movement/shadow change)
 .btn { transition: none !important; transform: none !important; }

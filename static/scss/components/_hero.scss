@@ -162,11 +162,18 @@
     text-decoration: none;
     transition: none; // keep flat look
 
-    // Primary variant (explicit only). No legacy fallback.
+    // Primary variant: align with global button tokens and ensure hover uses $btn-primary-hover-bg
     &.btn-primary {
-      background: $promo-cta-color;
-      color: $btn-color;
-      border: 1px solid $promo-cta-color;
+      background: $btn-primary-bg;
+      color: $btn-primary-color;
+      border: 1px solid $btn-primary-bg;
+
+      &:hover,
+      &:focus {
+        background: $btn-primary-hover-bg;
+        border-color: $btn-primary-hover-bg;
+        color: $btn-primary-color;
+      }
     }
 
     // Secondary variant already has its own styles from global buttons, but tweak spacing if needed
@@ -211,12 +218,12 @@
 
     // CSS var overrides for primary style only
     &.btn-primary,
-    &:not(.btn-secondary):not(.btn-tertiary):not(.btn-outline-secondary) {
+    &:not(.btn-secondary):not(.btn-tertiary) {
       --bs-btn-focus-box-shadow: 0 0 0 0.15rem rgba(255,255,255,0.06);
       --bs-btn-focus-shadow-rgb: 255,255,255;
-      --bs-btn-active-bg: #{$promo-cta-color};
-      --bs-btn-bg: #{$promo-cta-color};
-      --bs-btn-border-color: #{$promo-cta-color};
+      --bs-btn-active-bg: #{$brand-primary};
+      --bs-btn-bg: #{$brand-primary};
+      --bs-btn-border-color: #{$brand-primary};
       --bs-btn-hover-bg: #{$btn-primary-hover-bg};
       --bs-btn-hover-border-color: #{$btn-primary-hover-bg};
       --bs-btn-hover-color: #{$btn-color};

@@ -93,16 +93,16 @@
 		top: 50%;
 		transform: translateY(-50%);
 
-		// Visuals
+		// Visuals - use primary button tokens for consistency
 		display: inline-flex;
 		align-items: center;
 		justify-content: center;
-		background: $promo-cta-color;
-		color: $btn-color;
+		background: $btn-primary-bg;
+		color: $btn-primary-color;
 		padding: 0.45rem 0.9rem;
 		border-radius: $btn-border-radius;
-		font-weight: 600;
-		font-size: 0.95rem;
+		font-weight: $btn-font-weight;
+		font-size: $btn-font-size;
 		text-decoration: none;
 		pointer-events: auto; // enable clicks
 		z-index: 6;
@@ -125,13 +125,21 @@
 			border-radius: $btn-border-radius;
 		}
 
+		// Hover and focus states - use primary button tokens
+		&:hover,
+		&:focus {
+			background: $btn-primary-hover-bg;
+			color: $btn-primary-color;
+			text-decoration: none;
+		}
+
 		// Focus styles for keyboard users
 		&:focus {
 			outline: 3px solid rgba(255,255,255,0.12);
 			outline-offset: 2px;
 		}
 
-		// Desktop-only hover/lift effect (inlined from separate media block)
+		// Desktop-only positioning adjustments
 		@media (min-width: 768px) {
 			// Remove translate/animation: provide immediate visual feedback only.
 			transition: none;

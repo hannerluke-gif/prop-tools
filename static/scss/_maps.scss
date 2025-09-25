@@ -2,7 +2,7 @@
 // Define named color tokens here and merge them into Bootstrap's `$theme-colors`
 // so utilities like `bg-promo`, `text-promo`, and `.btn-promo` are available.
 $site-color-tokens: (
-  "promo": $promo-cta-color,
+  "promo": $brand-primary,
 ) !default;
 
 // Merge site tokens into Bootstrap's $theme-colors map so utilities are generated.

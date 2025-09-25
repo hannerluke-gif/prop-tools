@@ -5,7 +5,7 @@
 .prose {
   // Base text inherits page color unless overridden; guides set $guide-text-color
   line-height: 1.65;
-  font-size: 1.02rem;
+  font-size: 1.05rem;
   color: inherit; // Ensure prose inherits color from parent (guide sets white)
 
   // Headings
@@ -54,20 +54,21 @@
   // Small / meta text
   small, .small { font-size: .82em; line-height: 1.4; }
 
-  // FAQ details formatting inside prose
+  // Generic details/summary formatting (FAQ styling is handled by guide component)
   details { margin-bottom: 1rem; }
-  details > summary { font-weight: 600; cursor: pointer; transition: color .18s ease; }
-  // FAQ summary accent hover + open state persistence
-  details > summary .h6 { color: inherit; }
-    // Hover/focus accent (when closed)
-    details:not([open]) > summary:hover .h6,
-    details:not([open]) > summary:focus-visible .h6 { color: $accent-cyan; }
-  // Open state keeps accent color
-    details[open] > summary .h6 { color: $accent-cyan; }
-  // Keyboard focus ring on summary (focus-visible only)
-  details > summary:focus-visible { outline: 0; box-shadow: 0 0 0 3px rgba($btn-bg, 0.4); border-radius: .25rem; }
+  details > summary { 
+    font-weight: 600; 
+    cursor: pointer; 
+    transition: color .18s ease;
+    
+    &:focus-visible { 
+      outline: 0; 
+      box-shadow: 0 0 0 3px rgba($btn-bg, 0.4); 
+      border-radius: .25rem; 
+    }
+  }
 
-  // Utility overrides: keep secondary text from getting too dim in dark guides
+  // Utility overrides: keep secondary text readable in generic prose
   .text-secondary, .text-muted { opacity: .9; }
 
   // Buttons inside prose blocks: tighten top margin when following text
