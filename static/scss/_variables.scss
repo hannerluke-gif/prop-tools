@@ -116,6 +116,19 @@ $btn-font-size: 1.05rem !default;
 $btn-color: #fff !default;
 $btn-bg: $brand-primary !default;
 
+// Button padding (makes buttons taller and more generous)
+$btn-padding-y: 0.75rem !default;        // Vertical padding (controls height)
+$btn-padding-x: 1.5rem !default;         // Horizontal padding (controls width)
+
+// Bootstrap size variants (automatically calculated from base)
+$btn-padding-y-sm: $btn-padding-y * 0.5 !default;
+$btn-padding-x-sm: $btn-padding-x * 0.75 !default;
+$btn-font-size-sm: $btn-font-size * 0.875 !default;
+
+$btn-padding-y-lg: $btn-padding-y * 1.5 !default;
+$btn-padding-x-lg: $btn-padding-x * 1.25 !default;
+$btn-font-size-lg: $btn-font-size * 1.125 !default;
+
 // Primary button variants
 $btn-primary-bg: $btn-bg !default;
 $btn-primary-color: $btn-color !default;
