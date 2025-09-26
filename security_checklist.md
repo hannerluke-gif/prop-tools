@@ -2,24 +2,41 @@
 
 > Use this before every deploy. Mark completed items with ✅. Production-only items are tagged **\[prod]**.
 
+## Table of Contents
+- [Threat Model Snapshot](#0-threat-model-snapshot)
+- [Secrets & Configuration](#1-secrets--configuration)
+- [HTTPS & Security Headers](#2-https--security-headers)
+- [Flask App Hardening](#3-flask-app-hardening)
+- [Dependencies & Build](#4-dependencies--build)
+- [Heroku Specifics](#5-heroku-specifics)
+- [Monitoring, Logs, and Backups](#6-monitoring-logs-and-backups)
+- [DNS & Domain Hygiene](#7-dns--domain-hygiene-namecheap)
+- [Content & Robots](#8-content--robots)
+- [Pre-release Security Tests](#9-pre-release-security-tests)
+- [Incident Response Basics](#10-incident-response-basics)
+- [Code Snippets](#11-snippets-you-can-drop-in-now)
+- [Roadmap](#12-roadmap-when-features-expand)
+- [Quick Verification](#quick-verify-curl-one-liners)
+
 ---
 
 ## 0) Threat model snapshot
 
-* [ ] What data do we store/handle? (currently: static pages + JSON)
-* [ ] Are there logins, forms, payments, or file uploads? If **no**, attack surface is smaller.
-* [ ] Public endpoints that mutate state? List them.
+* [x] What data do we store/handle? (currently: static pages + JSON + guide landing pages)
+* [x] Are there logins, forms, payments, or file uploads? If **no**, attack surface is smaller.
+* [x] Public endpoints that mutate state? List them.
+* [x] Guide system endpoints (SEO pages): purely static content, no user input processing.
 
 ---
 
 ## 1) Secrets & configuration
 
-* [ ] **Never commit secrets** (API keys, tokens).
-* [ ] Store secrets in **Heroku Config Vars** (`heroku config:set KEY=value`).
-* [ ] Set a strong `SECRET_KEY` (>=32 bytes, random). **\[prod]**
-* [ ] Different keys for dev vs prod; no shared secrets across environments.
-* [ ] Disable Flask debug in prod (no `debug=True`). **\[prod]**
-* [ ] Trust proxy so `request.is_secure` works on Heroku:
+* [x] **Never commit secrets** (API keys, tokens).
+* [x] Store secrets in **Heroku Config Vars** (`heroku config:set KEY=value`).
+* [x] Set a strong `SECRET_KEY` (>=32 bytes, random). **\[prod]** - *implemented in app.py*
+* [x] Different keys for dev vs prod; no shared secrets across environments.
+* [x] Disable Flask debug in prod (no `debug=True`). **\[prod]** - *implemented with IS_PROD check*
+* [x] Trust proxy so `request.is_secure` works on Heroku: - *implemented with ProxyFix*
 
   ```python
   # app.py
@@ -31,7 +48,7 @@
 
 ## 2) HTTPS & security headers
 
-* [ ] Force HTTPS redirects (Flask/Talisman or manual): **\[prod]**
+* [x] Force HTTPS redirects (Flask/Talisman or manual): **\[prod]** - *implemented in app.py*
 
   ```python
   @app.before_request
@@ -48,7 +65,7 @@
       resp.headers['Strict-Transport-Security'] = 'max-age=31536000; includeSubDomains; preload'
       return resp
   ```
-* [ ] Set core security headers (can be done via Flask-Talisman or manually):
+* [x] Set core security headers (can be done via Flask-Talisman or manually): - *implemented in app.py*
 
   ```python
   @app.after_request
@@ -62,7 +79,7 @@
       resp.headers['Cross-Origin-Resource-Policy'] = 'same-origin'
       return resp
   ```
-* [ ] **Content-Security-Policy (CSP)** (tighten as needed):
+* [x] **Content-Security-Policy (CSP)** (tighten as needed): - *implemented with nonce support*
 
   ```python
   @app.after_request
@@ -88,9 +105,9 @@
 
 ## 3) Flask app hardening
 
-* [ ] **Auto-escaping on** in Jinja (default). Never mark unsafe (`|safe`) for user content.
-* [ ] **CSRF protection** (if forms): `Flask-WTF` with `WTF_CSRF_ENABLED = True` **\[prod]**
-* [ ] **Sessions**:
+* [x] **Auto-escaping on** in Jinja (default). Never mark unsafe (`|safe`) for user content.
+* [ ] **CSRF protection** (if forms): `Flask-WTF` with `WTF_CSRF_ENABLED = True` **\[prod]** - *N/A: no forms yet*
+* [x] **Sessions**: - *implemented in app.py*
 
   ```python
   app.config.update(
@@ -152,8 +169,9 @@
 
 ## 8) Content & robots
 
-* [ ] `/robots.txt` denies admin/private paths (if any).
+* [ ] `/robots.txt` denies admin/private paths (if any) and allows guide pages for SEO.
 * [ ] Add a `.well-known/security.txt` with contact info for vulnerability reports.
+* [ ] Guide system templates use proper escaping (Jinja2 auto-escaping enabled).
 
 ---
 

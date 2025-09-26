@@ -13,6 +13,7 @@
   border-radius: $btn-border-radius;
   font-weight: $btn-font-weight;
   font-size: $btn-font-size;
+  padding: $btn-padding-y $btn-padding-x;
   color: $btn-color;
   text-decoration: none; // ensure anchor-based buttons don't show underlines by default
   -webkit-tap-highlight-color: transparent; // avoid mobile blue flash
@@ -36,11 +37,14 @@
     @extend %btn-active-base;
   }
 
-  &.btn-lg { font-size: $btn-font-size; }
+  &.btn-lg { 
+    font-size: $btn-font-size-lg;
+    padding: $btn-padding-y-lg $btn-padding-x-lg;
+  }
 
   &.btn-sm {
-    font-size: calc(#{$btn-font-size} * 0.85);
-    padding: 0.25rem 0.5rem;
+    font-size: $btn-font-size-sm;
+    padding: $btn-padding-y-sm $btn-padding-x-sm;
   }
 
   // High contrast / forced colors mode: rely on system colors but keep shape
@@ -118,7 +122,7 @@
 // Tertiary: white background, black text; hover background becomes cyan, text remains black
 .btn-tertiary {
   background-color: $btn-tertiary-bg;
-  border: 1px solid $btn-tertiary-bg;
+  border: 1px solid $btn-tertiary-border-color;
   color: $btn-tertiary-color;
 
   &:hover,
@@ -169,8 +173,8 @@
   @extend %btn-active-base;
 
   &.btn-sm {
-    font-size: calc(#{$btn-font-size} * 0.85);
-    padding: 0.25rem 0.5rem;
+    font-size: $btn-font-size-sm;
+    padding: $btn-padding-y-sm $btn-padding-x-sm;
   }
 
   &:hover,
@@ -228,7 +232,11 @@
 }
 
 // Remove lift/translate hover animation across viewports: keep static (no movement/shadow change)
-.btn { transition: none !important; transform: none !important; }
+// Note: !important needed to override Bootstrap's transition defaults due to specificity
+.btn { 
+  transition: none !important; 
+  transform: none !important; 
+}
 
 // Respect reduced motion preferences
 @media (prefers-reduced-motion: reduce) {

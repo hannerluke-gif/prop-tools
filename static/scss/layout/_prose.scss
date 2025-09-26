@@ -76,5 +76,6 @@
   p + .btn, p + .btn-group, p + .d-flex { margin-top: .4rem; }
 
   // Last child adjustments
+  // Note: !important needed to override Bootstrap utility classes in content
   > :last-child { margin-bottom: 0 !important; }
 }

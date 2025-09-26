@@ -80,8 +80,8 @@
     margin-top: $guide-section-spacing;
     // Modifier: add extra breathing room before FAQ section when needed
     &--spacious {
-      // Double the default section spacing for clearer visual separation
-      margin-top: $guide-section-spacing * 2;
+      // Triple the default section spacing for clearer visual separation
+      margin-top: $guide-section-spacing * 3;
     }
   }
   &__faq {

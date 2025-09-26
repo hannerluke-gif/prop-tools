@@ -1,6 +1,10 @@
 // Site color tokens map
 // Define named color tokens here and merge them into Bootstrap's `$theme-colors`
 // so utilities like `bg-promo`, `text-promo`, and `.btn-promo` are available.
+
+// Ensure variables are available (imported in main.scss but explicit for IntelliSense)
+@import "variables";
+
 $site-color-tokens: (
   "promo": $brand-primary,
 ) !default;

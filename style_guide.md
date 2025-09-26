@@ -1,5 +1,17 @@
-* ### 📌 Project Style Guide (Flask + Bootstrap + Sass)
+# 📌 Project Style Guide (Flask + Bootstrap + Sass)
+
+## Table of Contents
+- [SCSS & Component Standards](#scss--component-standards)
+- [JavaScript Organization](#javascript-organization)
+- [New Component Standards (Strict BEM)](#new-component-standards-strict-bem)
+- [Debug Code & Cleanup Guidelines](#debug-code--cleanup-guidelines)
+- [Guide System Architecture](#guide-system-architecture)
+
+---
+
 **When adding new components or styles, follow these rules:**
+
+## SCSS & Component Standards
 1. **SCSS partials**
    * Create new SCSS files in `static/scss/components/` (or `layout/` for global structures).
    * Prefix filenames with `_` (e.g. `_account-card.scss`).
@@ -31,7 +43,7 @@
    * Add interactive behavior in `static/js/main.js`.
    * Use `{% block scripts %}` in `base.html` for page-specific scripts.
    
-   ### 📌 JavaScript Organization
+## JavaScript Organization
 
    1. **Entry file stays tiny**  
       * Keep `static/js/main.js` as the single entry point.  
@@ -63,7 +75,7 @@
       ```
       * Page-specific scripts may also be loaded as modules through `{% block scripts %}`.
 
-   ### 📌 New Component Standards (Strict BEM)
+## New Component Standards (Strict BEM)
 
    **For all NEW components created after September 2025, follow these strict patterns:**
 
@@ -131,7 +143,7 @@
 
 ---
 
-### 📌 Debug Code & Cleanup Guidelines
+## Debug Code & Cleanup Guidelines
 
 **Debug and development-only code must be removed before production:**
 
@@ -160,3 +172,86 @@
    * Verify no debug imports in `main.scss`
    * Run `npm run build` to ensure clean compilation
    * Test production build without debug assets
+
+---
+
+## Guide System Architecture
+
+**The guide system uses a shared base template for all SEO/landing pages:**
+
+1. **Base Template Structure**
+   * All guides extend `templates/guides/guide_base.html`
+   * Provides consistent structure: header → divider → content → CTA → FAQ → Keep Learning → disclosure
+   * Built-in SEO schema (FAQ + breadcrumbs) and CSP nonce support
+   * Extensible blocks for customization
+
+2. **Guide Component (BEM Structure)**
+   * Root component: `.guide` in `static/scss/layout/_guides.scss`
+   * Strict BEM naming: `.guide__header`, `.guide__section`, `.guide__faq`, `.guide__cta`, `.guide__next`
+   * All styling variables centralized in `_variables.scss` with `$guide-*` prefix
+   * Consistent 3rem section spacing and typography scaling
+
+3. **Creating New Guide Pages**
+   ```html
+   {% extends "guides/guide_base.html" %}
+   
+   {% block guide_title %}Your Guide Title{% endblock %}
+   {% block guide_subtitle %}Brief description that appears under title{% endblock %}
+   {% block meta_desc %}{{ meta_desc }}{% endblock %}
+   
+   {% block faq_items %}[{
+     "@type": "Question",
+     "name": "Your FAQ question?",
+     "acceptedAnswer": {
+       "@type": "Answer",
+       "text": "Answer for search engines"
+     }
+   }]{% endblock %}
+   
+   {% block guide_content %}
+     <div class="guide__section">
+       <h2 class="guide__section-title">Section Title</h2>
+       <ol class="guide__steps">
+         <li>Step one with <a href="/link" class="text-link">inline link</a></li>
+         <li>Step two with action</li>
+       </ol>
+     </div>
+   {% endblock %}
+   
+   {% block guide_faq %}
+   <div class="guide__faq-section guide__faq-section--spacious">
+     <h2 class="guide__section-title">Common questions</h2>
+     {% block faq_content %}
+       <details class="guide__faq" role="group">
+         <summary class="guide__faq__summary">
+           <span class="h6 mb-0 d-inline-block">FAQ Question?</span>
+         </summary>
+         <div class="guide__faq__content">
+           FAQ answer content with optional actions
+           <div class="mt-3">
+             <a href="/action" class="btn btn-sm btn-tertiary">Related Action</a>
+           </div>
+         </div>
+       </details>
+     {% endblock %}
+   </div>
+   {% endblock %}
+   
+   {% block next_links %}
+     <li class="guide__next__item">
+       <a class="guide__next__link text-link--accent" href="/guides/related">Related Guide</a>
+     </li>
+   {% endblock %}
+   ```
+
+4. **Guide Variables (Centralized Theming)**
+   * Typography: `$guide-text-color`, `$guide-headline-size`, `$guide-body-size`
+   * Spacing: `$guide-section-spacing`, `$guide-content-spacing`
+   * Components: `$guide-faq-*`, `$guide-cta-*`, `$guide-next-*` tokens
+   * All values use consistent design system for easy global adjustments
+
+5. **SEO & Schema Integration**
+   * Automatic FAQ schema generation from `faq_items` block
+   * Breadcrumb schema with proper linking
+   * Meta description inheritance from route handlers
+   * Structured data ready for rich snippets
