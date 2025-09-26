@@ -1,0 +1,32 @@
+{% extends "guides/guide_base.html" %}
+
+{% block meta_desc %}{{ meta_desc }}{% endblock %}
+{% block guide_title %}What Account Size Should I Start With?{% endblock %}
+{% block guide_subtitle %}
+Choose the smallest size that comfortably fits your stop size, typical drawdown, and trade frequency—then scale on results.
+{% endblock %}
+
+{% block faq_items %}[{
+  "@type":"Question","name":"How do I match size to my stops?",
+  "acceptedAnswer":{"@type":"Answer","text":"Estimate your average stop (ticks × tick value) and max concurrent positions. Ensure daily limit and trailing DD can withstand expected variance."}
+},{
+  "@type":"Question","name":"Start small or big?",
+  "acceptedAnswer":{"@type":"Answer","text":"Start small. Prove consistency, then scale. Oversizing early leads to rule breaches more than faster growth."}
+}]{% endblock %}
+
+{% block guide_content %}
+<div class="guide__section">
+  <h2 class="guide__section-title">Sizing checklist</h2>
+  <ul class="guide__bullets">
+    <li>Typical stop size (ticks) × tick value</li>
+    <li>Max simultaneous trades/contracts</li>
+    <li>Daily loss limit cushion (≥ 2–3× avg risk)</li>
+    <li>Trailing vs static drawdown behavior</li>
+  </ul>
+</div>
+{% endblock %}
+
+{% block next_links %}
+  <li class="guide__next__item"><a class="guide__next__link" href="/guides/what-is-an-evaluation">What is an evaluation?</a></li>
+  <li class="guide__next__item"><a class="guide__next__link" href="/guides/personal-vs-prop-account">Personal vs prop</a></li>
+{% endblock %}

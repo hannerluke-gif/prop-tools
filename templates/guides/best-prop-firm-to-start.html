@@ -1,0 +1,42 @@
+{% extends "guides/guide_base.html" %}
+
+{% block meta_desc %}{{ meta_desc }}{% endblock %}
+{% block guide_title %}Best Prop Firm to Start With{% endblock %}
+{% block guide_subtitle %}
+Pick beginner-friendly rules, clear payout terms, and fair pricing. Avoid hidden constraints that conflict with your style.
+{% endblock %}
+
+{% block faq_items %}[{
+  "@type":"Question","name":"What makes a firm beginner-friendly?",
+  "acceptedAnswer":{"@type":"Answer","text":"Transparent rules, reasonable drawdown, realistic targets, and responsive support. Promotions help, but rules matter most."}
+},{
+  "@type":"Question","name":"How important are discounts?",
+  "acceptedAnswer":{"@type":"Answer","text":"They reduce cost to try, but should not outweigh rule quality and payout reliability."}
+}]{% endblock %}
+
+{% block guide_content %}
+<div class="guide__section">
+  <h2 class="guide__section-title">What to compare first</h2>
+  <ul class="guide__bullets">
+    <li>Profit target vs max drawdown (risk-adjusted)</li>
+    <li>Trailing vs static drawdown mechanics</li>
+    <li>Daily loss limits and trade time restrictions</li>
+    <li>Payout schedule, splits, and fees</li>
+  </ul>
+</div>
+
+<div class="guide__cta card card-body my-4">
+  <div class="d-flex flex-column flex-md-row align-items-md-center gap-3">
+    <div class="flex-grow-1">
+      <h3 class="h5 mb-1">Compare beginner-friendly firms</h3>
+      <p class="mb-0">Side-by-side rules, costs, and current promos.</p>
+    </div>
+    <a href="/compare" class="btn btn-primary">See Top Picks</a>
+  </div>
+</div>
+{% endblock %}
+
+{% block next_links %}
+  <li class="guide__next__item"><a class="guide__next__link" href="/guides/best-account-size-to-start">Account size to start</a></li>
+  <li class="guide__next__item"><a class="guide__next__link" href="/guides/should-i-skip-evaluation">Skip evaluation?</a></li>
+{% endblock %}

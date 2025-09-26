@@ -107,6 +107,78 @@ def guide_what_is_a_prop_firm():
         meta_desc="A quick beginner’s guide: how prop firms work, how evaluations and sim-funded accounts differ, and how to choose your first account.",
     )
 
+@app.route("/guides/what-is-futures-trading")
+def guide_what_is_futures_trading():
+    return render_template(
+        "guides/what-is-futures-trading.html",
+        title="What is Futures Trading? (Simple Explanation)",
+        meta_desc="Futures trading basics: what contracts are, how margin and leverage work, and common risks beginners should know.",
+    )
+
+@app.route("/guides/best-way-to-start-trading-futures")
+def guide_best_way_to_start_trading_futures():
+    return render_template(
+        "guides/best-way-to-start-trading-futures.html",
+        title="Best Way to Start Trading Futures (Beginner Roadmap)",
+        meta_desc="A simple step-by-step path to start trading futures: tools, accounts, risk, and practice options.",
+    )
+
+@app.route("/guides/best-prop-firm-to-start")
+def guide_best_prop_firm_to_start():
+    return render_template(
+        "guides/best-prop-firm-to-start.html",
+        title="Best Prop Firm to Start With (For Beginners)",
+        meta_desc="Compare beginner-friendly prop firms by rules, cost, and payouts. Learn what matters most on day one.",
+    )
+
+@app.route("/guides/best-account-size-to-start")
+def guide_best_account_size_to_start():
+    return render_template(
+        "guides/best-account-size-to-start.html",
+        title="What Account Size Should I Start With?",
+        meta_desc="How to pick your first account size based on risk, drawdown, and trade plan—plus common beginner mistakes.",
+    )
+
+@app.route("/guides/should-i-skip-evaluation")
+def guide_should_i_skip_evaluation():
+    return render_template(
+        "guides/should-i-skip-evaluation.html",
+        title="Should I Skip the Evaluation and Go Straight to Sim-Funded?",
+        meta_desc="Pros and cons of skipping an evaluation for straight-to-sim-funded accounts—costs, speed, and rules.",
+    )
+
+@app.route("/guides/what-is-a-sim-account")
+def guide_what_is_a_sim_account():
+    return render_template(
+        "guides/what-is-a-sim-account.html",
+        title="What is a Sim Account?",
+        meta_desc="Sim accounts explained: practice risk-free, learn rules, and prepare for funded trading the right way.",
+    )
+
+@app.route("/guides/what-is-an-evaluation")
+def guide_what_is_an_evaluation():
+    return render_template(
+        "guides/what-is-an-evaluation.html",
+        title="What is a Prop Firm Evaluation?",
+        meta_desc="How prop firm evaluations work: profit targets, drawdown limits, time windows, and passing criteria.",
+    )
+
+@app.route("/guides/what-is-straight-to-sim-funded")
+def guide_what_is_straight_to_sim_funded():
+    return render_template(
+        "guides/what-is-straight-to-sim-funded.html",
+        title="What is a Straight-to-Sim-Funded Account?",
+        meta_desc="Understand straight-to-sim-funded accounts, how payouts work, and when they’re worth the extra cost.",
+    )
+
+@app.route("/guides/personal-vs-prop-account")
+def guide_personal_vs_prop_account():
+    return render_template(
+        "guides/personal-vs-prop-account.html",
+        title="Personal Account vs Prop Account — Which Should I Start With?",
+        meta_desc="Pros/cons of personal futures accounts vs prop accounts: capital, rules, risk, taxes, and control.",
+    )
+
 # -------- Error handling --------
 @app.errorhandler(500)
 def _500(e):

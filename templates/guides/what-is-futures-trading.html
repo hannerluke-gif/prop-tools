@@ -1,0 +1,40 @@
+{% extends "guides/guide_base.html" %}
+
+{% block meta_desc %}{{ meta_desc }}{% endblock %}
+{% block guide_title %}What is Futures Trading?{% endblock %}
+{% block guide_subtitle %}
+Futures are standardized contracts to buy or sell an asset at a set price on a future date. Traders use them for speculation, hedging, and diversification.
+{% endblock %}
+
+{% block faq_items %}[{
+  "@type":"Question","name":"What is a futures contract?",
+  "acceptedAnswer":{"@type":"Answer","text":"A futures contract obligates buyer and seller to transact an asset at a set price on a future date. Most retail traders close the position before expiration."}
+},{
+  "@type":"Question","name":"How does margin work in futures?",
+  "acceptedAnswer":{"@type":"Answer","text":"Futures use performance bonds (margin) instead of paying full value. This creates leverage—small price moves can create large gains or losses."}
+}]{% endblock %}
+
+{% block guide_content %}
+<div class="guide__section">
+  <h2 class="guide__section-title">Quick overview</h2>
+  <ul class="guide__bullets">
+    <li><strong>Standardized:</strong> Traded on exchanges (e.g., CME).</li>
+    <li><strong>Leverage:</strong> Small margin controls larger notional value.</li>
+    <li><strong>Two-way:</strong> Go long or short with equal ease.</li>
+  </ul>
+</div>
+
+<div class="guide__section">
+  <h2 class="guide__section-title">Common futures for new traders</h2>
+  <ul class="guide__bullets">
+    <li>Equity index micros (e.g., MNQ, MES)</li>
+    <li>Crude oil (CL) and gold (GC)</li>
+    <li>Rates/FX for macro exposure</li>
+  </ul>
+</div>
+{% endblock %}
+
+{% block next_links %}
+  <li class="guide__next__item"><a class="guide__next__link" href="/guides/best-way-to-start-trading-futures">Best way to start</a></li>
+  <li class="guide__next__item"><a class="guide__next__link" href="/guides/what-is-a-prop-firm">What is a prop firm?</a></li>
+{% endblock %}

@@ -1,0 +1,31 @@
+{% extends "guides/guide_base.html" %}
+
+{% block meta_desc %}{{ meta_desc }}{% endblock %}
+{% block guide_title %}What is a Sim Account?{% endblock %}
+{% block guide_subtitle %}
+A simulated account mirrors live trading without real capital. It’s where you learn rules and test a strategy safely.
+{% endblock %}
+
+{% block faq_items %}[{
+  "@type":"Question","name":"Are fills realistic?",
+  "acceptedAnswer":{"@type":"Answer","text":"They approximate market behavior but won’t match real slippage/liquidity perfectly. Use sim to validate rules and process first."}
+},{
+  "@type":"Question","name":"How long should I stay in sim?",
+  "acceptedAnswer":{"@type":"Answer","text":"Until you can follow your plan and show stable results across market conditions—often weeks to months."}
+}]{% endblock %}
+
+{% block guide_content %}
+<div class="guide__section">
+  <h2 class="guide__section-title">Why sim matters</h2>
+  <ul class="guide__bullets">
+    <li>Build execution discipline</li>
+    <li>Practice risk rules without losses</li>
+    <li>Collect stats to choose account size</li>
+  </ul>
+</div>
+{% endblock %}
+
+{% block next_links %}
+  <li class="guide__next__item"><a class="guide__next__link" href="/guides/what-is-an-evaluation">What is an evaluation?</a></li>
+  <li class="guide__next__item"><a class="guide__next__link" href="/guides/best-way-to-start-trading-futures">Best way to start</a></li>
+{% endblock %}

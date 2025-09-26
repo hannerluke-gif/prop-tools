@@ -1,0 +1,30 @@
+{% extends "guides/guide_base.html" %}
+
+{% block meta_desc %}{{ meta_desc }}{% endblock %}
+{% block guide_title %}Should I Skip the Evaluation and Go Straight to Sim-Funded?{% endblock %}
+{% block guide_subtitle %}
+Skipping saves time but costs more. It suits traders with a tested plan who value speed over price.
+{% endblock %}
+
+{% block faq_items %}[{
+  "@type":"Question","name":"Who should skip the eval?",
+  "acceptedAnswer":{"@type":"Answer","text":"Traders with verified stats, rule discipline, and a need to start payouts sooner. New traders usually benefit from an evaluation first."}
+},{
+  "@type":"Question","name":"Any rule differences?",
+  "acceptedAnswer":{"@type":"Answer","text":"Often similar risk limits apply. Some firms add payout thresholds or time minimums—read specifics."}
+}]{% endblock %}
+
+{% block guide_content %}
+<div class="guide__section">
+  <h2 class="guide__section-title">Quick comparison</h2>
+  <ul class="guide__bullets">
+    <li><strong>Evaluation:</strong> cheaper, slower to payouts, good for learning rules.</li>
+    <li><strong>Straight-to-sim:</strong> faster, higher upfront cost, still rule-bound.</li>
+  </ul>
+</div>
+{% endblock %}
+
+{% block next_links %}
+  <li class="guide__next__item"><a class="guide__next__link" href="/guides/what-is-straight-to-sim-funded">Straight-to-sim funded</a></li>
+  <li class="guide__next__item"><a class="guide__next__link" href="/guides/what-is-an-evaluation">What is an evaluation?</a></li>
+{% endblock %}

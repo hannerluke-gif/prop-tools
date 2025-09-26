@@ -1,0 +1,31 @@
+{% extends "guides/guide_base.html" %}
+
+{% block meta_desc %}{{ meta_desc }}{% endblock %}
+{% block guide_title %}What is a Prop Firm Evaluation?{% endblock %}
+{% block guide_subtitle %}
+An evaluation is a rules-based test in a demo account. Hit the profit target without breaking drawdown or time rules to pass.
+{% endblock %}
+
+{% block faq_items %}[{
+  "@type":"Question","name":"Typical rules?",
+  "acceptedAnswer":{"@type":"Answer","text":"Profit target, trailing or static drawdown, daily loss limits, and sometimes time or news restrictions."}
+},{
+  "@type":"Question","name":"One-phase vs two-phase?",
+  "acceptedAnswer":{"@type":"Answer","text":"Two-phase splits the target across steps; one-phase is faster but may cost more. Choose what fits your style and budget."}
+}]{% endblock %}
+
+{% block guide_content %}
+<div class="guide__section">
+  <h2 class="guide__section-title">Pass checklist</h2>
+  <ul class="guide__bullets">
+    <li>Define trade plan and max daily loss</li>
+    <li>Know your drawdown math (trailing/static)</li>
+    <li>Track adherence every session</li>
+  </ul>
+</div>
+{% endblock %}
+
+{% block next_links %}
+  <li class="guide__next__item"><a class="guide__next__link" href="/guides/best-prop-firm-to-start">Best prop firm to start</a></li>
+  <li class="guide__next__item"><a class="guide__next__link" href="/guides/best-account-size-to-start">Account size to start</a></li>
+{% endblock %}
