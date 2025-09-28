@@ -55,43 +55,8 @@
     </section>
 {% endblock %}
 
-{# Temporary guide links (to be removed once navigation is in place) #}
+{# Space reserved for future dashboard additions #}
 {% block extra_footer %}
-<section class="container py-4" aria-label="Temporary guide links">
-    <div class="border-top pt-3 mt-5">
-        <p class="small text-secondary mb-2">Guides (temporary links)</p>
-        <ul class="list-inline small mb-0">
-            <li class="list-inline-item me-3">
-                <a href="{{ url_for('guide_what_is_a_prop_firm') }}">What is a Prop Firm?</a>
-            </li>
-            <li class="list-inline-item me-3">
-                <a href="{{ url_for('guide_what_is_futures_trading') }}">What is Futures Trading?</a>
-            </li>
-            <li class="list-inline-item me-3">
-                <a href="{{ url_for('guide_best_way_to_start_trading_futures') }}">Best Way to Start Trading Futures</a>
-            </li>
-            <li class="list-inline-item me-3">
-                <a href="{{ url_for('guide_best_prop_firm_to_start') }}">Best Prop Firm to Start With</a>
-            </li>
-            <li class="list-inline-item me-3">
-                <a href="{{ url_for('guide_best_account_size_to_start') }}">Best Account Size to Start</a>
-            </li>
-            <li class="list-inline-item me-3">
-                <a href="{{ url_for('guide_should_i_skip_evaluation') }}">Should I Skip Evaluation?</a>
-            </li>
-            <li class="list-inline-item me-3">
-                <a href="{{ url_for('guide_what_is_a_sim_account') }}">What is a Sim Account?</a>
-            </li>
-            <li class="list-inline-item me-3">
-                <a href="{{ url_for('guide_what_is_an_evaluation') }}">What is an Evaluation?</a>
-            </li>
-            <li class="list-inline-item me-3">
-                <a href="{{ url_for('guide_what_is_straight_to_sim_funded') }}">What is Straight to Sim Funded?</a>
-            </li>
-            <li class="list-inline-item me-3">
-                <a href="{{ url_for('guide_personal_vs_prop_account') }}">Personal vs Prop Account</a>
-            </li>
-        </ul>
-    </div>
-</section>
+{# Include the parent footer from base.html #}
+{{ super() }}
 {% endblock %}

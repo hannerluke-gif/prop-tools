@@ -114,14 +114,15 @@
   }
 
   .hero-headline {
-    font-size: clamp(2.1rem, 6vw, 3.3rem);
+    // Largest, heaviest element on the page for strong hierarchy
+    font-size: clamp(2.4rem, 6.2vw, 3.8rem);
     line-height: 1.1;
     margin: 0 0 .9rem;
-    font-weight: 900;
+    font-weight: $weight-black; // maximum emphasis
     letter-spacing: -0.5px;
     padding-bottom: 4px;
     display: inline-block;
-    color: #fff;
+    color: $text-color;
     max-width: 15ch;
   // Text clamping (2 lines mobile, 3 desktop)
     display: -webkit-box;
@@ -144,9 +145,9 @@
 
   .hero-subline {
     margin: 0 0 1.35rem;
-    font-size: clamp(1rem, 1.2vw + .65rem, 1.25rem);
-    color: #fff;
-    font-weight: 500;
+    font-size: clamp(1rem, 1.2vw + .6rem, 1.2rem);
+    color: $text-color;
+    font-weight: $weight-medium;
     max-width: 28ch;
   }
 
@@ -160,7 +161,14 @@
     font-weight: $btn-font-weight;
     font-size: $btn-font-size;
     text-decoration: none;
-    transition: none; // keep flat look
+    transition: background-color $btn-transition-duration ease-in-out, 
+               color $btn-transition-duration ease-in-out,
+               border-color $btn-transition-duration ease-in-out;
+
+    // Desktop: slightly reduce physical size without changing type scale
+    @include media-breakpoint-up(lg) {
+      padding: 0.75rem 1.2rem; // tighter footprint on desktop
+    }
 
     // Primary variant: align with global button tokens and ensure hover uses $btn-primary-hover-bg
     &.btn-primary {
@@ -301,7 +309,7 @@
     width: auto;
     height: auto;
     
-    color: $white;
+    color: $text-color;
     font-size: 2rem;
     cursor: pointer;
     
@@ -339,7 +347,7 @@
     transition: background .35s ease, transform .4s ease;
 
     &.is-active {
-      background: #fff;
+      background: $text-color;
       transform: scale(1.6);
       box-shadow: none;
     }

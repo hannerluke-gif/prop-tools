@@ -1,9 +1,9 @@
 # Stdlib
-import os
-import secrets
+import os, datetime, secrets
 
 # Third-party
-from flask import Flask, render_template, request, redirect, g
+from flask import Flask, render_template, request, redirect, g, Response, url_for
+from urllib.parse import urljoin
 from werkzeug.middleware.proxy_fix import ProxyFix
 
 app = Flask(__name__)
@@ -97,7 +97,26 @@ def security_txt():
     return app.send_static_file(".well-known/security.txt")
 
 # --- Guides / SEO pages ---
-from flask import render_template
+
+@app.route("/guides")
+def guides_index():
+    # Add groups to the GUIDES for display
+    guides_with_groups = []
+    for guide in GUIDES:
+        guide_with_group = guide.copy()
+        # Determine group based on guide content
+        if any(keyword in guide["title"].lower() for keyword in ["what is", "evaluation"]):
+            guide_with_group["group"] = "Beginner Basics"
+        else:
+            guide_with_group["group"] = "Choosing an Account"
+        guides_with_groups.append(guide_with_group)
+    
+    return render_template(
+        "guides/index.html",
+        title="Trading Guides & Prop Firm 101",
+        meta_desc="Learn prop firm basics, futures trading, evaluations, sim-funded, and how to choose the right account size and firm.",
+        guides=guides_with_groups,
+    )
 
 @app.route("/guides/what-is-a-prop-firm")
 def guide_what_is_a_prop_firm():
@@ -178,6 +197,64 @@ def guide_personal_vs_prop_account():
         title="Personal Account vs Prop Account — Which Should I Start With?",
         meta_desc="Pros/cons of personal futures accounts vs prop accounts: capital, rules, risk, taxes, and control.",
     )
+
+# Central list you can reuse across the app
+GUIDES = [
+    # Beginner Basics
+    {"title":"What is a Prop Firm?", "href":"/guides/what-is-a-prop-firm"},
+    {"title":"What is Futures Trading?", "href":"/guides/what-is-futures-trading"},
+    {"title":"What is a Sim Account?", "href":"/guides/what-is-a-sim-account"},
+    {"title":"What is a Prop Firm Evaluation?", "href":"/guides/what-is-an-evaluation"},
+    # Choosing an Account
+    {"title":"Best Way to Start Trading Futures", "href":"/guides/best-way-to-start-trading-futures"},
+    {"title":"Best Prop Firm to Start With", "href":"/guides/best-prop-firm-to-start"},
+    {"title":"What Account Size Should I Start With?", "href":"/guides/best-account-size-to-start"},
+    {"title":"Should I Skip the Evaluation?", "href":"/guides/should-i-skip-evaluation"},
+    {"title":"What is a Straight-to-Sim-Funded Account?", "href":"/guides/what-is-straight-to-sim-funded"},
+    {"title":"Personal Account vs Prop Account", "href":"/guides/personal-vs-prop-account"},
+]
+
+def _abs_url(path: str) -> str:
+    return urljoin(request.url_root, path.lstrip('/'))
+
+def _iso_utc(ts: float) -> str:
+    return datetime.datetime.utcfromtimestamp(ts).replace(microsecond=0).isoformat() + "Z"
+
+@app.route("/sitemap.xml")
+def sitemap():
+    # Base URLs you want indexed
+    core = [
+        {"loc": _abs_url("/"), "changefreq": "daily", "priority": "1.0"},
+        {"loc": _abs_url("/guides"), "changefreq": "weekly", "priority": "0.90"},
+        # Add other core pages here when they exist:
+        # {"loc": _abs_url("/compare"), "changefreq": "daily", "priority": "0.95"},
+    ]
+
+    # Guide pages (optionally compute lastmod from template files)
+    guide_entries = []
+    for g in GUIDES:
+        loc = _abs_url(g["href"])
+        lastmod = None
+        # Try to map a template path (adjust if your paths differ)
+        # e.g., templates/guides/what-is-a-prop-firm.html
+        tpl_path = os.path.join(
+            os.path.dirname(__file__),
+            "templates",
+            g["href"].lstrip("/"),
+        ) + ".html"
+        if os.path.exists(tpl_path):
+            lastmod = _iso_utc(os.path.getmtime(tpl_path))
+
+        guide_entries.append({
+            "loc": loc,
+            "changefreq": "monthly",
+            "priority": "0.85",
+            "lastmod": lastmod,
+        })
+
+    urls = core + guide_entries
+    xml = render_template("sitemap.xml", urls=urls)
+    return Response(xml, mimetype="application/xml")
 
 # -------- Error handling --------
 @app.errorhandler(500)

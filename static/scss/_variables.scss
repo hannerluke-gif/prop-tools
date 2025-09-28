@@ -12,6 +12,14 @@
 $font-family-sans-serif: "Manrope", system-ui, -apple-system, "Segoe UI", Roboto, Arial, sans-serif !default;
 $font-family-base: $font-family-sans-serif !default;
 
+// Font weight tokens (mapped to Manrope's variable axis)
+$weight-regular: 400 !default;
+$weight-medium: 500 !default;
+$weight-semibold: 600 !default;
+$weight-bold: 700 !default;
+$weight-extrabold: 800 !default;
+$weight-black: 900 !default;
+
 // ============================================================
 // COLOR PALETTE
 // Brand colors and accent tokens used throughout the site
@@ -23,6 +31,7 @@ $accent-cyan: #22d3ee !default; // Global accent color
 
 // Base layout colors
 $base-html-bg: #0b0b12 !default; // Overall page background
+$text-color: #f5f5f5 !default; // Default text color for the project
 
 // ============================================================
 // SITE BANNER COMPONENT
@@ -46,8 +55,12 @@ $site-banner-icon-hover: $accent-cyan !default;
 $site-banner-logo-height-desktop: 175px !default;
 $site-banner-logo-height-mobile: 150px !default;
 
-// Global focus override (removes Bootstrap's default focus glow)
-$input-focus-box-shadow: none !default;
+// Mobile hamburger menu
+$site-banner-hamburger-color: $text-color !default;
+$site-banner-hamburger-size: 24px !default;
+$site-banner-menu-bg: $base-html-bg !default;
+$site-banner-menu-width: 280px !default;
+$site-banner-menu-link-color: $text-color !default;
 
 // ============================================================
 // GUIDE PAGES COMPONENT SYSTEM
@@ -55,7 +68,6 @@ $input-focus-box-shadow: none !default;
 // ============================================================
 
 // Typography
-$guide-text-color: #f5f5f5 !default;
 $guide-headline-size: clamp(1.6rem, 4vw, 2.2rem) !default;
 $guide-body-size: 1.05rem !default;
 $guide-body-line-height: 1.65 !default;
@@ -92,17 +104,26 @@ $guide-next-link-hover-bg: $guide-background-subtle !default;
 // Comprehensive tokens for inline text links (body content, guides, etc.)
 // ============================================================
 
-// Option 1: Default text links (cyan text, no underline -> add underline on hover)
-$text-link-color: $guide-text-color !default; // Default text color (#f5f5f5)
-$text-link-decoration: none !default; // No underline by default
-$text-link-hover-color: $accent-cyan !default; // Cyan on hover
-$text-link-hover-decoration: underline !default; // Add underline on hover
+// Option 1: Default text links (body color, no underline -> cyan on hover, add underline on hover)
+$text-link-color: $text-color !default;
+$text-link-decoration: none !default;
+$text-link-hover-color: $accent-cyan !default;
+$text-link-hover-decoration: underline !default;
 
-// Option 2: Inline text links (body color + underline -> cyan on hover, underline stays)
-$text-link-inline-color: $accent-cyan !default; // Cyan by default
-$text-link-inline-decoration: none !default; // No underline by default
-$text-link-inline-hover-color: $accent-cyan !default; // Cyan on hover
-$text-link-inline-hover-decoration: underline !default; // Add underline on hover
+// Option 2: Alt text links (body color, no underline -> cyan on hover, no underline on hover)
+$text-link-alt-color: $text-color !default;
+$text-link-alt-decoration: none !default;
+$text-link-alt-hover-color: $accent-cyan !default;
+$text-link-alt-hover-decoration: none !default;
+
+// Option 3: Inline text links (cyan text, no underline -> add underline on hover)
+$text-link-inline-color: $accent-cyan !default;
+$text-link-inline-decoration: none !default;
+$text-link-inline-hover-color: $accent-cyan !default;
+$text-link-inline-hover-decoration: underline !default;
+
+// Text link transition timing
+$text-link-transition-duration: 0.3s !default;
 
 // ============================================================
 // BUTTON SYSTEM
@@ -111,14 +132,17 @@ $text-link-inline-hover-decoration: underline !default; // Add underline on hove
 
 // Base button properties
 $btn-border-radius: 1rem !default;
-$btn-font-weight: 900 !default;
-$btn-font-size: 1.05rem !default;
-$btn-color: #fff !default;
+$btn-font-weight: $weight-extrabold !default;
+$btn-font-size: 1rem !default;
+$btn-color: $text-color !default;
 $btn-bg: $brand-primary !default;
 
+// Button transition timing
+$btn-transition-duration: 0.3s !default;
+
 // Button padding (makes buttons taller and more generous)
-$btn-padding-y: 0.75rem !default;        // Vertical padding (controls height)
-$btn-padding-x: 1.5rem !default;         // Horizontal padding (controls width)
+$btn-padding-y: 0.75rem !default;
+$btn-padding-x: 1.5rem !default;
 
 // Bootstrap size variants (automatically calculated from base)
 $btn-padding-y-sm: $btn-padding-y * 0.5 !default;
@@ -133,16 +157,16 @@ $btn-font-size-lg: $btn-font-size * 1.125 !default;
 $btn-primary-bg: $btn-bg !default;
 $btn-primary-color: $btn-color !default;
 $btn-primary-border-color: $btn-bg !default;
-$btn-primary-hover-bg: #ff7fad !default; // Slightly brighter on hover
+$btn-primary-hover-bg: #ff7fad !default;
 
 // Secondary button (black bg, white text -> cyan text on hover)
 $btn-secondary-bg: #000000 !default;
-$btn-secondary-color: #ffffff !default;
+$btn-secondary-color: $btn-color !default;
 $btn-secondary-hover-color: $accent-cyan !default;
 $btn-secondary-border-color: $btn-secondary-color !default;
 
 // Tertiary button (white bg, black text -> cyan background on hover)
-$btn-tertiary-bg: #ffffff !default;
+$btn-tertiary-bg: $btn-color !default;
 $btn-tertiary-color: #000000 !default;
 $btn-tertiary-border-color: $btn-tertiary-bg !default;
 $btn-tertiary-hover-bg: $accent-cyan !default;

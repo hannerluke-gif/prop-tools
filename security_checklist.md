@@ -170,6 +170,7 @@
 ## 8) Content & robots
 
 * [ ] `/robots.txt` denies admin/private paths (if any) and allows guide pages for SEO.
+* [ ] Dynamic `/sitemap.xml` only includes existing routes and properly escapes URLs.
 * [ ] Add a `.well-known/security.txt` with contact info for vulnerability reports.
 * [ ] Guide system templates use proper escaping (Jinja2 auto-escaping enabled).
 

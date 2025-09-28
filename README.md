@@ -16,6 +16,7 @@ A comprehensive Flask project featuring a scalable guide system, modern Sass/BEM
 
 ## Features
 - **Flask app** with dashboard and SEO-optimized guide system
+- **Dynamic sitemap** automatically generated from guides and routes
 - **Guide System** with BEM components, schema markup, and responsive design
 - **Modern Sass architecture** with Bootstrap 5 integration and design tokens
 - **Security hardening** with CSP, HTTPS, and production-ready headers
@@ -33,12 +34,17 @@ propfirm_bootstrap/
 ├── templates/
 │   ├── base.html              # Main layout template
 │   ├── dashboard.html         # Dashboard page
+│   ├── sitemap.xml           # Dynamic sitemap template
 │   ├── 500.html              # Error page
 │   └── guides/               # Guide system templates
 │       ├── guide_base.html   # Shared guide layout
 │       └── what-is-a-prop-firm.html  # Example guide page
 │
 ├── static/
+│   ├── robots.txt
+│   ├── manifest.json
+│   ├── .well-known/          # Security and metadata files
+│   │   └── security.txt      # Vulnerability disclosure policy
 │   ├── css/                  # Compiled CSS output
 │   │   └── main.css
 │   ├── scss/                 # Sass source files
@@ -73,8 +79,11 @@ propfirm_bootstrap/
 │   │   └── slide/
 │   ├── data/                # JSON data files
 │   │   ├── firms.json
+│   │   ├── firms_with_promos.json
 │   │   ├── promos.json
-│   │   └── slides.json
+│   │   ├── slides.json
+│   │   ├── top_picks.json
+│   │   └── top_picks_overrides.json
 │   └── vendor/              # Third-party assets
 │       └── bootstrap/
 │

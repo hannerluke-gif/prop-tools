@@ -59,7 +59,7 @@
 			flex-direction: column;
 			justify-content: flex-start;
 			z-index: 4; // above slides and optional overlay
-			color: #fff;
+			color: $text-color;
 			pointer-events: none; // we want clicks to go to the banner wrapper
 			text-shadow: 0 1px 2px rgba(0,0,0,0.6);
 			padding-left: 100px; // indented to avoid embedded logo; adjust if needed
@@ -74,14 +74,14 @@
 		}
 
 		.promo-banner__line--primary {
-			font-weight: 600;
-			font-size: 0.95rem;
+			font-weight: $weight-medium; // lighter than site/nav
+			font-size: 0.9rem; // slightly smaller than before
             margin-bottom: 5px; // small gap between primary and secondary lines
 		}
 
 		.promo-banner__line--secondary {
-			font-weight: 500;
-			font-size: 0.8rem;
+			font-weight: $weight-regular;
+			font-size: 0.78rem;
 			opacity: 0.95;
 		}
 
@@ -106,6 +106,10 @@
 		text-decoration: none;
 		pointer-events: auto; // enable clicks
 		z-index: 6;
+
+		// Base transitions for smooth interaction feedback
+		transition: background-color $btn-transition-duration ease-in-out, 
+		           color $btn-transition-duration ease-in-out;
 
 		// Hidden state until JS populates the href
 		&[aria-hidden="true"] {
@@ -141,8 +145,7 @@
 
 		// Desktop-only positioning adjustments
 		@media (min-width: 768px) {
-			// Remove translate/animation: provide immediate visual feedback only.
-			transition: none;
+			// Keep background color transitions while preserving centered position
 			&:hover,
 			&:focus {
 				transform: translateY(-50%); // preserve centered position, no movement
@@ -192,11 +195,11 @@ $promo-banner-slide-images: (
 
 			// Slightly larger text on desktop
 			.promo-banner__line--primary {
-				font-size: 1rem;
+				font-size: 0.95rem;
 			}
 
 			.promo-banner__line--secondary {
-				font-size: 0.95rem;
+				font-size: 0.85rem;
 			}
 		}
 	}

@@ -7,14 +7,12 @@
 @import "variables";  // $body-bg, $font-family-base, colors, etc.
 @import "bootstrap/scss/variables"; // bring in Bootstrap's defaults so maps exist
 @import "maps";       // map-merge for $theme-colors, utilities API
-@import "mixins";     // your mixins (if Bootstrap uses them, define first)
 
 // 2) Bootstrap source
 @import "bootstrap/scss/bootstrap"; // installed via npm (no CDN CSS)
 
 // 3) Your app styles AFTER Bootstrap
 // Layout
-@import "layout/header";
 @import "layout/footer";
 @import "layout/prose"; // long-form article typography
 @import "layout/guides";
@@ -27,7 +25,6 @@
 @import "components/site-banner";
 @import "components/brand";
 @import "components/hero";
-@import "components/dashboard";
 
 // Global layout/base document styles
 // Uses $base-html-bg defined in _variables.scss
@@ -40,7 +37,5 @@
 }
 
 
-// NOTE: Generic button variables are available in `_variables.scss` for consistent
-// button styling across components: `$btn-border-radius`, `$btn-font-weight`,
-// `$btn-font-size`, `$btn-color`, `$btn-bg` (shadow tokens removed for flat button design).
-// Use these in component partials to keep CTAs/buttons consistent site-wide.
+// NOTE: Button tokens ($btn-*) are available in _variables.scss for consistent
+// styling across components. Use these variables to maintain design system consistency.

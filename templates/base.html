@@ -100,8 +100,29 @@
                         />
                     </a>
 
+                    <!-- Primary Navigation (Desktop only) -->
+                    <nav class="site-nav d-none d-md-flex" aria-label="Primary">
+                        <a href="/guides" class="site-nav__link">Guides</a>
+                        <a href="/compare" class="site-nav__link">Compare</a>
+                        <a href="/promos" class="site-nav__link">Promos</a>
+                    </nav>
+
                     <!-- Mobile baseline bar -->
                     <div class="site-banner__mobile-bar d-md-none px-2 position-relative w-100">
+                        <!-- Hamburger menu button -->
+                        <button class="site-banner__hamburger-btn" type="button" aria-label="Toggle menu" data-hamburger-toggle>
+                            <div class="site-banner__hamburger-icon" aria-hidden="true">
+                                <span></span>
+                                <span></span>
+                                <span></span>
+                            </div>
+                            <!-- Close (X) icon displayed only when menu is open -->
+                            <svg class="site-banner__close-icon" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" vector-effect="non-scaling-stroke" aria-hidden="true">
+                                <path d="M6 6 L18 18 M18 6 L6 18" />
+                            </svg>
+                        </button>
+                        
+                        <!-- Search button -->
                         <button class="site-banner__mobile-btn" type="button" aria-label="Open search" data-site-banner-toggle>
                             <svg
                                 class="site-banner__mobile-icon"
@@ -144,8 +165,17 @@
                         </form>
                     </div>
 
+                    <!-- Mobile slide-out menu -->
+                    <nav class="site-banner__mobile-menu d-md-none" aria-label="Mobile navigation">
+                        <div class="site-banner__mobile-menu-content">
+                            <a href="/guides" class="site-banner__mobile-menu-link">Guides</a>
+                            <a href="/compare" class="site-banner__mobile-menu-link">Compare</a>
+                            <a href="/promos" class="site-banner__mobile-menu-link">Promos</a>
+                        </div>
+                    </nav>
+
                     <!-- Desktop layout -->
-                    <div class="d-none d-md-flex w-100 align-items-center justify-content-between px-2">
+                    <div class="d-none d-md-flex w-100 align-items-center justify-content-end px-2">
                         <div class="site-banner__search">
                             <form
                                 class="site-banner__search-form"
@@ -180,8 +210,90 @@
             {% block content %}{% endblock %}
         </main>
 
-        {# Optional page-specific footer content (e.g., temporary links) #}
-        {% block extra_footer %}{% endblock %}
+        {# 
+        FOOTER SECTION
+        
+        Optional per-page override: In any template you can pass popular_guides=[("/guides/...","Label"),(...)] 
+        via render_template(...) to control which 2–3 guides appear in the footer.
+        
+        Example usage in your route:
+        return render_template('your_template.html', 
+                             popular_guides=[
+                                 ("/guides/what-is-a-prop-firm", "What is a Prop Firm?"),
+                                 ("/guides/best-account-size-to-start", "What Account Size Should I Start With?")
+                             ])
+        #}
+        {% block extra_footer %}
+        <footer class="site-footer mt-5">
+            <!-- Upper Footer Section: Links and Content -->
+            <div class="site-footer__upper">
+                <div class="container py-5">
+                    <div class="row gy-4">
+                        <div class="col-12 col-md-6 col-lg-4">
+                            <h3 class="site-footer__section-title">Popular Guides</h3>
+                            <ul class="site-footer__link-list">
+                                {% set default_popular = [
+                                    ("/guides/what-is-a-prop-firm","What is a Prop Firm?"),
+                                    ("/guides/best-account-size-to-start","What Account Size Should I Start With?"),
+                                    ("/guides/personal-vs-prop-account","Personal vs Prop Account"),
+                                    ("/guides/what-is-futures-trading","What is Futures Trading?"),
+                                    ("/guides/best-prop-firm-to-start","Best Prop Firm to Start With")
+                                ] %}
+                                {% for href, label in (popular_guides or default_popular) %}
+                                    <li><a class="footer-link" href="{{ href }}">{{ label }}</a></li>
+                                {% endfor %}
+                            </ul>
+                        </div>
+                        <div class="col-12 col-md-6 col-lg-4">
+                            <h3 class="site-footer__section-title">Resources</h3>
+                            <ul class="site-footer__link-list">
+                                <li><a class="footer-link" href="/guides">All Guides</a></li>
+                                <li><a class="footer-link" href="/">Compare Firms</a></li>
+                                <li><a class="footer-link" href="#contact">Contact Us</a></li>
+                            </ul>
+                        </div>
+                        <div class="col-12 col-lg-4">
+                            <h3 class="site-footer__section-title">About Prop Tools</h3>
+                            <p class="site-footer__description">
+                                Compare top futures prop firms and find the perfect match for your trading goals. 
+                                Our platform helps traders make informed decisions with comprehensive comparisons and expert guides.
+                            </p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            
+            <!-- Footer Divider -->
+            <div class="site-footer__divider"></div>
+            
+            <!-- Lower Footer Section: Logo, Copyright, Legal -->
+            <div class="site-footer__lower">
+                <div class="container py-4">
+                    <div class="row align-items-center gy-3">
+                        <div class="col-12 col-md-6">
+                            <div class="site-footer__brand">
+                                <img 
+                                    src="{{ url_for('static', filename='img/logos/site/prop_tools_logo_lockup.png') }}" 
+                                    alt="Prop Tools Logo" 
+                                    class="site-footer__logo"
+                                />
+                            </div>
+                        </div>
+                        <div class="col-12 col-md-6 text-md-end">
+                            <div class="site-footer__legal">
+                                <small class="text-secondary d-block mb-1">© {{ 2025 }} Prop Tools. All rights reserved.</small>
+                                <div class="site-footer__legal-links">
+                                    <a href="#privacy" class="footer-link footer-link--small">Privacy Policy</a>
+                                    <span class="text-secondary mx-2">|</span>
+                                    <a href="#terms" class="footer-link footer-link--small">Terms of Service</a>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </footer>
+        {% endblock %}
 
         <!-- Bootstrap JS (via CDN) -->
         <script src="{{ url_for('static', filename='vendor/bootstrap/bootstrap.bundle.min.js') }}" defer></script>

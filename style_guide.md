@@ -245,7 +245,7 @@
    ```
 
 4. **Guide Variables (Centralized Theming)**
-   * Typography: `$guide-text-color`, `$guide-headline-size`, `$guide-body-size`
+   * Typography: `$text-color`, `$guide-headline-size`, `$guide-body-size`
    * Spacing: `$guide-section-spacing`, `$guide-content-spacing`
    * Components: `$guide-faq-*`, `$guide-cta-*`, `$guide-next-*` tokens
    * All values use consistent design system for easy global adjustments

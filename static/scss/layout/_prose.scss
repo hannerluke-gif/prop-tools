@@ -3,14 +3,14 @@
 // lists, and inline elements for readable guide content.
 
 .prose {
-  // Base text inherits page color unless overridden; guides set $guide-text-color
+  // Base text inherits page color unless overridden; guides set $text-color
   line-height: 1.65;
   font-size: 1.05rem;
   color: inherit; // Ensure prose inherits color from parent (guide sets white)
 
   // Headings
   h1, h2, h3, h4, h5, h6 {
-    font-weight: 700;
+    font-weight: $weight-bold;
     line-height: 1.25;
     scroll-margin-top: 6rem; // better anchor offset below sticky header
   }
@@ -31,16 +31,20 @@
   hr { margin: 2.2rem 0; opacity: .25; }
 
   // Links: use the text link system variables instead of forcing underlines
-  a {
+  // BUT exclude buttons - they should follow button system, not text link system
+  a:not(.btn) {
+    color: $text-link-inline-color;
     text-decoration: $text-link-inline-decoration;
+    text-decoration-color: transparent;
     text-underline-offset: 2px;
-    transition: color .18s ease, text-decoration-color .18s ease;
+    transition: color $text-link-transition-duration ease, text-decoration-color $text-link-transition-duration ease;
   }
-  a:hover {
+  a:not(.btn):hover {
+    color: $text-link-inline-hover-color;
     text-decoration: $text-link-inline-hover-decoration;
     text-decoration-color: currentColor;
   }
-  a:focus-visible {
+  a:not(.btn):focus-visible {
     outline: 0;
     box-shadow: 0 0 0 3px rgba($btn-bg, 0.4);
     text-decoration: $text-link-inline-hover-decoration;
@@ -49,7 +53,7 @@
   a.btn { text-decoration: none; }
 
   // Emphasis
-  strong { font-weight: 600; }
+  strong { font-weight: $weight-semibold; }
   em { font-style: italic; }
 
   // Small / meta text
@@ -58,9 +62,9 @@
   // Generic details/summary formatting (FAQ styling is handled by guide component)
   details { margin-bottom: 1rem; }
   details > summary { 
-    font-weight: 600; 
+    font-weight: $weight-semibold; 
     cursor: pointer; 
-    transition: color .18s ease;
+    transition: color $text-link-transition-duration ease;
     
     &:focus-visible { 
       outline: 0; 

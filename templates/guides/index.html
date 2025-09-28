@@ -1,0 +1,76 @@
+{% extends "guides/guide_base.html" %}
+
+{% block meta_desc %}{{ meta_desc }}{% endblock %}
+{% block guide_title %}Trading Guides & Prop Firm 101{% endblock %}
+{% block guide_subtitle %}
+Straight answers to the questions traders Google most—plus practical next steps and comparisons.
+{% endblock %}
+
+{# JSON-LD: Breadcrumbs + ItemList for the index #}
+{% block extra_schema %}
+<script type="application/ld+json" nonce="{{ g.csp_nonce|default('') }}">
+{
+  "@context": "https://schema.org",
+  "@type": "BreadcrumbList",
+  "itemListElement": [{
+    "@type": "ListItem", "position": 1, "name": "Guides",
+    "item": "{{ url_for('guides_index', _external=True) }}"
+  }]
+}
+</script>
+
+<script type="application/ld+json" nonce="{{ g.csp_nonce|default('') }}">
+{
+  "@context": "https://schema.org",
+  "@type": "ItemList",
+  "itemListElement": [
+    {% for i, g in enumerate(guides, start=1) -%}
+    {"@type":"ListItem","position": {{ i }},"url":"{{ g.href }}"}{{ "," if not loop.last }}
+    {%- endfor %}
+  ]
+}
+</script>
+{% endblock %}
+
+{% block guide_content %}
+<section class="guide-index container px-0">
+  <div class="guide-index__groups">
+    <div class="guide-index__group">
+      <h2 class="guide-index__heading h4">Beginner Basics</h2>
+      <ul class="guide-index__list">
+        {% for g in guides if g.group == "Beginner Basics" %}
+          <li class="guide-index__item">
+            <a class="guide-index__link" href="{{ g.href }}">{{ g.title }}</a>
+          </li>
+        {% endfor %}
+      </ul>
+    </div>
+
+    <div class="guide-index__group">
+      <h2 class="guide-index__heading h4">Choosing an Account</h2>
+      <ul class="guide-index__list">
+        {% for g in guides if g.group == "Choosing an Account" %}
+          <li class="guide-index__item">
+            <a class="guide-index__link" href="{{ g.href }}">{{ g.title }}</a>
+          </li>
+        {% endfor %}
+      </ul>
+    </div>
+  </div>
+
+  <div class="guide__cta card card-body my-4">
+    <div class="d-flex flex-column flex-md-row align-items-md-center gap-3">
+      <div class="flex-grow-1">
+        <h3 class="h5 mb-1">Ready to compare firms?</h3>
+        <p class="mb-0">See rules, account sizes, and live promos side-by-side.</p>
+      </div>
+      <a href="/compare" class="btn btn-primary btn-lg">Compare Top Prop Firms</a>
+    </div>
+  </div>
+</section>
+{% endblock %}
+
+{% block next_links %}
+  <li class="guide__next__item"><a class="guide__next__link" href="/guides/what-is-a-prop-firm">What is a Prop Firm?</a></li>
+  <li class="guide__next__item"><a class="guide__next__link" href="/guides/best-way-to-start-trading-futures">Best Way to Start Trading Futures</a></li>
+{% endblock %}

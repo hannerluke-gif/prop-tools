@@ -58,7 +58,7 @@ The guide system provides a consistent, SEO-optimized framework for creating lan
 **All guide styling controlled by variables:**
 ```scss
 // Typography
-$guide-text-color: #f5f5f5
+$text-color: #f5f5f5
 $guide-headline-size: clamp(1.6rem, 4vw, 2.2rem)
 $guide-body-size: 1.05rem
 
@@ -295,7 +295,7 @@ Edit `static/scss/_variables.scss`:
 
 ```scss
 // Change all guide text color
-$guide-text-color: #ffffff; // Pure white instead of off-white
+$text-color: #ffffff; // Pure white instead of off-white
 
 // Adjust section spacing
 $guide-section-spacing: 4rem; // More space between sections

@@ -1,0 +1,153 @@
+// ============================================================
+// SITE FOOTER
+// Large two-section footer with links, branding, and legal info
+// ============================================================
+
+.site-footer {
+  background: rgba(255, 255, 255, 0.02);
+  border-top: 1px solid rgba(255, 255, 255, 0.08);
+  backdrop-filter: blur(10px);
+  margin-top: auto; // Push footer to bottom if using flexbox layout
+  
+  // Upper section: main content, links, descriptions
+  &__upper {
+    background: rgba(255, 255, 255, 0.03);
+    padding-top: 3rem;
+    padding-bottom: 3rem;
+    
+    @include media-breakpoint-up(lg) {
+      padding-top: 4rem;
+      padding-bottom: 4rem;
+    }
+  }
+  
+  // Divider between sections
+  &__divider {
+    height: 1px;
+    background: linear-gradient(
+      90deg,
+      transparent 0%,
+      rgba(255, 255, 255, 0.15) 20%,
+      rgba(255, 255, 255, 0.15) 80%,
+      transparent 100%
+    );
+    margin: 0 1rem;
+  }
+  
+  // Lower section: logo, copyright, legal
+  &__lower {
+    background: rgba(255, 255, 255, 0.01);
+    padding-top: 1.5rem;
+    padding-bottom: 1.5rem;
+  }
+  
+  // Section titles in upper footer
+  &__section-title {
+    font-size: 1.375rem; // was 1.25rem
+    font-weight: $weight-black; // heaviest weight per request
+    margin-bottom: 1.5rem;
+    color: $text-color;
+    
+    @include media-breakpoint-up(lg) {
+      font-size: 1.5rem; // was 1.375rem
+      margin-bottom: 2rem;
+    }
+  }
+  
+  // Link lists in upper footer
+  &__link-list {
+    list-style: none;
+    padding: 0;
+    margin: 0;
+    
+    li {
+      margin-bottom: 0.75rem;
+      
+      &:last-child {
+        margin-bottom: 0;
+      }
+    }
+  }
+  
+  // Description text in upper footer
+  &__description {
+    color: rgba(255, 255, 255, 0.8);
+    line-height: 1.6;
+    margin-bottom: 0;
+    font-size: 0.95rem;
+    
+    @include media-breakpoint-up(lg) {
+      font-size: 1rem;
+    }
+  }
+  
+  // Brand section in lower footer
+  &__brand {
+    display: flex;
+    align-items: center;
+  }
+  
+  &__logo {
+    height: 2.75rem;
+    width: auto;
+    opacity: 0.9;
+    transition: opacity 0.2s ease;
+    
+    &:hover {
+      opacity: 1;
+    }
+    
+    @include media-breakpoint-up(md) {
+      height: 3.25rem;
+    }
+    
+    @include media-breakpoint-up(lg) {
+      height: 3.5rem;
+    }
+  }
+  
+  // Legal section in lower footer
+  &__legal {
+    text-align: left;
+    
+    @include media-breakpoint-up(md) {
+      text-align: right;
+    }
+  }
+  
+  &__legal-links {
+    margin-top: 0.25rem;
+  }
+  
+  // Improve contrast for better readability
+  .text-secondary {
+    color: rgba(255, 255, 255, 0.6) !important;
+  }
+}
+
+// Footer link styles
+.footer-link {
+  color: $text-link-color;
+  text-decoration: $text-link-decoration;
+  text-decoration-color: transparent;
+  transition: color $text-link-transition-duration ease, text-decoration-color $text-link-transition-duration ease;
+  font-size: 0.95rem;
+  
+  &:hover,
+  &:focus {
+    color: $text-link-hover-color;
+    text-decoration: $text-link-hover-decoration;
+    text-decoration-color: currentColor;
+  }
+  
+  // Small variant for legal links
+  &--small {
+    font-size: 0.875rem;
+    opacity: 0.9;
+    
+    &:hover,
+    &:focus {
+      opacity: 1;
+    }
+  }
+}

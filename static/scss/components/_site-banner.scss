@@ -5,7 +5,7 @@
 .site-banner {
   position: sticky;
   top: 0;
-  z-index: 1020; // Above standard content; Bootstrap navbar uses 1000
+  z-index: 1200; // Above mobile menu panel and standard content; Bootstrap navbar uses 1000
   width: 100%;
   background: $site-banner-bg; // solid background (token)
   color: #fff;
@@ -50,7 +50,10 @@
     gap: 1rem;
     padding: 0.35rem 0.75rem; // compact vertical spacing
     position: relative; // for absolutely positioned mobile logo
-    z-index: 1; // ensure content sits above gradient overlay pseudo-element
+    // Ensure banner content (especially the hamburger/close button) renders
+    // above the slide-out panel which sits at z-index: 1020.
+    // The banner’s ::after overlay remains at z-index: 0.
+    z-index: 1202;
   }
 
   // Search container (desktop) uses position-relative for button placement
@@ -73,7 +76,8 @@
     border-radius: $btn-border-radius;
     padding-right: 2.5rem;
     padding-left: 0.9rem;
-    font-size: 0.875rem;
+  font-size: 0.875rem;
+  font-weight: $weight-medium; // medium weight for balance
     height: $site-banner-input-height;
 
     &::placeholder {
@@ -108,6 +112,7 @@
     justify-content: center;
     color: $site-banner-icon-color;
     cursor: pointer;
+    transition: color $btn-transition-duration ease;
 
     // button icons inherit sizing from .site-banner svg
     svg { stroke: currentColor; }
@@ -124,6 +129,104 @@
     gap: 0.5rem;
   }
 
+    // Hamburger menu button (left side of mobile bar)
+  &__hamburger-btn {
+    background: transparent;
+    border: none;
+    color: $site-banner-hamburger-color;
+    width: 40px;
+    height: 40px;
+    padding: 0;
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    cursor: pointer;
+    position: relative;
+  z-index: 1201; // Above menu overlay (panel z-index is lower)
+    margin-right: auto; // Push to left side
+
+    &:hover, &:focus {
+      outline: none;
+      box-shadow: none;
+    }
+  }
+
+  // Hamburger icon (3 lines that transform to X)
+  &__hamburger-icon {
+    width: $site-banner-hamburger-size;
+    height: $site-banner-hamburger-size;
+    position: relative;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    // Ensure rotated bars aren’t visually clipped by the box
+    overflow: visible;
+    
+    span {
+      display: block;
+      width: 100%;
+      height: 2px;
+      background-color: currentColor;
+      transition: all 0.3s ease;
+      transform-origin: center;
+      border-radius: 1px; // soften line ends to avoid harsh clipped corners
+      
+      &:nth-child(1) {
+        transform: translateY(-6px);
+      }
+      
+      &:nth-child(2) {
+        transform: translateY(0);
+      }
+      
+      &:nth-child(3) {
+        transform: translateY(6px);
+      }
+    }
+  }
+
+  // Close (X) svg icon—hidden by default; shown when menu is open
+  &__close-icon {
+    display: none;
+    width: $site-banner-hamburger-size;
+    height: $site-banner-hamburger-size;
+    stroke: currentColor;
+    overflow: visible; // allow stroke caps to render beyond the viewBox
+  }
+
+  // Transform hamburger to X when menu is open
+  &.menu-open &__hamburger-icon {
+    // Hide the hamburger container entirely so only the close icon occupies
+    // the 40px button area, preventing any clipping.
+    display: none;
+  }
+  &.menu-open &__hamburger-icon span {
+    // Slightly inset the diagonals so they don’t butt up against the
+    // 24px bounds, which can look like the right edge is cut off on some
+    // screens due to anti-aliasing. This only applies when in X state so
+    // the hamburger retains its full width.
+  width: calc(#{$site-banner-hamburger-size} - 4px);
+  margin-left: 2px;
+  margin-right: 2px;
+    &:nth-child(1) {
+      transform: translateY(0) rotate(45deg);
+    }
+    
+    &:nth-child(2) {
+      opacity: 0;
+      transform: scale(0);
+    }
+    
+    &:nth-child(3) {
+      transform: translateY(0) rotate(-45deg);
+    }
+  }
+
+  // In open state, show the dedicated close icon
+  &.menu-open &__close-icon {
+    display: inline-block;
+  }
+
   // Mobile button to open search mode (inside mobile bar)
   &__mobile-btn {
     background: transparent;
@@ -137,6 +240,7 @@
     align-items: center;
     justify-content: center;
     cursor: pointer;
+    transition: color $btn-transition-duration ease, border-color $btn-transition-duration ease;
 
     // button icons inherit sizing from .site-banner svg
     svg { stroke: currentColor; }
@@ -147,9 +251,7 @@
       box-shadow: none;
       border: none;
     }
-  }
-
-  // Mobile search mode overlay (replaces bar)
+  }  // Mobile search mode overlay (replaces bar)
   &__mobile-search {
     display: none;
     width: 100%;
@@ -191,6 +293,12 @@
   }
 
   @media (max-width: 767.98px) {
+    // Tuck icons closer to screen edges (equal left/right spacing)
+    &__inner {
+      padding-left: 0rem;  // was 0.75rem
+      padding-right: 0rem; // was 0.75rem
+    }
+
     &__search { display: none; }
 
     // Mobile search overlay: shows when .is-searching class is active
@@ -244,6 +352,46 @@
         border: none; 
       }
     }
+
+    // Mobile slide-out menu
+    &__mobile-menu {
+      position: fixed;
+      top: var(--mobile-menu-top, 0);
+      left: -$site-banner-menu-width;
+      width: $site-banner-menu-width;
+      height: calc(100vh - var(--mobile-menu-top, 0));
+      background: $site-banner-menu-bg;
+      z-index: 1020; // Above content, below hamburger button
+      transition: left 0.3s ease;
+      border-right: 1px solid rgba(255, 255, 255, 0.1);
+    }
+
+    &__mobile-menu-content {
+      padding: 4rem 2rem 2rem;
+      display: flex;
+      flex-direction: column;
+      gap: 1.5rem;
+    }
+
+    &__mobile-menu-link {
+      color: $site-banner-menu-link-color;
+      text-decoration: none;
+      font-size: 1.125rem;
+      font-weight: $weight-medium;
+      padding: 0.75rem 0;
+      border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+      transition: none; // No hover effects as specified
+      
+      &:hover, &:focus {
+        color: $site-banner-menu-link-color; // No color change on hover
+        text-decoration: none;
+      }
+    }
+
+    // Show menu when menu-open class is active
+    &.menu-open &__mobile-menu {
+      left: 0;
+    }
   }
 }
 
@@ -255,3 +403,33 @@
     height: 22px;
     stroke: currentColor;
   }
+
+// Site Navigation Component (Primary navigation links in site banner)
+// BEM: .site-nav as block, .site-nav__link as element  
+.site-nav {
+  display: flex;
+  align-items: center;
+  gap: 1.25rem;
+  flex-shrink: 0; // Prevent compression when search grows
+
+  &__link {
+    color: $text-link-alt-color;
+    text-decoration: $text-link-alt-decoration;
+    font-size: 1rem; // balanced size, not competing with hero
+    font-weight: $weight-medium; // medium weight for nav links
+    padding: 0.25rem 0.5rem;
+    border-radius: $btn-border-radius;
+    white-space: nowrap;
+    transition: color $text-link-transition-duration ease, background-color 0.2s ease, text-decoration $text-link-transition-duration ease;
+
+    &:hover,
+    &:focus {
+      color: $text-link-alt-hover-color;
+      text-decoration: $text-link-alt-hover-decoration;
+    }
+
+    &:focus {
+      outline: none;
+    }
+  }
+}

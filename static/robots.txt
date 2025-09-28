@@ -1,11 +1,4 @@
 User-agent: *
-Disallow: /admin/
-Disallow: /private/
-Disallow: /.env
-Disallow: /config/
+Disallow: /
 
-# Allow all other pages
-Allow: /
-
-# Sitemap (if you have one)
-# Sitemap: https://www.proptradetools.com/sitemap.xml
+Sitemap: https://www.proptradetools.com/sitemap.xml

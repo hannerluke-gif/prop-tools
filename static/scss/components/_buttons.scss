@@ -12,13 +12,14 @@
   // Use site tokens to ensure consistent buttons across the app
   border-radius: $btn-border-radius;
   font-weight: $btn-font-weight;
-  font-size: $btn-font-size;
+  font-size: $btn-font-size; // 1rem base, scales with variants
   padding: $btn-padding-y $btn-padding-x;
   color: $btn-color;
   text-decoration: none; // ensure anchor-based buttons don't show underlines by default
   -webkit-tap-highlight-color: transparent; // avoid mobile blue flash
   position: relative; // anchor for focus outline pseudo if needed
   outline: 0; // we substitute with :focus-visible ring
+  transition: background-color $btn-transition-duration ease, color $btn-transition-duration ease, border-color $btn-transition-duration ease;
 
   &:hover,
   &:focus {
@@ -191,54 +192,83 @@
 
 // Default text link: body color + underline -> cyan hover (underline stays)
 .text-link {
-  color: $text-link-inline-color;
-  text-decoration: $text-link-inline-decoration;
-  transition: color 0.2s ease;
+  color: $text-link-color;
+  text-decoration: $text-link-decoration;
+  text-decoration-color: transparent;
+  transition: color $text-link-transition-duration ease, text-decoration-color $text-link-transition-duration ease;
 
   &:hover,
   &:focus {
-    color: $text-link-inline-hover-color;
-    text-decoration: $text-link-inline-hover-decoration;
+    color: $text-link-hover-color;
+    text-decoration: $text-link-hover-decoration;
+    text-decoration-color: currentColor;
   }
 
   &:focus-visible {
-    outline: 2px solid rgba($text-link-inline-hover-color, 0.4);
+    outline: 2px solid rgba($text-link-hover-color, 0.4);
     outline-offset: 2px;
   }
 }
 
 // Accent text link: cyan text (no underline) -> add underline on hover
 .text-link--accent {
-  color: $text-link-color;
-  text-decoration: $text-link-decoration;
-  transition: text-decoration 0.2s ease;
+  color: $text-link-inline-color;
+  text-decoration: $text-link-inline-decoration;
+  text-decoration-color: transparent;
+  transition: color $text-link-transition-duration ease, text-decoration-color $text-link-transition-duration ease;
 
   &:hover,
   &:focus {
-    color: $text-link-hover-color;
-    text-decoration: $text-link-hover-decoration;
+    color: $text-link-inline-hover-color;
+    text-decoration: $text-link-inline-hover-decoration;
+    text-decoration-color: currentColor;
   }
 
   &:focus-visible {
-    outline: 2px solid rgba($text-link-color, 0.4);
+    outline: 2px solid rgba($text-link-inline-color, 0.4);
+    outline-offset: 2px;
+  }
+}
+
+// Alt text link: body color -> cyan (no underline) for FAQ content
+.text-link--alt {
+  color: $text-link-alt-color;
+  text-decoration: $text-link-alt-decoration;
+  // Animate color and the underline color for browsers that support it
+  transition: color $text-link-transition-duration ease, text-decoration-color $text-link-transition-duration ease;
+
+  &:hover,
+  &:focus {
+    color: $text-link-alt-hover-color;
+    text-decoration: $text-link-alt-hover-decoration;
+    // Keep underline color in sync when underline is shown
+    text-decoration-color: currentColor;
+  }
+
+  &:focus-visible {
+    outline: 2px solid rgba($text-link-alt-hover-color, 0.4);
     outline-offset: 2px;
   }
 }
 
 // Global link defaults for prose/guide content
-.prose a:not(.btn):not(.text-link):not(.text-link--accent),
-.guide a:not(.btn):not(.text-link):not(.text-link--accent) {
+.prose a:not(.btn):not(.text-link):not(.text-link--accent):not(.text-link--alt),
+.guide a:not(.btn):not(.text-link):not(.text-link--accent):not(.text-link--alt) {
   @extend .text-link;
 }
 
-// Remove lift/translate hover animation across viewports: keep static (no movement/shadow change)
-// Note: !important needed to override Bootstrap's transition defaults due to specificity
+// FAQ links specifically use the alt styling
+.guide__faq__content a:not(.btn) {
+  @extend .text-link--alt;
+}
+
+// Remove lift/translate hover animation across viewports: keep static (no movement/shadow change)  
+// But preserve color/background transitions for smooth hover effects
 .btn { 
-  transition: none !important; 
   transform: none !important; 
 }
 
-// Respect reduced motion preferences
+// Respect reduced motion preferences - disable all transitions for accessibility
 @media (prefers-reduced-motion: reduce) {
   .btn {
     transition: none !important;
