@@ -53,7 +53,8 @@ function initGuideTracking() {
           guide_title: title,
           click_source: source,
           event_category: 'engagement',
-          event_label: `${source}:${id}`
+          event_label: `${source}:${id}`,
+          debug_mode: true
         });
         console.log(`📈 GA4 event sent: guide_click for ${id}`);
       }
