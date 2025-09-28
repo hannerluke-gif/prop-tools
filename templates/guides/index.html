@@ -1,9 +1,9 @@
 {% extends "guides/guide_base.html" %}
 
 {% block meta_desc %}{{ meta_desc }}{% endblock %}
-{% block guide_title %}Trading Guides & Prop Firm 101{% endblock %}
+{% block guide_title %}Trading Guides & Prop Firms Explained{% endblock %}
 {% block guide_subtitle %}
-Straight answers to the questions traders Google most—plus practical next steps and comparisons.
+Clear answers, step-by-step next moves, and unbiased comparisons.
 {% endblock %}
 
 {# JSON-LD: Breadcrumbs + ItemList for the index #}
@@ -40,7 +40,7 @@ Straight answers to the questions traders Google most—plus practical next step
       <ul class="guide-index__list">
         {% for g in guides if g.group == "Beginner Basics" %}
           <li class="guide-index__item">
-            <a class="guide-index__link" href="{{ g.href }}">{{ g.title }}</a>
+            <a class="guide-index__link" href="{{ g.href }}" data-guide-id="{{ g.id }}">{{ g.title }}</a>
           </li>
         {% endfor %}
       </ul>
@@ -51,7 +51,7 @@ Straight answers to the questions traders Google most—plus practical next step
       <ul class="guide-index__list">
         {% for g in guides if g.group == "Choosing an Account" %}
           <li class="guide-index__item">
-            <a class="guide-index__link" href="{{ g.href }}">{{ g.title }}</a>
+            <a class="guide-index__link" href="{{ g.href }}" data-guide-id="{{ g.id }}">{{ g.title }}</a>
           </li>
         {% endfor %}
       </ul>
@@ -71,6 +71,6 @@ Straight answers to the questions traders Google most—plus practical next step
 {% endblock %}
 
 {% block next_links %}
-  <li class="guide__next__item"><a class="guide__next__link" href="/guides/what-is-a-prop-firm">What is a Prop Firm?</a></li>
-  <li class="guide__next__item"><a class="guide__next__link" href="/guides/best-way-to-start-trading-futures">Best Way to Start Trading Futures</a></li>
+  <li class="guide__next__item"><a class="guide__next__link" href="/guides/what-is-a-prop-firm" data-guide-id="{{ '/guides/what-is-a-prop-firm' | guide_id }}">What is a Prop Firm?</a></li>
+  <li class="guide__next__item"><a class="guide__next__link" href="/guides/best-way-to-start-trading-futures" data-guide-id="{{ '/guides/best-way-to-start-trading-futures' | guide_id }}">Best Way to Start Trading Futures</a></li>
 {% endblock %}

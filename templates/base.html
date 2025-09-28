@@ -71,6 +71,15 @@
         <link rel="canonical" href="https://www.proptradetools.com{{ request.path }}" />
         {% block head %}{% endblock %}
 
+        <!-- Google tag (gtag.js) -->
+        <script async src="https://www.googletagmanager.com/gtag/js?id=G-ZEBP98J6ZQ"></script>
+        <script nonce="{{ g.csp_nonce|default('') }}">
+          window.dataLayer = window.dataLayer || [];
+          function gtag(){dataLayer.push(arguments);}
+          gtag('js', new Date());
+          gtag('config', 'G-ZEBP98J6ZQ');
+        </script>
+
         <!-- Google Fonts: Manrope -->
         <link rel="preconnect" href="https://fonts.googleapis.com" />
         <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
@@ -240,7 +249,7 @@
                                     ("/guides/best-prop-firm-to-start","Best Prop Firm to Start With")
                                 ] %}
                                 {% for href, label in (popular_guides or default_popular) %}
-                                    <li><a class="footer-link" href="{{ href }}">{{ label }}</a></li>
+                                    <li><a class="footer-link" href="{{ href }}" data-guide-id="{{ href | guide_id }}">{{ label }}</a></li>
                                 {% endfor %}
                             </ul>
                         </div>

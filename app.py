@@ -8,6 +8,14 @@ from werkzeug.middleware.proxy_fix import ProxyFix
 
 app = Flask(__name__)
 
+# Custom Jinja2 filter to convert guide URLs to IDs for analytics
+@app.template_filter('guide_id')
+def guide_id_filter(url):
+    """Convert guide URL to ID for analytics tracking"""
+    if url and url.startswith('/guides/'):
+        return url.replace('/guides/', '')
+    return url
+
 @app.before_request
 def _csp_nonce():
     g.csp_nonce = secrets.token_urlsafe(16)
@@ -201,17 +209,17 @@ def guide_personal_vs_prop_account():
 # Central list you can reuse across the app
 GUIDES = [
     # Beginner Basics
-    {"title":"What is a Prop Firm?", "href":"/guides/what-is-a-prop-firm"},
-    {"title":"What is Futures Trading?", "href":"/guides/what-is-futures-trading"},
-    {"title":"What is a Sim Account?", "href":"/guides/what-is-a-sim-account"},
-    {"title":"What is a Prop Firm Evaluation?", "href":"/guides/what-is-an-evaluation"},
+    {"id": "what-is-a-prop-firm", "title":"What is a Prop Firm?", "href":"/guides/what-is-a-prop-firm"},
+    {"id": "what-is-futures-trading", "title":"What is Futures Trading?", "href":"/guides/what-is-futures-trading"},
+    {"id": "what-is-a-sim-account", "title":"What is a Sim Account?", "href":"/guides/what-is-a-sim-account"},
+    {"id": "what-is-an-evaluation", "title":"What is a Prop Firm Evaluation?", "href":"/guides/what-is-an-evaluation"},
     # Choosing an Account
-    {"title":"Best Way to Start Trading Futures", "href":"/guides/best-way-to-start-trading-futures"},
-    {"title":"Best Prop Firm to Start With", "href":"/guides/best-prop-firm-to-start"},
-    {"title":"What Account Size Should I Start With?", "href":"/guides/best-account-size-to-start"},
-    {"title":"Should I Skip the Evaluation?", "href":"/guides/should-i-skip-evaluation"},
-    {"title":"What is a Straight-to-Sim-Funded Account?", "href":"/guides/what-is-straight-to-sim-funded"},
-    {"title":"Personal Account vs Prop Account", "href":"/guides/personal-vs-prop-account"},
+    {"id": "best-way-to-start-trading-futures", "title":"Best Way to Start Trading Futures", "href":"/guides/best-way-to-start-trading-futures"},
+    {"id": "best-prop-firm-to-start", "title":"Best Prop Firm to Start With", "href":"/guides/best-prop-firm-to-start"},
+    {"id": "best-account-size-to-start", "title":"What Account Size Should I Start With?", "href":"/guides/best-account-size-to-start"},
+    {"id": "should-i-skip-evaluation", "title":"Should I Skip the Evaluation?", "href":"/guides/should-i-skip-evaluation"},
+    {"id": "what-is-straight-to-sim-funded", "title":"What is a Straight-to-Sim-Funded Account?", "href":"/guides/what-is-straight-to-sim-funded"},
+    {"id": "personal-vs-prop-account", "title":"Personal Account vs Prop Account", "href":"/guides/personal-vs-prop-account"},
 ]
 
 def _abs_url(path: str) -> str:

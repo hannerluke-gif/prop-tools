@@ -16,7 +16,7 @@
 - [Incident Response Basics](#10-incident-response-basics)
 - [Code Snippets](#11-snippets-you-can-drop-in-now)
 - [Roadmap](#12-roadmap-when-features-expand)
-- [Quick Verification](#quick-verify-curl-one-liners)
+- [Quick Verify](#quick-verify-curl-one-liners)
 
 ---
 

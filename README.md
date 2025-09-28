@@ -7,12 +7,13 @@ A comprehensive Flask project featuring a scalable guide system, modern Sass/BEM
 - [Project Structure](#project-structure)
 - [Requirements](#requirements)
 - [Quick Start](#quick-start)
-- [Development Workflow](#development-workflow)
-- [Guide System](#guide-system)
-- [Production Deployment](#production-deployment)
-- [Testing](#testing)
-- [Maintenance](#maintenance)
-- [Component Updates](#component-updates)
+- [Guide System (SEO Landing Pages)](#guide-system-seo-landing-pages)
+- [Development Workflow](#11-development-workflow)
+- [Production Deployment](#12-production-deployment)
+- [Testing](#13-testing)
+- [Suggested Next Enhancements](#14-suggested-next-enhancements)
+- [Maintenance](#15-maintenance)
+- [Component Updates](#16-component-updates)
 
 ## Features
 - **Flask app** with dashboard and SEO-optimized guide system

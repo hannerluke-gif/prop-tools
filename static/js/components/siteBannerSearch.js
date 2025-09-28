@@ -103,14 +103,15 @@ export function initSiteBannerSearch(root = document.querySelector('.site-banner
 		isSearching = false;
 	}
 
-	// Teardown removes listeners
-		const teardown = function teardown() {
-		while (listeners.length) {
-			const off = listeners.pop();
-			try { off && off(); } catch {}
-		}
-		};
-		try { banner[TEARDOWN_KEY] = teardown; } catch {}
-		return teardown;
+	// Teardown function
+	const teardown = () => {
+		closeSearch(); // ensure clean state
+		listeners.forEach(remove => remove());
+		delete banner[TEARDOWN_KEY];
+	};
+
+	// Store teardown for idempotency
+	banner[TEARDOWN_KEY] = teardown;
+	return teardown;
 }
 
