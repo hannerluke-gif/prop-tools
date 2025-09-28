@@ -1,6 +1,11 @@
-# 🔒 Security Checklist – Flask + Bootstrap + Sass (Heroku)
+# 🔒 Security Checklist – Flask + Bootstrap + Sass (Heroku)* [ ] Add **HSTS** (1 year + preload) **only when you're sure** site is stable on HTTPS: **\[prod]** - *ready for implementation when domain is stable*
 
-> Use this before every deploy. Mark completed items with ✅. Production-only items are tagged **\[prod]**.
+  ```python
+  @app.after_request
+  def _hsts(resp):
+      resp.headers['Strict-Transport-Security'] = 'max-age=31536000; includeSubDomains; preload'
+      return resp
+  ```e this before every deploy. Mark completed items with ✅. Production-only items are tagged **\[prod]**.
 
 ## Table of Contents
 - [Threat Model Snapshot](#0-threat-model-snapshot)
@@ -128,16 +133,16 @@
 
 ## 4) Dependencies & build
 
-* [ ] Pin safe versions but **update regularly** (`pip-audit`, `safety`, `npm audit`).
-* [ ] Remove unused packages and dev-only deps from production image.
+* [x] Pin safe versions but **update regularly** (`pip-audit`, `safety`, `npm audit`). - *requirements.txt has pinned versions*
+* [x] Remove unused packages and dev-only deps from production image. - *requirements.txt minimal, package.json uses devDependencies*
 * [ ] Avoid `pip install --upgrade` in Heroku release without testing.
-* [ ] If using CDN JS/CSS, add **SRI** and explicit `integrity` + `crossorigin` attributes.
+* [x] If using CDN JS/CSS, add **SRI** and explicit `integrity` + `crossorigin` attributes. - *using local Bootstrap build, no CDN dependencies*
 
 ---
 
 ## 5) Heroku specifics
 
-* [ ] `Procfile` uses **gunicorn**; no Flask dev server in prod.
+* [x] `Procfile` uses **gunicorn**; no Flask dev server in prod. - *Procfile configured with gunicorn*
 * [ ] Gunicorn basic hardening (tune workers/timeouts):
 
   ```bash
@@ -169,10 +174,10 @@
 
 ## 8) Content & robots
 
-* [ ] `/robots.txt` denies admin/private paths (if any) and allows guide pages for SEO.
-* [ ] Dynamic `/sitemap.xml` only includes existing routes and properly escapes URLs.
+* [x] `/robots.txt` denies admin/private paths (if any) and allows guide pages for SEO. - *robots.txt present in static folder*
+* [x] Dynamic `/sitemap.xml` only includes existing routes and properly escapes URLs. - *implemented in app.py*
 * [ ] Add a `.well-known/security.txt` with contact info for vulnerability reports.
-* [ ] Guide system templates use proper escaping (Jinja2 auto-escaping enabled).
+* [x] Guide system templates use proper escaping (Jinja2 auto-escaping enabled). - *Flask default auto-escaping active*
 
 ---
 

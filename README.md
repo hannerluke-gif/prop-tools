@@ -100,9 +100,10 @@ propfirm_bootstrap/
 ```
 
 ## Requirements
-- Python 3.10+ (earlier versions 3.8+ likely work, but not tested here)
+- Python 3.8+ (tested with 3.10+, earlier versions 3.8+ should work)
 - Node.js 16+ (for Sass compilation)
 - PowerShell (for provided commands) / VS Code
+- Git (for version control and deployment)
 
 ## Quick Start
 
@@ -120,7 +121,7 @@ Set-ExecutionPolicy -Scope CurrentUser -ExecutionPolicy RemoteSigned
 ### 2. Install Dependencies
 ```powershell
 pip install -r requirements.txt
-npm install  # For Sass compilation
+npm install  # Installs Bootstrap 5.3.3 and Sass 1.92.1
 ```
 
 ### 3. Run the App (Direct Python)
@@ -301,12 +302,15 @@ pytest -q
 
 ## 14. Suggested Next Enhancements
 - Add `README` badges & license
-- Implement Blueprints for modularization
+- Implement Blueprints for modularization  
 - Add a `config.py` with multiple environments (Dev/Staging/Prod)
 - Integrate a database (SQLite + SQLAlchemy)
 - Add form handling with WTForms or Flask-WTF
 - Add basic tests (`pytest` + `coverage`)
 - Expand guide system with more landing pages
+- Add admin dashboard for content management
+- Implement user authentication and personalization
+- Add analytics and tracking integration
 
 ## 15. Maintenance
 

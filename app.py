@@ -72,13 +72,13 @@ def _security_headers(resp):
         nonce = getattr(g, "csp_nonce", "")
         csp = (
             "default-src 'self'; "
-            "script-src 'self'; "
-            "script-src-elem 'self'; "
+            f"script-src 'self' 'nonce-{nonce}' https://www.googletagmanager.com; "
+            f"script-src-elem 'self' 'nonce-{nonce}' https://www.googletagmanager.com; "
             "script-src-attr 'none'; "
             f"style-src 'self' 'nonce-{nonce}' https://fonts.googleapis.com; "
             "img-src 'self' data:; "
             "font-src 'self' https://fonts.gstatic.com data:; "
-            "connect-src 'self'; "
+            "connect-src 'self' https://www.google-analytics.com https://analytics.google.com; "
             "frame-ancestors 'none'; "
             "base-uri 'self'; form-action 'self'"
         )
