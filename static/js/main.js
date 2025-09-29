@@ -19,18 +19,71 @@ document.addEventListener('DOMContentLoaded', () => {
 // ============================================================
 
 /**
+ * Session-based rate limiting for analytics
+ * Prevents rapid-fire clicking abuse (max 3 clicks per guide per minute per session)
+ */
+function checkAnalyticsRateLimit(guideId) {
+  try {
+    // Generate or retrieve session UUID
+    let sessionId = localStorage.getItem('analyticsSessionId');
+    if (!sessionId) {
+      sessionId = 'sess_' + Date.now() + '_' + Math.random().toString(36).substr(2, 9);
+      localStorage.setItem('analyticsSessionId', sessionId);
+    }
+
+    // Get rate limit data
+    const rateLimitKey = 'analyticsRateLimit';
+    const rateLimits = JSON.parse(localStorage.getItem(rateLimitKey) || '{}');
+    const now = Date.now();
+    const windowMs = 60 * 1000; // 1 minute window
+    const maxClicks = 3; // max clicks per guide per minute
+    
+    // Clean old entries (older than window)
+    const cutoff = now - windowMs;
+    Object.keys(rateLimits).forEach(key => {
+      rateLimits[key] = rateLimits[key].filter(timestamp => timestamp > cutoff);
+      if (rateLimits[key].length === 0) {
+        delete rateLimits[key];
+      }
+    });
+    
+    // Check current guide rate limit
+    const limitKey = `${sessionId}:${guideId}`;
+    const clicks = rateLimits[limitKey] || [];
+    
+    if (clicks.length >= maxClicks) {
+      return false; // Rate limited
+    }
+    
+    // Record this click
+    clicks.push(now);
+    rateLimits[limitKey] = clicks;
+    localStorage.setItem(rateLimitKey, JSON.stringify(rateLimits));
+    
+    return true; // Allow analytics
+  } catch (error) {
+    console.warn('Rate limit check failed:', error);
+    return true; // Default to allowing on error
+  }
+}
+
+/**
  * Track guide link clicks in localStorage for personalized UX
  */
 function initGuideTracking() {
   document.addEventListener('click', (e) => {
-    // Match any guide link with data-guide-id attribute
-    const el = e.target.closest('a[data-guide-id]');
+    // Target guide index links specifically
+    const el = e.target.closest('.guide-index__link');
     if (!el) return;
 
-    const id = el.dataset.guideId;
-    const title = el.textContent.trim();
-    const source = getClickSource(el);
+    // Extract guide data with fallbacks
+    const id = el.dataset.guideId || (el.getAttribute('href') || '').split('/').pop();
+    const title = el.dataset.guideTitle || el.textContent.trim();
+    const href = el.getAttribute('href');
 
+    // Session-based deduplication to prevent abuse
+    const shouldSendAnalytics = checkAnalyticsRateLimit(id);
+    
     // Log to localStorage for client-side popularity tracking
     try {
       const key = 'guideClicks';
@@ -39,27 +92,42 @@ function initGuideTracking() {
       localStorage.setItem(key, JSON.stringify(clicks));
       
       // Optional: Log for debugging
-      console.log(`📊 Guide click: ${id} (${clicks[id]} total) from ${source}`);
+      console.log(`📊 Guide click: ${id} (${clicks[id]} total)`);
     } catch (error) {
       // Silently handle localStorage errors (private browsing, etc.)
       console.warn('Guide tracking failed:', error);
     }
 
-    // Send event to Google Analytics 4
-    try {
-      if (typeof gtag !== 'undefined') {
-        gtag('event', 'guide_click', {
-          guide_id: id,
-          guide_title: title,
-          click_source: source,
-          event_category: 'engagement',
-          event_label: `${source}:${id}`,
-          debug_mode: true
-        });
-        console.log(`📈 GA4 event sent: guide_click for ${id}`);
-      }
-    } catch (error) {
-      console.warn('GA4 tracking failed:', error);
+    // Send event to our analytics endpoint (with rate limiting)
+    if (shouldSendAnalytics) {
+      const payload = JSON.stringify({ guide_id: id, guide_title: title, href });
+
+    // Prefer sendBeacon so the request completes during navigation
+    if (navigator.sendBeacon) {
+      const blob = new Blob([payload], { type: 'application/json' });
+      navigator.sendBeacon('/analytics/guide-click', blob);
+      console.log(`📊 Analytics beacon sent: ${id}`);
+    } else {
+      fetch('/analytics/guide-click', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: payload,
+        keepalive: true  // hint to allow during unload
+      }).catch(() => {});
+      console.log(`📊 Analytics fetch sent: ${id}`);
+    }
+    } else {
+      console.log(`📊 Analytics rate limited for: ${id}`);
+    }
+
+    // Optional: also fire GA4
+    if (window.gtag) {
+      window.gtag('event', 'guide_click', {
+        event_category: 'Guides',
+        event_label: id,
+        value: 1
+      });
+      console.log(`📈 GA4 event sent: guide_click for ${id}`);
     }
 
     // Don't prevent navigation - let the click go through

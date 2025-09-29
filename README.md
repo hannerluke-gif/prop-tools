@@ -19,6 +19,7 @@ A comprehensive Flask project featuring a scalable guide system, modern Sass/BEM
 - **Flask app** with dashboard and SEO-optimized guide system
 - **Dynamic sitemap** automatically generated from guides and routes
 - **Guide System** with BEM components, schema markup, and responsive design
+- **Privacy-friendly analytics** with guide click tracking (no PII stored)
 - **Modern Sass architecture** with Bootstrap 5 integration and design tokens
 - **Security hardening** with CSP, HTTPS, and production-ready headers
 - **VS Code integration** with tasks, Sass watch, and development workflow
@@ -251,6 +252,32 @@ def guide_your_guide_slug():
 - **Consistent Spacing**: 3rem section rhythm, responsive typography
 - **Text Links**: Integrated `.text-link` and `.text-link--accent` system
 - **Easy Theming**: Change colors/spacing globally via SCSS variables
+
+## Privacy-Friendly Analytics
+
+The application includes a built-in analytics system for tracking guide popularity while maintaining user privacy:
+
+### Data Collection
+- **What we track**: Guide clicks, titles, and URLs for popularity ranking
+- **What we DON'T track**: Personal information, IP addresses, cookies, or user accounts
+- **Data stored**: Guide ID, title, timestamp, and truncated User-Agent (for bot filtering)
+- **Retention**: No automatic deletion (implement based on your needs)
+
+### Privacy Features
+- **No PII**: No personally identifiable information is collected or stored
+- **Bot filtering**: Automated traffic is filtered out using User-Agent patterns
+- **Rate limiting**: Client-side deduplication prevents abuse (3 clicks/guide/minute/session)
+- **Local storage only**: Session data stays on user's device
+- **CSP compliant**: All tracking code in external files, no inline scripts
+
+### Technical Implementation
+- **Database**: SQLite for development, Postgres for production (via `DATABASE_URL`)
+- **Endpoints**: `/analytics/guide-click` (POST) and `/analytics/top-guides` (GET)
+- **Client tracking**: Uses `navigator.sendBeacon` for reliable delivery during navigation
+- **Popular guides**: Shows 🔥 flame indicator for guides with 5+ clicks in 30 days
+
+### Usage
+Popular guides are automatically highlighted in the guides index with flame indicators. The system is designed to be privacy-first while providing valuable insights into content performance.
 
 ## 11. Development Workflow
 

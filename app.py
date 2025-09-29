@@ -1,12 +1,21 @@
 # Stdlib
-import os, datetime, secrets
+import os, secrets
+import datetime
+from datetime import timedelta, timezone
+import sqlite3
 
 # Third-party
 from flask import Flask, render_template, request, redirect, g, Response, url_for
 from urllib.parse import urljoin
 from werkzeug.middleware.proxy_fix import ProxyFix
 
+# Local imports
+from analytics import analytics_bp
+
 app = Flask(__name__)
+
+# Register blueprints
+app.register_blueprint(analytics_bp)
 
 # Custom Jinja2 filter to convert guide URLs to IDs for analytics
 @app.template_filter('guide_id')
@@ -85,6 +94,40 @@ def _security_headers(resp):
         resp.headers["Content-Security-Policy"] = csp
     return resp
 
+# -------- Analytics Helper --------
+def get_popular_guides(days=30, limit=6):
+    """Query guide popularity from analytics database"""
+    since = (datetime.datetime.now(timezone.utc) - timedelta(days=days)).isoformat()
+    db_url = os.getenv('DATABASE_URL', '')
+    
+    if not db_url or db_url.startswith('sqlite:'):
+        # SQLite path
+        try:
+            conn = sqlite3.connect('instance/analytics.db')
+            rows = conn.execute(
+                "SELECT guide_id, COUNT(*) c FROM guide_clicks WHERE ts_utc >= ? GROUP BY guide_id ORDER BY c DESC LIMIT ?",
+                (since, limit)
+            ).fetchall()
+            conn.close()
+        except (sqlite3.Error, FileNotFoundError):
+            # Database doesn't exist yet or error occurred
+            return {}
+    else:
+        # Postgres path
+        try:
+            import psycopg
+            with psycopg.connect(db_url) as conn, conn.cursor() as cur:
+                cur.execute(
+                    "SELECT guide_id, COUNT(*) c FROM guide_clicks WHERE ts_utc >= %s GROUP BY guide_id ORDER BY c DESC LIMIT %s",
+                    (since, limit)
+                )
+                rows = cur.fetchall()
+        except Exception:
+            # Psycopg not available or connection error
+            return {}
+
+    return {gid: c for gid, c in rows}
+
 # -------- Routes --------
 @app.route("/")
 def dashboard():
@@ -108,7 +151,10 @@ def security_txt():
 
 @app.route("/guides")
 def guides_index():
-    # Add groups to the GUIDES for display
+    # Get popularity data for the last 30 days
+    popular_map = get_popular_guides(days=30, limit=10)
+    
+    # Add groups and popularity scores to the GUIDES for display
     guides_with_groups = []
     for guide in GUIDES:
         guide_with_group = guide.copy()
@@ -117,13 +163,20 @@ def guides_index():
             guide_with_group["group"] = "Beginner Basics"
         else:
             guide_with_group["group"] = "Choosing an Account"
+        
+        # Add popularity score
+        guide_with_group["score_30d"] = popular_map.get(guide["id"], 0)
         guides_with_groups.append(guide_with_group)
+    
+    # Optional: reorder each group by popularity
+    # guides_with_groups.sort(key=lambda g: g["score_30d"], reverse=True)
     
     return render_template(
         "guides/index.html",
         title="Trading Guides & Prop Firm 101",
         meta_desc="Learn prop firm basics, futures trading, evaluations, sim-funded, and how to choose the right account size and firm.",
         guides=guides_with_groups,
+        popular_map=popular_map,
     )
 
 @app.route("/guides/what-is-a-prop-firm")
