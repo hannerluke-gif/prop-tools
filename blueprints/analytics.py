@@ -821,6 +821,21 @@ def debug_db():
         except Exception as e:
             debug_simple = f"Error: {str(e)}"
         
+        # Also test a simple raw query that should definitely work
+        try:
+            cur.execute("""
+                SELECT guide_id, COUNT(*) as clicks
+                FROM guide_clicks 
+                WHERE ts_utc >= NOW() - INTERVAL '30 days'
+                GROUP BY guide_id 
+                ORDER BY clicks DESC 
+                LIMIT 10
+            """)
+            raw_results = cur.fetchall()
+            debug_raw = [{"guide_id": r[0], "clicks": int(r[1])} for r in raw_results]
+        except Exception as e:
+            debug_raw = f"Raw query error: {str(e)}"
+        
         return jsonify({
             "total_clicks": total_count,
             "daily_summary_count": daily_count,
@@ -829,6 +844,7 @@ def debug_db():
                 for r in recent_records
             ],
             "top_guides_simple_test": debug_simple,
+            "raw_query_test": debug_raw,
             "note": "SECURITY: Remove this debug endpoint after use"
         }), 200
         
