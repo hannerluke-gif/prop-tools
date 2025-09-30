@@ -470,8 +470,6 @@ def top_guides_simple(days: int = 30, limit: int = 5):
                 """)
 
                 rows = cur.fetchall()
-                # Debug logging
-                current_app.logger.info(f"top_guides_simple: Found {len(rows)} results for {days} days")
                 cur.close()
                 return [(gid, int(c)) for gid, c in rows]
             finally:
@@ -479,9 +477,7 @@ def top_guides_simple(days: int = 30, limit: int = 5):
 
     except Exception as e:
         # Graceful fallback - return empty list if analytics fails
-        current_app.logger.error(f"Popular guides query failed: {e}")
-        import traceback
-        current_app.logger.error(f"Full traceback: {traceback.format_exc()}")
+        current_app.logger.warning(f"Popular guides query failed: {e}")
         return []
 
 @analytics_bp.route('/popular', methods=['GET'])
@@ -632,6 +628,8 @@ def migrate_tables():
     Usage: POST /analytics/migrate-tables
     Remove this endpoint after running once for security.
     """
+    # DISABLED: Migration completed successfully
+    return jsonify({"message": "Migration endpoint disabled - tables already created"}), 200
     
     db_url = os.getenv('DATABASE_URL', '')
     if not db_url:
@@ -721,6 +719,8 @@ def debug_db():
     TEMPORARY DEBUG ENDPOINT - Check database contents
     Remove after debugging is complete.
     """
+    # DISABLED: Analytics is now working correctly
+    return jsonify({"message": "Debug endpoint disabled - analytics working correctly"}), 200
     
     db_url = os.getenv('DATABASE_URL', '')
     if not db_url:
