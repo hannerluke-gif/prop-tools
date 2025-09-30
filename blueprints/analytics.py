@@ -470,6 +470,8 @@ def top_guides_simple(days: int = 30, limit: int = 5):
                 """, (interval_str, limit))
 
                 rows = cur.fetchall()
+                # Debug logging
+                current_app.logger.info(f"top_guides_simple: Found {len(rows)} results for {days} days")
                 cur.close()
                 return [(gid, int(c)) for gid, c in rows]
             finally:
@@ -477,7 +479,9 @@ def top_guides_simple(days: int = 30, limit: int = 5):
 
     except Exception as e:
         # Graceful fallback - return empty list if analytics fails
-        current_app.logger.warning(f"Popular guides query failed: {e}")
+        current_app.logger.error(f"Popular guides query failed: {e}")
+        import traceback
+        current_app.logger.error(f"Full traceback: {traceback.format_exc()}")
         return []
 
 @analytics_bp.route('/popular', methods=['GET'])
