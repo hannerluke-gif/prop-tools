@@ -1,6 +1,15 @@
 // ============================================================
-// SITE FOOTER
-// Large two-section footer with links, branding, and legal info
+// SITE FOOTER LAYOUT (BEM COMPLIANT)
+// 
+// Two-section footer with upper content area and lower legal/branding area.
+// Uses backdrop blur effects and gradient borders for visual depth.
+// 
+// BEM Structure:
+// .site-footer                     → Root component
+// .site-footer__upper              → Main content section
+// .site-footer__lower              → Copyright/legal section  
+// .site-footer__divider            → Visual separator between sections
+// .site-footer__section-title      → Section headings in upper footer
 // ============================================================
 
 .site-footer {

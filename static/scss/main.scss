@@ -1,30 +1,46 @@
-// main.scss
+// ============================================================
+// MAIN SCSS ENTRY POINT
+// Imports organized following the official Sass architecture pattern
+// Variables → Bootstrap → Layout → Components → Utilities
+// ============================================================
 
-// 0) Bootstrap core SASS prerequisites for variable/mapping customization
+// ============================================================
+// 1) BOOTSTRAP PREREQUISITES
+// Core functions needed for variable customization
+// ============================================================
 @import "bootstrap/scss/functions";
 
-// 1) Your overrides BEFORE Bootstrap
-@import "variables";  // $body-bg, $font-family-base, colors, etc.
-@import "bootstrap/scss/variables"; // bring in Bootstrap's defaults so maps exist
-@import "maps";       // map-merge for $theme-colors, utilities API
+// ============================================================
+// 2) PROJECT VARIABLES & CUSTOMIZATION
+// Must come before Bootstrap to override defaults
+// ============================================================
+@import "variables";                    // Global design tokens and component variables
+@import "bootstrap/scss/variables";     // Bootstrap defaults (needed for map merging)
+@import "maps";                         // Theme color extensions and utility maps
 
-// 2) Bootstrap source
-@import "bootstrap/scss/bootstrap"; // installed via npm (no CDN CSS)
+// ============================================================
+// 3) BOOTSTRAP FRAMEWORK
+// Complete Bootstrap framework import
+// ============================================================
+@import "bootstrap/scss/bootstrap";
 
-// 3) Your app styles AFTER Bootstrap
-// Layout
-@import "layout/footer";
-@import "layout/prose"; // long-form article typography
-@import "layout/guides";
+// ============================================================
+// 4) LAYOUT COMPONENTS
+// Global layout structures and typography systems
+// ============================================================
+@import "layout/footer";                // Site footer with links and branding
+@import "layout/prose";                 // Long-form article typography
+@import "layout/guides";                // Guide/landing page component system
 
-// Global button styles (ensure site tokens are applied to Bootstrap buttons)
-@import "components/buttons";
-
-// Components
-@import "components/promo-banner";
-@import "components/site-banner";
-@import "components/brand";
-@import "components/hero";
+// ============================================================
+// 5) UI COMPONENTS
+// Individual interface components following BEM methodology
+// ============================================================
+@import "components/buttons";           // Global button token enforcement
+@import "components/brand";             // Site logo and branding
+@import "components/site-banner";       // Sticky header with search (BEM compliant)
+@import "components/promo-banner";      // Homepage promotional banner (BEM compliant)
+@import "components/hero";              // Hero section (legacy global selectors - grandfathered)
 
 // Global layout/base document styles
 // Uses $base-html-bg defined in _variables.scss

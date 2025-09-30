@@ -1,6 +1,21 @@
-// Site Banner Component
-// Styles are scoped under .site-banner
-// BEM elements: &__inner, &__search, &__search-form, &__input, &__search-btn, &__mobile-btn, &__mobile-bar, &__mobile-search
+// ============================================================
+// SITE BANNER COMPONENT (BEM COMPLIANT)
+// 
+// Sticky header with logo, search functionality, and mobile navigation.
+// Exemplifies proper BEM methodology and serves as a reference implementation.
+// 
+// BEM Structure:
+// .site-banner                     → Root component
+// .site-banner__inner              → Main container
+// .site-banner__search             → Search section wrapper
+// .site-banner__search-form        → Search form element
+// .site-banner__input              → Search input field
+// .site-banner__search-btn         → Search submit button
+// .site-banner__mobile-btn         → Mobile hamburger button
+// .site-banner__mobile-bar         → Mobile navigation container
+// .site-banner__mobile-search      → Mobile-specific search
+// .site-banner.is-searching        → Component state modifier
+// ============================================================
 
 .site-banner {
   position: sticky;

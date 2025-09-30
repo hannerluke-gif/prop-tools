@@ -88,7 +88,7 @@ WHERE ts_utc >= datetime('now', '-1 day');
 ```
 
 #### Health Checks
-- Monitor `/analytics/top-guides` endpoint response time
+- Monitor `/analytics/popular` endpoint response time (recommended) or `/analytics/top-guides` (legacy)
 - Check database connection health
 - Watch for unusual traffic spikes (potential abuse)
 

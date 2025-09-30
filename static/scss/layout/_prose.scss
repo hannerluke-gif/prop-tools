@@ -1,6 +1,17 @@
-// Unified article / long-form content typography
-// Apply to any container with class .prose to normalize spacing, headings,
-// lists, and inline elements for readable guide content.
+// ============================================================
+// PROSE TYPOGRAPHY SYSTEM
+// 
+// Unified typography component for long-form content and articles.
+// Apply .prose class to any container to normalize spacing, headings, lists,
+// and inline elements for optimal readability.
+// 
+// Features:
+// * Responsive heading scales with clamp() functions
+// * Consistent vertical rhythm and spacing
+// * Integration with text link design tokens
+// * Optimized line heights and font sizes for readability
+// * Excludes buttons from text link styling to avoid conflicts
+// ============================================================
 
 .prose {
   // Base text inherits page color unless overridden; guides set $text-color

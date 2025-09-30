@@ -1,9 +1,18 @@
-// Site Logo component
-// Replaces previous wordmark stack. Designed to occupy 40px site banner height.
-// Markup:
+// ============================================================
+// SITE LOGO COMPONENT (BEM COMPLIANT)
+// 
+// Site branding/logo component designed for 40px banner integration.
+// Responsive design with mobile centering and desktop left alignment.
+// 
+// BEM Structure:
+// .site-logo          → Root component
+// .site-logo__img     → Logo image element
+// 
+// Usage:
 // <a href="/" class="site-logo d-inline-flex align-items-center">
-//   <img src=".../prop_tools_logo.svg" alt="Prop Tools Logo" class="site-logo__img" />
+//   <img src="logo.svg" alt="Site Logo" class="site-logo__img" />
 // </a>
+// ============================================================
 
 .site-logo {
   height: 40px; // match banner height

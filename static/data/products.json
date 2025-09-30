@@ -1,0 +1,68 @@
+{
+  "disclaimer": "Availability varies by prop firm. Always confirm with your firm before trading.",
+  "categories": [
+    {
+      "name": "Equity Index Futures", 
+      "items": [
+        {"name": "S&P 500", "symbols": ["ES","MES"], "exchange": "CME"},
+        {"name": "Nasdaq-100", "symbols": ["NQ","MNQ"], "exchange": "CME"},
+        {"name": "Dow", "symbols": ["YM","MYM"], "exchange": "CBOT"},
+        {"name": "Russell 2000", "symbols": ["RTY","M2K"], "exchange": "CME"},
+        {"name": "Midcap 400", "symbols": ["EMD"], "exchange": "CME"},
+        {"name": "Nikkei 225 (USD)", "symbols": ["NKD"], "exchange": "CME"},
+        {"name": "Eurex (extra sub)", "symbols": ["FDAX","FDXM","FESX","FGBL"], "exchange": "EUREX"}
+      ]
+    },
+    {
+      "name": "Currency Futures", 
+      "items": [
+        {"name": "Euro FX", "symbols": ["6E","M6E"], "exchange": "CME"},
+        {"name": "Japanese Yen", "symbols": ["6J"], "exchange": "CME"},
+        {"name": "British Pound", "symbols": ["6B","M6B"], "exchange": "CME"},
+        {"name": "Australian Dollar", "symbols": ["6A","M6A"], "exchange": "CME"},
+        {"name": "Canadian Dollar", "symbols": ["6C"], "exchange": "CME"},
+        {"name": "Swiss Franc", "symbols": ["6S"], "exchange": "CME"},
+        {"name": "New Zealand Dollar", "symbols": ["6N"], "exchange": "CME"}
+      ]
+    },
+    {
+      "name": "Energy Futures", 
+      "items": [
+        {"name": "Crude Oil", "symbols": ["CL","MCL","QM"], "exchange": "NYMEX"},
+        {"name": "Natural Gas", "symbols": ["NG","QG"], "exchange": "NYMEX"},
+        {"name": "Heating Oil", "symbols": ["HO"], "exchange": "NYMEX"},
+        {"name": "RBOB Gasoline", "symbols": ["RB"], "exchange": "NYMEX"}
+      ]
+    },
+    {
+      "name": "Metal Futures", 
+      "items": [
+        {"name": "Gold", "symbols": ["GC","MGC","QO"], "exchange": "COMEX"},
+        {"name": "Silver", "symbols": ["SI","QI"], "exchange": "COMEX"},
+        {"name": "Copper", "symbols": ["HG"], "exchange": "COMEX"},
+        {"name": "Platinum", "symbols": ["PL"], "exchange": "NYMEX"},
+        {"name": "Palladium", "symbols": ["PA"], "exchange": "NYMEX"}
+      ]
+    },
+    {
+      "name": "Agricultural Futures", 
+      "items": [
+        {"name": "Corn", "symbols": ["ZC"], "exchange": "CBOT"},
+        {"name": "Soybeans", "symbols": ["ZS"], "exchange": "CBOT"},
+        {"name": "Wheat", "symbols": ["ZW"], "exchange": "CBOT"},
+        {"name": "Soybean Meal", "symbols": ["ZM"], "exchange": "CBOT"},
+        {"name": "Soybean Oil", "symbols": ["ZL"], "exchange": "CBOT"},
+        {"name": "Live Cattle", "symbols": ["LE"], "exchange": "CME"},
+        {"name": "Feeder Cattle", "symbols": ["GF"], "exchange": "CME"},
+        {"name": "Lean Hogs", "symbols": ["HE"], "exchange": "CME"}
+      ]
+    },
+    {
+      "name": "Crypto Futures (CME)", 
+      "items": [
+        {"name": "Micro Bitcoin", "symbols": ["MBT"], "exchange": "CME"},
+        {"name": "Micro Ether", "symbols": ["MET"], "exchange": "CME"}
+      ]
+    }
+  ]
+}

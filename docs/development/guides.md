@@ -25,10 +25,12 @@ The guide system provides a consistent, SEO-optimized framework for creating lan
 ### 1. Base Template (`templates/guides/guide_base.html`)
 
 **Provides consistent structure for all guides:**
+- Smart back navigation (context-aware)
 - Header with title and subtitle
 - Horizontal divider
 - Main content sections
 - Call-to-action card
+- Bottom back navigation (always "Back to Guides")
 - FAQ section with schema markup
 - "Keep Learning" navigation
 - Disclosure/fine print
@@ -39,18 +41,27 @@ The guide system provides a consistent, SEO-optimized framework for creating lan
 - Meta description inheritance
 - CSP nonce support
 
+**Navigation Features:**
+- **Smart top back link**: Context-aware navigation that links back to the previous guide when applicable
+- **Bottom back link**: Always provides "← Back to Guides" after the CTA section
+- **Analytics tracking**: Both back links are tracked separately for usage analysis
+- **Fallback logic**: Safe referrer checking with same-origin validation
+
 ### 2. BEM Component System (`static/scss/layout/_guides.scss`)
 
 **Strict BEM structure for maintainability:**
 ```scss
-.guide                    // Root component
-├── .guide__header        // Title + subtitle section
-├── .guide__section       // Content sections
-├── .guide__section-title // Section headings
-├── .guide__cta           // Call-to-action card
-├── .guide__faq           // FAQ items
-├── .guide__next          // Keep Learning section
-└── .guide__disclosure    // Fine print
+.guide                     // Root component
+├── .guide__back-nav       // Top back navigation
+├── .guide__back-nav-bottom// Bottom back navigation
+├── .guide__back-link      // Back link styling
+├── .guide__header         // Title + subtitle section
+├── .guide__section        // Content sections
+├── .guide__section-title  // Section headings
+├── .guide__cta            // Call-to-action card
+├── .guide__faq            // FAQ items
+├── .guide__next           // Keep Learning section
+└── .guide__disclosure     // Fine print
 ```
 
 ### 3. Centralized Variables (`static/scss/_variables.scss`)
@@ -207,6 +218,28 @@ def guide_your_guide_slug():
 - `faq_schema` - Override entire FAQ schema block
 - `guide_cta` - Replace entire CTA section
 - `guide_faq` - Replace entire FAQ section
+
+### Available Context Variables
+
+All guide templates automatically have access to these context variables:
+
+#### `guide_back` Dictionary
+Smart back navigation data provided by the `_inject_guide_back()` context processor:
+- `guide_back.href` - URL for the back link (empty if no back navigation should show)
+- `guide_back.label` - Display text for the back link (e.g., "← Back to Guides" or "← Back to \"Guide Title\"")
+
+**Usage in templates:**
+```jinja2
+{% if guide_back.href %}
+  <a href="{{ guide_back.href }}">{{ guide_back.label }}</a>
+{% endif %}
+```
+
+**Logic:**
+- **Context-aware**: If user came from another guide, links back to that specific guide
+- **Safe fallback**: Always defaults to "← Back to Guides" if no valid referrer
+- **Same-origin only**: Only links back to same-domain referrers for security
+- **Analytics ready**: Back links include `guide-back__link` class for tracking
 - `guide_next` - Replace entire Keep Learning section
 - `guide_disclosure` - Replace disclosure section
 

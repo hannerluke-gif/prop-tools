@@ -1,8 +1,14 @@
-// Site color tokens map
-// Define named color tokens here and merge them into Bootstrap's `$theme-colors`
-// so utilities like `bg-promo`, `text-promo`, and `.btn-promo` are available.
-
-// Ensure variables are available (imported in main.scss but explicit for IntelliSense)
+// ============================================================
+// BOOTSTRAP THEME EXTENSIONS
+// 
+// Extends Bootstrap's utility system with custom color tokens and maps.
+// Custom tokens defined here become available as Bootstrap utilities:
+// - CSS classes: `.bg-promo`, `.text-promo`, `.border-promo`  
+// - Button variants: `.btn-promo`
+// - Component utilities: `.alert-promo`, `.badge-promo`
+//
+// Variables imported explicitly for IDE IntelliSense support
+// ============================================================
 @import "variables";
 
 $site-color-tokens: (

@@ -7,6 +7,7 @@ A comprehensive Flask project featuring a scalable guide system, modern Sass/BEM
 - [Project Structure](#project-structure)
 - [Requirements](#requirements)
 - [Quick Start](#quick-start)
+- [📚 Documentation](#-documentation)
 - [Guide System (SEO Landing Pages)](#guide-system-seo-landing-pages)
 - [Development Workflow](#11-development-workflow)
 - [Production Deployment](#12-production-deployment)
@@ -19,7 +20,7 @@ A comprehensive Flask project featuring a scalable guide system, modern Sass/BEM
 - **Flask app** with dashboard and SEO-optimized guide system
 - **Dynamic sitemap** automatically generated from guides and routes
 - **Guide System** with BEM components, schema markup, and responsive design
-- **Privacy-friendly analytics** with guide click tracking (no PII stored)
+- **Privacy-friendly analytics** with guide click tracking and back link navigation analytics (no PII stored)
 - **Modern Sass architecture** with Bootstrap 5 integration and design tokens
 - **Security hardening** with CSP, HTTPS, and production-ready headers
 - **VS Code integration** with tasks, Sass watch, and development workflow
@@ -29,17 +30,25 @@ A comprehensive Flask project featuring a scalable guide system, modern Sass/BEM
 ```
 propfirm_bootstrap/
 ├── app.py                     # Flask application with routes & security
+├── guides_catalog.py          # Centralized guide definitions and metadata
 ├── requirements.txt           # Python dependencies
 ├── Procfile                   # Heroku deployment config
 ├── package.json               # Node.js dependencies (Sass)
+│
+├── blueprints/               # Flask Blueprint modules
+│   ├── __init__.py
+│   └── analytics.py          # Analytics system with click tracking
 │
 ├── templates/
 │   ├── base.html              # Main layout template
 │   ├── dashboard.html         # Dashboard page
 │   ├── sitemap.xml           # Dynamic sitemap template
 │   ├── 500.html              # Error page
+│   ├── components/           # Reusable template components
+│   │   └── popular_guides.html # Popular guides widget
 │   └── guides/               # Guide system templates
 │       ├── guide_base.html   # Shared guide layout
+│       ├── index.html        # Guides index with popular widget
 │       └── what-is-a-prop-firm.html  # Example guide page
 │
 ├── static/
@@ -67,7 +76,8 @@ propfirm_bootstrap/
 │   │       ├── _guides.scss # Guide system BEM components
 │   │       └── _prose.scss  # Typography utilities
 │   ├── js/                  # JavaScript modules (ES6)
-│   │   ├── main.js          # Entry point
+│   │   ├── main.js          # Entry point with analytics tracking
+│   │   ├── analytics.js     # Google Analytics initialization (CSP compliant)
 │   │   ├── components/      # Component scripts
 │   │   │   ├── hero.js
 │   │   │   ├── promoBanner.js
@@ -89,15 +99,26 @@ propfirm_bootstrap/
 │   └── vendor/              # Third-party assets
 │       └── bootstrap/
 │
+├── instance/                # Instance-specific data (SQLite dev database)
+│   └── analytics.db         # Analytics database (development)
+│
+├── docs/                    # Project documentation
+│   ├── README.md
+│   ├── analytics/           # Analytics system documentation
+│   │   ├── usage.md         # Usage guide and API reference
+│   │   ├── production.md    # Production setup (Heroku, Postgres)
+│   │   └── production.md    # Production setup (Heroku, Postgres)
+│   ├── development/         # Development guides
+│   │   ├── guides.md        # Guide system development
+│   │   └── styles.md        # Sass/CSS development guide
+│   ├── security.md          # Unified security guide (deployment + analytics)
+│   └── deployment/          # Deployment documentation
+│
 ├── .venv/                   # Python virtual environment
 ├── .vscode/                 # VS Code configuration
 │   └── tasks.json          # Development tasks
 │
-└── Documentation:
-    ├── README.md            # This file
-    ├── style_guide.md       # Development guidelines
-    ├── security_checklist.md # Security review checklist
-    └── guide_system_docs.md # Guide system documentation
+└── README.md               # This file - project overview
 ```
 
 ## Requirements
@@ -179,14 +200,34 @@ $env:SECRET_KEY = "some-secret"
 - Set `FLASK_ENV` (or `FLASK_DEBUG`) appropriately and avoid leaving debug mode enabled in production.
 - Consider `.env` management via `python-dotenv`.
 
+## 📚 Documentation
+
+This project includes comprehensive documentation organized by topic in the [`docs/`](docs/) directory:
+
+### Quick Access
+- **📖 [Complete Documentation Index](docs/README.md)** - Start here for all documentation
+- **🔧 [Guide System Documentation](docs/development/guides.md)** - Creating and managing SEO landing pages  
+- **🎨 [Style Guide](docs/development/styles.md)** - SCSS architecture and component standards
+- **📊 [Analytics Usage Guide](docs/analytics/usage.md)** - Understanding and using the analytics system
+- **🚀 [Security Guide](docs/security.md)** - Comprehensive security hardening for deployment and analytics
+
+### By Category
+- **Analytics** (`docs/analytics/`) - Analytics system usage and production setup
+- **Development** (`docs/development/`) - Guide system architecture, style guides, and coding standards  
+- **Security** (`docs/security.md`) - Unified security guide for deployment and analytics
+
+> **💡 Tip:** The documentation includes cross-references and examples. Start with the [Documentation Index](docs/README.md) to find what you need quickly.
+
 ## Guide System (SEO Landing Pages)
 
 The project includes a scalable guide system for creating SEO-optimized landing pages:
 
 ### Base Template System
 - **Shared Layout**: All guides extend `templates/guides/guide_base.html`
-- **Consistent Structure**: Header → Content → CTA (dual buttons) → FAQ → Keep Learning → Disclosure
+- **Smart Navigation**: Context-aware back links + always-available "Back to Guides" navigation
+- **Consistent Structure**: Back Link → Header → Content → CTA → Back Link → FAQ → Keep Learning → Disclosure
 - **Built-in SEO**: FAQ schema, breadcrumbs, meta descriptions, CSP nonce support
+- **Analytics Ready**: Back link usage tracking for UX optimization
 - **BEM Components**: Strict `.guide__*` naming with modifiers (e.g., `guide__faq-section--spacious`)
 
 ### Creating New Guides
@@ -255,29 +296,67 @@ def guide_your_guide_slug():
 
 ## Privacy-Friendly Analytics
 
-The application includes a built-in analytics system for tracking guide popularity while maintaining user privacy:
+The application includes a comprehensive analytics system for tracking guide popularity while maintaining user privacy:
 
-### Data Collection
+### 🚀 Core Features
+- **Click Tracking**: Automatic guide click analytics with privacy-first design
+- **Popular Guides Widget**: Server-rendered component showing trending content
+- **JSON API**: RESTful endpoint for accessing analytics data anywhere in your app
+- **Daily Rollup**: Automated data aggregation via Heroku Scheduler
+- **Centralized Catalog**: Single source of truth for all guide metadata
+
+### 📊 Data Collection
 - **What we track**: Guide clicks, titles, and URLs for popularity ranking
 - **What we DON'T track**: Personal information, IP addresses, cookies, or user accounts
 - **Data stored**: Guide ID, title, timestamp, and truncated User-Agent (for bot filtering)
-- **Retention**: No automatic deletion (implement based on your needs)
+- **Retention**: Daily rollup with configurable data purging
 
-### Privacy Features
+### 🔒 Privacy Features
 - **No PII**: No personally identifiable information is collected or stored
 - **Bot filtering**: Automated traffic is filtered out using User-Agent patterns
-- **Rate limiting**: Client-side deduplication prevents abuse (3 clicks/guide/minute/session)
+- **Rate limiting**: Client-side deduplication prevents abuse (10 clicks/user/hour)
 - **Local storage only**: Session data stays on user's device
-- **CSP compliant**: All tracking code in external files, no inline scripts
+- **CSP compliant**: All scripts in external files with nonce protection
 
-### Technical Implementation
+### 🛠️ Technical Implementation
 - **Database**: SQLite for development, Postgres for production (via `DATABASE_URL`)
-- **Endpoints**: `/analytics/guide-click` (POST) and `/analytics/top-guides` (GET)
+- **Endpoints**: 
+  - `/analytics/guide-click` (POST) - Record guide clicks
+  - `/analytics/popular` (GET) - JSON API with rich metadata
+  - `/analytics/maintenance/rollup` (POST) - Daily aggregation (admin only)
 - **Client tracking**: Uses `navigator.sendBeacon` for reliable delivery during navigation
-- **Popular guides**: Shows 🔥 flame indicator for guides with 5+ clicks in 30 days
+- **Popular indicators**: Shows 🔥 flame emoji for guides with 10+ clicks in 7 days
+- **Widget Integration**: Reusable `popular_guides.html` component
 
-### Usage
-Popular guides are automatically highlighted in the guides index with flame indicators. The system is designed to be privacy-first while providing valuable insights into content performance.
+### 🎯 Usage Examples
+
+#### JSON API
+```bash
+# Get top 5 popular guides from last 30 days
+curl "https://yoursite.com/analytics/popular?days=30&limit=5"
+
+# Response includes full metadata
+{
+  "days": 30,
+  "guides": [
+    {
+      "id": "what-is-a-prop-firm",
+      "title": "What is a Prop Firm?",
+      "href": "/guides/what-is-a-prop-firm",
+      "group": "Beginner Basics",
+      "clicks": 42
+    }
+  ]
+}
+```
+
+#### Popular Guides Widget
+```html
+<!-- In any template -->
+{% include 'components/popular_guides.html' %}
+```
+
+The system automatically highlights popular content and provides valuable insights while respecting user privacy.
 
 ## 11. Development Workflow
 

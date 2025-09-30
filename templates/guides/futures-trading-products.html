@@ -1,0 +1,90 @@
+{% extends "guides/guide_base.html" %}
+
+{% block meta_desc %}{{ meta_desc }}{% endblock %}
+{% block guide_title %}Futures Trading Products{% endblock %}
+{% block guide_subtitle %}
+Most prop firms allow traders to access a wide range of CME Group products (CME, CBOT, NYMEX, COMEX). Some also support Eurex and crypto futures.
+{% endblock %}
+
+{% block faq_items %}[{
+  "@type":"Question","name":"Can I trade crypto futures with prop firm capital?",
+  "acceptedAnswer":{"@type":"Answer","text":"Some prop firms allow CME crypto futures like Micro Bitcoin (MBT) and Micro Ether (MET), but availability varies. Always check with your specific firm."}
+},{
+  "@type":"Question","name":"What are the most popular futures for beginners?",
+  "acceptedAnswer":{"@type":"Answer","text":"Most beginners start with equity index futures like ES/MES (S&P 500) or NQ/MNQ (Nasdaq) due to their liquidity and smaller contract sizes with micros."}
+}]{% endblock %}
+
+{% block guide_content %}
+<div class="guide__section">
+  <p>This page is a <strong>reference guide</strong> to common futures contracts you'll find across firms.</p>
+  <p>Always check the specific firm's rules before trading — permitted products can change.</p>
+</div>
+
+{% for category in products['categories'] %}
+<div class="guide__section">
+  <h2 class="guide__section-title">{{ category['name'] }}</h2>
+  <ul class="guide__bullets">
+    {% for item in category['items'] %}
+    <li>
+      <strong>{{ item['name'] }}:</strong> 
+      {% for symbol in item['symbols'] -%}
+        {{- symbol }}{% if not loop.last %}, {% endif %}
+      {%- endfor %}
+      {% if item['exchange'] and item['exchange'] != "CME" %} ({{ item['exchange'] }}){% endif %}
+    </li>
+    {% endfor %}
+  </ul>
+</div>
+{% endfor %}
+
+{% if products['disclaimer'] %}
+<div class="guide__section">
+  <p><strong>⚠️ Disclaimer:</strong> {{ products['disclaimer'] }}</p>
+</div>
+{% endif %}
+{% endblock %}
+
+{% block faq_content %}
+{# <details class="guide__faq" role="group">
+  <summary class="guide__faq__summary">
+    <span class="h6 mb-0 d-inline-block">Do all prop firms offer the same futures products?</span>
+  </summary>
+  <div class="guide__faq__content">
+    No, product availability varies by prop firm. Most offer CME Group products (CME, CBOT, NYMEX, COMEX), but some may restrict certain markets or require additional subscriptions for exchanges like Eurex.
+    <div class="mt-3">
+      <a href="/compare" class="btn btn-sm btn-tertiary">Compare Firm Rules</a>
+    </div>
+  </div>
+</details> #}
+
+<details class="guide__faq" role="group">
+  <summary class="guide__faq__summary">
+    <span class="h6 mb-0 d-inline-block">Can I trade crypto futures with prop firm capital?</span>
+  </summary>
+  <div class="guide__faq__content">
+    Some prop firms allow CME crypto futures like Micro Bitcoin (MBT) and Micro Ether (MET), but availability varies. Always check with your specific firm before trading crypto products.
+    <div class="mt-3">
+      <a href="/compare" class="btn btn-sm btn-tertiary">Best Prop Firms</a>
+    </div>
+  </div>
+</details>
+
+<details class="guide__faq" role="group">
+  <summary class="guide__faq__summary">
+    <span class="h6 mb-0 d-inline-block">What are the most popular futures for beginners?</span>
+  </summary>
+  <div class="guide__faq__content">
+    Most beginners start with equity index futures like ES/MES (S&P 500) or NQ/MNQ (Nasdaq) due to their liquidity and smaller contract sizes with micros.
+    <div class="mt-3 d-flex flex-wrap gap-3">
+      <a href="/guides/best-way-to-start-trading-futures" class="btn btn-sm btn-tertiary">Start Trading</a>
+      <a href="/compare" class="btn btn-sm btn-secondary">Best Prop Firms</a>
+    </div>
+  </div>
+</details>
+{% endblock %}
+
+{% block next_links %}
+  <li class="guide__next__item"><a class="guide__next__link" href="/guides/what-is-futures-trading" data-guide-id="{{ '/guides/what-is-futures-trading' | guide_id }}">What is Futures Trading?</a></li>
+  <li class="guide__next__item"><a class="guide__next__link" href="/guides/best-way-to-start-trading-futures" data-guide-id="{{ '/guides/best-way-to-start-trading-futures' | guide_id }}">Best Way to Start Trading Futures</a></li>
+  <li class="guide__next__item"><a class="guide__next__link" href="/guides/what-is-a-prop-firm" data-guide-id="{{ '/guides/what-is-a-prop-firm' | guide_id }}">What is a Prop Firm?</a></li>
+{% endblock %}

@@ -1,8 +1,7 @@
 # Stdlib
-import os, secrets
+import os, secrets, json
 import datetime
 from datetime import timedelta, timezone
-import sqlite3
 
 # Third-party
 from flask import Flask, render_template, request, redirect, g, Response, url_for
@@ -10,7 +9,9 @@ from urllib.parse import urljoin
 from werkzeug.middleware.proxy_fix import ProxyFix
 
 # Local imports
-from analytics import analytics_bp
+from blueprints.analytics import analytics_bp, top_guides_simple
+from guides_catalog import GUIDES_CATALOG, get_all_guides, get_guide_by_id
+from urllib.parse import urlparse
 
 app = Flask(__name__)
 
@@ -33,6 +34,65 @@ def _csp_nonce():
 def _inject_csp_nonce():
     return {"csp_nonce": getattr(g, "csp_nonce", "")}
 
+# -------- Helper functions --------
+GUIDES_PREFIX = "/guides/"
+
+def _safe_context_back_link() -> dict:
+    """
+    Return a dict {href, label} for the top 'Back' link on guide pages.
+    Rules:
+      - If referrer is same-origin AND starts with /guides/ (and not this page),
+        link back to that guide by title.
+      - Otherwise, link to the Guide Index.
+    """
+    # Defaults
+    default = {"href": url_for("guides_index"), "label": "← Back to Guides"}
+
+    # Only show on actual guide detail pages (not /guides index)
+    if not request.path.startswith(GUIDES_PREFIX) or request.path == GUIDES_PREFIX:
+        return {}
+
+    ref = request.referrer or ""
+    if not ref:
+        return default
+
+    # Same-origin check
+    ref_url = urlparse(ref)
+    here_url = urlparse(request.url)
+    if (ref_url.scheme, ref_url.netloc) != (here_url.scheme, here_url.netloc):
+        return default
+
+    # Must be a guide page (not the index) and not the same page
+    if not ref_url.path.startswith(GUIDES_PREFIX) or ref_url.path == GUIDES_PREFIX or ref_url.path == request.path:
+        return default
+
+    # Derive guide_id from /guides/<slug>
+    slug = ref_url.path.replace(GUIDES_PREFIX, "", 1).strip("/")
+    guide = get_guide_by_id(slug)
+    if not guide:
+        return default
+
+    # Nice label: Back to "Title"
+    return {
+        "href": guide["href"],
+        "label": f"← Back to \"{guide['title']}\""
+    }
+
+@app.context_processor
+def _inject_guide_back():
+    try:
+        return {"guide_back": _safe_context_back_link()}
+    except Exception:
+        return {"guide_back": {}}
+
+@app.context_processor
+def _inject_global_popular_guides():
+    """Make popular guides available in all templates for footer/sidebar use"""
+    try:
+        return {"global_popular_guides": get_popular_guides_widget(days=30, limit=4)}
+    except Exception:
+        return {"global_popular_guides": []}
+
 # -------- Environment & base config --------
 # Set APP_ENV=production on Heroku (Config Vars). Anything else = dev.
 APP_ENV = os.getenv("APP_ENV", "").lower()
@@ -46,6 +106,10 @@ app.config.update(
     SESSION_COOKIE_HTTPONLY=True,   # not accessible to JS
     SESSION_COOKIE_SAMESITE="Lax",  # or "Strict" if no cross-site POSTs
 )
+
+# Guide flame icon threshold (30-day clicks needed to show 🔥)
+# Can be overridden with FLAME_ICON_THRESHOLD environment variable
+FLAME_ICON_THRESHOLD = int(os.getenv("FLAME_ICON_THRESHOLD", "5"))
 
 # Only trust proxy headers when deployed behind Heroku's proxy
 if IS_PROD:
@@ -95,38 +159,61 @@ def _security_headers(resp):
     return resp
 
 # -------- Analytics Helper --------
-def get_popular_guides(days=30, limit=6):
-    """Query guide popularity from analytics database"""
-    since = (datetime.datetime.now(timezone.utc) - timedelta(days=days)).isoformat()
-    db_url = os.getenv('DATABASE_URL', '')
-    
-    if not db_url or db_url.startswith('sqlite:'):
-        # SQLite path
-        try:
-            conn = sqlite3.connect('instance/analytics.db')
-            rows = conn.execute(
-                "SELECT guide_id, COUNT(*) c FROM guide_clicks WHERE ts_utc >= ? GROUP BY guide_id ORDER BY c DESC LIMIT ?",
-                (since, limit)
-            ).fetchall()
-            conn.close()
-        except (sqlite3.Error, FileNotFoundError):
-            # Database doesn't exist yet or error occurred
-            return {}
-    else:
-        # Postgres path
-        try:
-            import psycopg
-            with psycopg.connect(db_url) as conn, conn.cursor() as cur:
-                cur.execute(
-                    "SELECT guide_id, COUNT(*) c FROM guide_clicks WHERE ts_utc >= %s GROUP BY guide_id ORDER BY c DESC LIMIT %s",
-                    (since, limit)
-                )
-                rows = cur.fetchall()
-        except Exception:
-            # Psycopg not available or connection error
-            return {}
+# REMOVED: get_popular_guides() function - moved to blueprints/analytics.py
+# Use top_guides_simple() from analytics blueprint instead
 
-    return {gid: c for gid, c in rows}
+def get_popular_guides_widget(days=30, limit=5):
+    """
+    Get popular guides data formatted for the popular_guides.html widget.
+    Returns a list of dicts with id, title, href, clicks for template use.
+    """
+    try:
+        # Get raw popularity data
+        popular_tuples = top_guides_simple(days=days, limit=limit)
+        
+        # Format for widget template using centralized catalog
+        widget_guides = []
+        used_guide_ids = set()
+        
+        for guide_id, clicks in popular_tuples:
+            guide_info = get_guide_by_id(guide_id)
+            if guide_info:  # Only include guides that still exist in catalog
+                widget_guides.append({
+                    "id": guide_id,
+                    "title": guide_info["title"],
+                    "href": guide_info["href"],
+                    "clicks": clicks
+                })
+                used_guide_ids.add(guide_id)
+        
+        # If we don't have enough guides from analytics, fill with popular fallbacks
+        if len(widget_guides) < limit:
+            fallback_guides = [
+                "what-is-a-prop-firm",
+                "best-account-size-to-start", 
+                "personal-vs-prop-account",
+                "what-is-futures-trading",
+                "best-prop-firm-to-start"
+            ]
+            
+            for guide_id in fallback_guides:
+                if len(widget_guides) >= limit:
+                    break
+                if guide_id not in used_guide_ids:
+                    guide_info = get_guide_by_id(guide_id)
+                    if guide_info:
+                        widget_guides.append({
+                            "id": guide_id,
+                            "title": guide_info["title"],
+                            "href": guide_info["href"],
+                            "clicks": 0  # No analytics data, so 0 clicks
+                        })
+        
+        return widget_guides[:limit]  # Ensure we don't exceed the limit
+    except Exception as e:
+        # Graceful fallback - return empty list if analytics fails
+        app.logger.warning(f"Popular guides widget failed: {e}")
+        return []
 
 # -------- Routes --------
 @app.route("/")
@@ -151,19 +238,16 @@ def security_txt():
 
 @app.route("/guides")
 def guides_index():
-    # Get popularity data for the last 30 days
-    popular_map = get_popular_guides(days=30, limit=10)
+    # Get popular guides widget data (includes click counts)
+    popular_guides = get_popular_guides_widget(days=30, limit=5)
     
-    # Add groups and popularity scores to the GUIDES for display
+    # Convert to simple map for template compatibility
+    popular_map = {guide["id"]: guide["clicks"] for guide in popular_guides}
+    
+    # Get all guides from catalog with popularity scores
     guides_with_groups = []
-    for guide in GUIDES:
+    for guide in get_all_guides():
         guide_with_group = guide.copy()
-        # Determine group based on guide content
-        if any(keyword in guide["title"].lower() for keyword in ["what is", "evaluation"]):
-            guide_with_group["group"] = "Beginner Basics"
-        else:
-            guide_with_group["group"] = "Choosing an Account"
-        
         # Add popularity score
         guide_with_group["score_30d"] = popular_map.get(guide["id"], 0)
         guides_with_groups.append(guide_with_group)
@@ -177,6 +261,8 @@ def guides_index():
         meta_desc="Learn prop firm basics, futures trading, evaluations, sim-funded, and how to choose the right account size and firm.",
         guides=guides_with_groups,
         popular_map=popular_map,
+        popular_guides=popular_guides,
+        flame_threshold=FLAME_ICON_THRESHOLD,
     )
 
 @app.route("/guides/what-is-a-prop-firm")
@@ -259,21 +345,26 @@ def guide_personal_vs_prop_account():
         meta_desc="Pros/cons of personal futures accounts vs prop accounts: capital, rules, risk, taxes, and control.",
     )
 
-# Central list you can reuse across the app
-GUIDES = [
-    # Beginner Basics
-    {"id": "what-is-a-prop-firm", "title":"What is a Prop Firm?", "href":"/guides/what-is-a-prop-firm"},
-    {"id": "what-is-futures-trading", "title":"What is Futures Trading?", "href":"/guides/what-is-futures-trading"},
-    {"id": "what-is-a-sim-account", "title":"What is a Sim Account?", "href":"/guides/what-is-a-sim-account"},
-    {"id": "what-is-an-evaluation", "title":"What is a Prop Firm Evaluation?", "href":"/guides/what-is-an-evaluation"},
-    # Choosing an Account
-    {"id": "best-way-to-start-trading-futures", "title":"Best Way to Start Trading Futures", "href":"/guides/best-way-to-start-trading-futures"},
-    {"id": "best-prop-firm-to-start", "title":"Best Prop Firm to Start With", "href":"/guides/best-prop-firm-to-start"},
-    {"id": "best-account-size-to-start", "title":"What Account Size Should I Start With?", "href":"/guides/best-account-size-to-start"},
-    {"id": "should-i-skip-evaluation", "title":"Should I Skip the Evaluation?", "href":"/guides/should-i-skip-evaluation"},
-    {"id": "what-is-straight-to-sim-funded", "title":"What is a Straight-to-Sim-Funded Account?", "href":"/guides/what-is-straight-to-sim-funded"},
-    {"id": "personal-vs-prop-account", "title":"Personal Account vs Prop Account", "href":"/guides/personal-vs-prop-account"},
-]
+@app.route("/guides/futures-trading-products")
+def guide_futures_trading_products():
+    # Load products data from JSON file
+    static_folder = app.static_folder or 'static'
+    products_path = os.path.join(static_folder, 'data', 'products.json')
+    try:
+        with open(products_path, 'r', encoding='utf-8') as f:
+            products_data = json.load(f)
+    except (FileNotFoundError, json.JSONDecodeError):
+        # Fallback to empty data if file issues
+        products_data = {"disclaimer": "", "categories": []}
+    
+    return render_template(
+        "guides/futures-trading-products.html",
+        title="Futures Trading Products — Complete Reference Guide",
+        meta_desc="Complete reference guide to futures trading products available at prop firms. Index, currency, energy, metal, agricultural, and crypto futures.",
+        products=products_data
+    )
+
+# Guides data now centralized in guides_catalog.py
 
 def _abs_url(path: str) -> str:
     return urljoin(request.url_root, path.lstrip('/'))
@@ -293,7 +384,7 @@ def sitemap():
 
     # Guide pages (optionally compute lastmod from template files)
     guide_entries = []
-    for g in GUIDES:
+    for g in get_all_guides():
         loc = _abs_url(g["href"])
         lastmod = None
         # Try to map a template path (adjust if your paths differ)

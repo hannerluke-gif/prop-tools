@@ -1,10 +1,21 @@
-// Promo Banner Component
-// -----------------------
-// Requirements implemented:
-// * Fixed height: 60px default, 72px on very small screens (<=430px)
-// * Three slides (structure in HTML) with fading cross-fade
-// * Background images left-aligned; cover to fill width while keeping left side (logo) visible
-// * Hover pause handled in JS (desktop only) – we only add a helper class here
+// ============================================================
+// PROMO BANNER COMPONENT (BEM COMPLIANT)
+// 
+// Rotating promotional banner with background images and fade transitions.
+// Follows strict BEM methodology with .promo-banner as root component.
+// 
+// BEM Structure:
+// .promo-banner                    → Root component
+// .promo-banner__slides            → Slide container  
+// .promo-banner__slide             → Individual slide
+// .promo-banner__slide.is-active   → Active slide state
+// 
+// Requirements:
+// * Fixed height: 60px default, 72px on screens ≤540px
+// * Three slides with smooth cross-fade transitions
+// * Background images left-aligned to preserve embedded logos
+// * JavaScript hover pause functionality (desktop only)
+// ============================================================
 
 .promo-banner {
 	// z-index map:

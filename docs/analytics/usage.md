@@ -20,23 +20,101 @@ Visit your guides page: `http://localhost:5000/guides/`
 ## 📊 User Experience Features
 
 ### Automatic Click Tracking
-- **What happens**: When users click guide links, analytics data is automatically sent
+- **What happens**: When users click guide links or back navigation, analytics data is automatically sent
 - **Method**: Uses `navigator.sendBeacon()` for reliability during page navigation
 - **Fallback**: Falls back to regular fetch if sendBeacon isn't available
 - **Rate limiting**: Max 10 clicks per user per hour to prevent abuse
+
+### Back Link Navigation Analytics
+- **Smart back links**: Context-aware navigation that links back to the previous guide when applicable
+- **Fallback navigation**: Always provides "Back to Guides" option when no context is available
+- **Tracking**: Separately tracks back link usage vs. "Keep Learning" link usage
+- **Analytics data**: 
+  - `back_context`: Smart contextual back links (e.g., "← Back to What is Futures Trading?")
+  - `back_index`: Direct back to guides index (e.g., "← Back to Guides")
 
 ### Popularity Indicators
 - **Visual cue**: Popular guides show 🔥 emoji next to the title
 - **Threshold**: Guides with 10+ clicks in the past 7 days are marked as popular
 - **Real-time**: Updates based on actual user engagement
 
+### Popular Guides Widget
+- **Component**: Reusable server-rendered widget displaying trending guides
+- **Location**: Appears on guides index page and can be added to any template
+- **Display**: Shows guide titles with click counts and responsive styling
+- **Auto-updating**: Refreshes with each page load based on current analytics data
+
+#### Using the Widget
+```html
+<!-- In any template -->
+{% include 'components/popular_guides.html' %}
+```
+
+**Required Context** (add to your route):
+```python
+# In your Flask route function
+popular_guides = get_popular_guides_widget(days=30, limit=5)
+return render_template('your_template.html', popular_guides=popular_guides)
+```
+
+### Centralized Guides Catalog
+All guide definitions are managed in `guides_catalog.py` for consistency:
+
+**Key Features**:
+- **Single source of truth**: All guide metadata in one place
+- **Rich metadata**: IDs, titles, URLs, groupings, and descriptions
+- **Helper functions**: Easy access via `get_guide_by_id()`, `get_guides_by_group()`
+- **API integration**: Powers the enhanced JSON responses
+
+**Usage Example**:
+```python
+from guides_catalog import get_guide_by_id, get_all_guides
+
+# Get specific guide metadata
+guide = get_guide_by_id('what-is-a-prop-firm')
+print(f"{guide['title']} -> {guide['href']}")
+
+# Get all guides by category
+beginner_guides = get_guides_by_group('Beginner Basics')
+```
+
 ## 🔧 Admin/Developer Features
 
 ### View Analytics Data
 
-#### Top Guides API
+#### Popular Guides JSON API (Recommended)
 ```bash
-# Get top guides for last 7 days (default)
+# Get top 5 popular guides from last 30 days with full metadata
+curl "http://localhost:5000/analytics/popular?days=30&limit=5"
+
+# Get top 3 guides from last 7 days
+curl "http://localhost:5000/analytics/popular?days=7&limit=3"
+
+# PowerShell version
+$response = Invoke-RestMethod -Uri "http://localhost:5000/analytics/popular?days=30&limit=5" -Method Get
+$response.guides | ForEach-Object { Write-Host "$($_.title): $($_.clicks) clicks ($($_.group))" }
+```
+
+**Enhanced Response Format** (includes full metadata):
+```json
+{
+  "days": 30,
+  "limit": 5,
+  "guides": [
+    {
+      "id": "what-is-a-prop-firm",
+      "title": "What is a Prop Firm?",
+      "href": "/guides/what-is-a-prop-firm", 
+      "group": "Beginner Basics",
+      "clicks": 42
+    }
+  ]
+}
+```
+
+#### Legacy Top Guides API (Simple)
+```bash
+# Get top guides for last 7 days (default) - simple format
 curl http://localhost:5000/analytics/top-guides
 
 # Get top guides for specific time period
@@ -147,18 +225,27 @@ DATABASE_URL=postgresql://...
 
 ### Check System Health
 ```bash
-# Test endpoint
+# Test guide click endpoint
 curl -X POST http://localhost:5000/analytics/guide-click \
   -H "Content-Type: application/json" \
   -d '{"guide_id": "test", "guide_title": "Test Guide", "href": "/guides/test"}'
 
-# Should return: {"status": "success"}
+# Test back link click endpoint
+curl -X POST http://localhost:5000/analytics/guide-back-click \
+  -H "Content-Type: application/json" \
+  -d '{"guide_id": "back_context", "guide_title": "← Back to Test Guide", "href": "/guides"}'
+
+curl -X POST http://localhost:5000/analytics/guide-back-click \
+  -H "Content-Type: application/json" \
+  -d '{"guide_id": "back_index", "guide_title": "← Back to Guides", "href": "/guides"}'
+
+# Should return: {"ok": true}
 ```
 
 ### Common Issues
 
 #### No flame indicators showing
-- Check if guides have enough clicks: `curl http://localhost:5000/analytics/top-guides`
+- Check if guides have enough clicks: `curl http://localhost:5000/analytics/popular`
 - Verify database has data: check `guide_clicks` table
 - Ensure popularity threshold is met (10+ clicks in 7 days)
 
@@ -267,10 +354,76 @@ Before going live, verify:
 
 ---
 
+## 🎨 Popular Guides Widget & API
+
+### JSON API Endpoint
+**Endpoint:** `/analytics/popular`
+
+**Parameters:**
+- `days` (optional): Time window in days (default: 30, max: 365)
+- `limit` (optional): Maximum number of guides (default: 5, max: 20)
+
+**Example Usage:**
+```bash
+curl "https://proptradetools.com/analytics/popular?days=7&limit=5"
+```
+
+**Response:**
+```json
+{
+  "days": 7,
+  "limit": 5,
+  "guides": [
+    {
+      "id": "what-is-a-prop-firm",
+      "clicks": 42
+    },
+    {
+      "id": "best-account-size-to-start", 
+      "clicks": 28
+    }
+  ]
+}
+```
+
+### Server-Rendered Widget
+**Template:** `components/popular_guides.html`
+
+**Usage in any template:**
+```html
+<!-- Include the widget -->
+{% include 'components/popular_guides.html' %}
+```
+
+**Required context:**
+```python
+# In your route function
+popular_guides = get_popular_guides_widget(days=30, limit=5)
+return render_template('your_template.html', popular_guides=popular_guides)
+```
+
+### Implementation Details
+
+**Backend Functions:**
+- **`top_guides_simple(days, limit)`** - Lightweight query function using daily summary tables
+- **`get_popular_guides_widget(days, limit)`** - Formats data for template consumption with titles and URLs
+
+**Frontend Integration:**
+- Analytics tracking: All guide links automatically tracked via `main.js`
+- Styling: Bootstrap-compatible CSS in `_popular-guides.scss`
+- Responsive design with dark mode support
+
+**Data Flow:**
+1. Click tracking → `/analytics/guide-click`
+2. Storage in `guide_clicks` table
+3. Daily rollup to `guide_clicks_daily`
+4. Widget queries optimized combined data
+5. Display with click counts and hover effects
+
 ## Support
 If you encounter issues:
 1. Check the troubleshooting section above
-2. Review the security checklist for configuration
+2. Review the security guide for configuration
 3. Check application logs for specific error messages
 4. Verify all environment variables are set correctly
 

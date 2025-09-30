@@ -1,3 +1,14 @@
+// ============================================================
+// HERO COMPONENT (LEGACY)
+// 
+// ⚠️  LEGACY EXCEPTION: This component predates strict BEM standards
+// and uses global selectors (.hero-slide, .hero-headline) for historical compatibility.
+// NEW COMPONENTS must follow strict BEM patterns as outlined in the style guide.
+// 
+// Do not replicate these patterns in new components - use proper BEM structure:
+// .component__element and .component__element--modifier instead.
+// ============================================================
+
 .hero {
   color: $white;
   // Fallback background to avoid white/transparent flash during slide transitions.

@@ -1,7 +1,12 @@
 // ============================================================
-// PROJECT VARIABLES
-// Global overrides for Bootstrap and site components
-// Add new variables here to control colors, spacing, and component theming
+// PROJECT DESIGN TOKENS
+// 
+// Global overrides for Bootstrap and site components.
+// All component-specific variables should be defined here for centralized theming.
+// Variables are organized by category and follow consistent naming conventions.
+//
+// Usage: Import this file BEFORE Bootstrap to override defaults
+// Organization: Typography → Colors → Components (alphabetical)
 // ============================================================
 
 // ============================================================

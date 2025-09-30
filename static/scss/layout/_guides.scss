@@ -77,12 +77,12 @@
   // FAQ SECTION COMPONENT
   // ============================================================
   &__faq-section {
-    // Triple the default section spacing for clearer visual separation
+    // Double the default section spacing for clearer visual separation
     // This creates consistent breathing room between content and FAQ across all guides
-    margin-top: $guide-section-spacing * 3;
+    margin-top: $guide-section-spacing * 2;
     // Legacy modifier: kept for backwards compatibility but now redundant
     &--spacious {
-      margin-top: $guide-section-spacing * 3;
+      margin-top: $guide-section-spacing * 2;
     }
   }
   &__faq {
@@ -197,6 +197,39 @@
     }
   }
   // ============================================================
+  // BACK NAVIGATION COMPONENT
+  // ============================================================
+  &__back-nav,
+  &__back-nav-bottom {
+    margin-bottom: 1rem;
+  }
+  &__back-nav-bottom {
+    margin-top: 2rem;
+    margin-bottom: 2rem;
+  }
+  &__back-link {
+    color: $text-link-alt-color !important;
+    font-weight: $weight-medium;
+    font-size: 0.95rem;
+    transition: color $text-link-transition-duration ease;
+    display: inline-flex;
+    align-items: center;
+    gap: 0.3rem;
+    
+    &:hover,
+    &:focus {
+      color: $text-link-alt-hover-color !important;
+      text-decoration: none !important;
+    }
+    
+    &:focus {
+      outline: 2px solid rgba(255, 255, 255, 0.2);
+      outline-offset: 2px;
+      border-radius: 3px;
+    }
+  }
+  
+  // ============================================================
   // UTILITY ELEMENTS
   // ============================================================
   &__divider {
@@ -264,14 +297,58 @@
   .guide-index__item { margin: .25rem 0; }
   .guide-index__link {
     display: inline-flex; align-items: center; gap: .4rem;
-    color: $text-link-alt-color;
-    text-decoration: $text-link-alt-decoration;
+    // Defer color/decoration to text-link utility classes (Option 3 via .text-link--accent)
     transition: color $text-link-transition-duration ease, text-decoration $text-link-transition-duration ease;
   }
-  .guide-index__link:hover { 
-    color: $text-link-alt-hover-color;
-    text-decoration: $text-link-alt-hover-decoration;
+  // Prevent underline being applied to the entire inline-flex (which would underline the icon)
+  .guide-index__link { text-decoration: none; }
+  .guide-index__label { text-decoration: inherit; }
+  // Strengthen Option 3 inside guide index blocks if other global rules compete
+  // Option 1 reinforcement (if needed): body color, no underline; cyan + underline on hover
+  .guide-index__link.text-link { 
+    color: $text-link-color; 
+    text-decoration: none; 
+    text-decoration-color: transparent;
   }
+  // Apply underline on hover to label text only (Option 1)
+  .guide-index__link.text-link:hover,
+  .guide-index__link.text-link:focus,
+  .guide-index__link.text-link:focus-visible,
+  .guide-index__link.text-link:active { 
+    color: $text-link-hover-color; 
+    text-decoration: none !important; // hard override global .text-link:hover underline
+    text-decoration-color: transparent !important;
+  }
+  .guide-index__link.text-link:hover .guide-index__label,
+  .guide-index__link.text-link:focus .guide-index__label,
+  .guide-index__link.text-link:focus-visible .guide-index__label,
+  .guide-index__link.text-link:active .guide-index__label { text-decoration: $text-link-hover-decoration; }
+
+  // Visited state: keep default/body color and no underline on the anchor
+  .guide-index__link.text-link:visited {
+    color: $text-link-color;
+    text-decoration: none !important;
+    text-decoration-color: transparent !important;
+  }
+  // Visited + interactive states: same as hover/focus (underline label only)
+  .guide-index__link.text-link:visited:hover,
+  .guide-index__link.text-link:visited:focus,
+  .guide-index__link.text-link:visited:focus-visible,
+  .guide-index__link.text-link:visited:active {
+    color: $text-link-hover-color;
+    text-decoration: none !important;
+    text-decoration-color: transparent !important;
+  }
+  .guide-index__link.text-link:visited:hover .guide-index__label,
+  .guide-index__link.text-link:visited:focus .guide-index__label,
+  .guide-index__link.text-link:visited:focus-visible .guide-index__label,
+  .guide-index__link.text-link:visited:active .guide-index__label {
+    text-decoration: $text-link-hover-decoration;
+  }
+
+  // Ensure any icon next to the label (e.g., flame) never receives underline
+  .guide-index__link .text-warning { text-decoration: none !important; }
+  // No explicit :hover styles here; allow .text-link--accent to control hover underline/color
 }
 
 

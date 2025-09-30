@@ -39,6 +39,15 @@
   <div class="row justify-content-center">
     <article class="col-12 col-lg-9 prose">
       
+      {# Top Back Link #}
+      {% if guide_back.href %}
+      <nav class="guide__back-nav mb-3">
+        <a href="{{ guide_back.href }}" class="guide__back-link guide-back__link text-decoration-none" data-back-type="context">
+          {{ guide_back.label }}
+        </a>
+      </nav>
+      {% endif %}
+      
       {# Guide Header #}
       <header class="guide__header">
         <h1 class="guide__title">{% block guide_title %}{% endblock %}</h1>
@@ -63,7 +72,7 @@
               <h3 class="guide__cta__title h5">{% block cta_title %}Ready to Start?{% endblock %}</h3>
               <p class="guide__cta__text">{% block cta_text %}Compare top firms, pick your path, and start trading.{% endblock %}</p>
             </div>
-            <div class="d-flex flex-column flex-sm-row gap-3">
+            <div class="d-flex flex-column flex-sm-row gap-3 flex-shrink-0">
               <a href="{% block cta_link %}/compare{% endblock %}" class="btn btn-primary">
                 {% block cta_button %}Start Trading{% endblock %}
               </a>
@@ -75,6 +84,13 @@
         </div>
       </div>
       {% endblock %}
+
+      {# Bottom Back Link - Always goes to Guides index #}
+      <nav class="guide__back-nav-bottom mt-4 mb-4">
+        <a href="{{ url_for('guides_index') }}" class="guide__back-link guide-back__link text-decoration-none" data-back-type="index">
+          ← Back to Guides
+        </a>
+      </nav>
 
       {# FAQ Section #}
       {% block guide_faq %}

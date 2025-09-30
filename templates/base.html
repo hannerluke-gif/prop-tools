@@ -73,14 +73,7 @@
 
         <!-- Google tag (gtag.js) -->
         <script async src="https://www.googletagmanager.com/gtag/js?id=G-ZEBP98J6ZQ"></script>
-        <script nonce="{{ g.csp_nonce|default('') }}">
-          window.dataLayer = window.dataLayer || [];
-          function gtag(){dataLayer.push(arguments);}
-          gtag('js', new Date());
-          gtag('config', 'G-ZEBP98J6ZQ', { 
-            'debug_mode': true 
-          });
-        </script>
+        <script src="{{ url_for('static', filename='js/analytics.js') }}" defer></script>
 
         <!-- Google Fonts: Manrope -->
         <link rel="preconnect" href="https://fonts.googleapis.com" />
@@ -250,9 +243,15 @@
                                     ("/guides/what-is-futures-trading","What is Futures Trading?"),
                                     ("/guides/best-prop-firm-to-start","Best Prop Firm to Start With")
                                 ] %}
-                                {% for href, label in (popular_guides or default_popular) %}
-                                    <li><a class="footer-link" href="{{ href }}" data-guide-id="{{ href | guide_id }}">{{ label }}</a></li>
-                                {% endfor %}
+                                {% if global_popular_guides %}
+                                    {% for guide in global_popular_guides %}
+                                        <li><a class="footer-link" href="{{ guide.href }}" data-guide-id="{{ guide.id }}" data-guide-title="{{ guide.title }}">{{ guide.title }}</a></li>
+                                    {% endfor %}
+                                {% else %}
+                                    {% for href, label in default_popular %}
+                                        <li><a class="footer-link" href="{{ href }}" data-guide-id="{{ href | guide_id }}">{{ label }}</a></li>
+                                    {% endfor %}
+                                {% endif %}
                             </ul>
                         </div>
                         <div class="col-12 col-md-6 col-lg-4">

@@ -1,4 +1,16 @@
-// Buttons partial - enforce site-wide button tokens and remove underline on anchor buttons
+// ============================================================
+// BUTTON SYSTEM COMPONENT
+// 
+// Global button styling enforcement using design tokens from _variables.scss.
+// Applies site-wide button standards to Bootstrap's button system.
+// Removes underlines from anchor-based buttons and ensures consistent theming.
+// 
+// Key Features:
+// * Enforces design token consistency across all button variants
+// * Removes text decoration from anchor buttons (.btn a)
+// * Provides accessible focus states with :focus-visible
+// * Maintains Bootstrap sizing variants (sm, lg) with custom tokens
+// ============================================================
 
 // Internal placeholder for active/pressed style reuse
 %btn-active-base {

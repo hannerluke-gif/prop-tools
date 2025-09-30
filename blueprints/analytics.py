@@ -5,6 +5,11 @@ import sqlite3
 import os
 import re
 import json
+import sys
+
+# Import guides catalog - handle import path for blueprints
+sys.path.append(os.path.dirname(os.path.dirname(os.path.abspath(__file__))))
+from guides_catalog import get_guide_by_id
 
 analytics_bp = Blueprint('analytics', __name__, url_prefix='/analytics')
 
@@ -204,6 +209,69 @@ def guide_click():
 
     return jsonify({"ok": True})
 
+@analytics_bp.route('/guide-back-click', methods=['POST'])
+def guide_back_click():
+    """
+    Track back link usage: { guide_id: "back_context" | "back_index", guide_title, href }
+    Helps understand navigation patterns vs. "Keep Learning" links.
+    """
+    # Validate content type
+    if not request.is_json:
+        return jsonify({"ok": False, "err": "invalid_content_type"}), 400
+    
+    # Get and validate user agent
+    ua = (request.headers.get('User-Agent') or '')[:MAX_UA_LENGTH]
+    
+    # Filter out bot traffic
+    if _is_bot_request(ua):
+        return jsonify({"ok": False, "err": "bot_filtered"}), 429
+    
+    # Parse and validate JSON payload
+    try:
+        data = request.get_json(force=True)
+    except (ValueError, TypeError):
+        return jsonify({"ok": False, "err": "invalid_json"}), 400
+    
+    # Extract and validate back link data
+    guide_id = (data.get('guide_id') or '').strip()
+    guide_title = (data.get('guide_title') or '').strip()[:MAX_TITLE_LENGTH]
+    href = (data.get('href') or '').strip()[:MAX_HREF_LENGTH]
+    
+    # Basic validation
+    if not guide_id or len(guide_id) > MAX_GUIDE_ID_LENGTH:
+        return jsonify({"ok": False, "err": "invalid_guide_id"}), 400
+    
+    # Valid back link types
+    if guide_id not in ['back_context', 'back_index']:
+        return jsonify({"ok": False, "err": "invalid_back_type"}), 400
+    
+    ts_utc = _now_utc_iso()
+
+    # Store to database (reuse same table with special guide_id prefixes)
+    db = get_db()
+    try:
+        if isinstance(db, sqlite3.Connection):
+            db.execute(
+                "INSERT INTO guide_clicks (guide_id, guide_title, href, ua, ts_utc) VALUES (?,?,?,?,?)",
+                (guide_id, guide_title, href, ua, ts_utc)
+            )
+            db.commit()
+        else:
+            with db.cursor() as cur:
+                cur.execute(
+                    "INSERT INTO guide_clicks (guide_id, guide_title, href, ua, ts_utc) VALUES (%s,%s,%s,%s,%s)",
+                    (guide_id, guide_title, href, ua, ts_utc)
+                )
+                db.commit()
+        
+        current_app.logger.info(f"Back link analytics recorded: {guide_id}")
+        
+    except Exception as e:
+        current_app.logger.error(f"Back link analytics database error: {e}")
+        return jsonify({"ok": False}), 500
+
+    return jsonify({"ok": True})
+
 def get_top_guides(days=7, limit=10):
     """
     Query helper to get top guides for a time window.
@@ -339,6 +407,184 @@ def top_guides():
         "days": days,
         "guides": [{"guide_id": r[0], "title": r[1], "clicks": r[2]} for r in results]
     })
+
+# Helper functions for Popular Now widget
+def analytics_db_connect():
+    """Direct database connection for analytics queries (not request-scoped)"""
+    db_url = os.getenv('DATABASE_URL', '')
+    if _is_sqlite(db_url):
+        os.makedirs('instance', exist_ok=True)
+        return sqlite3.connect('instance/analytics.db')
+    else:
+        import psycopg
+        return psycopg.connect(db_url)
+
+def top_guides_simple(days: int = 30, limit: int = 5):
+    """
+    Returns list of tuples: (guide_id, clicks) for last N days.
+    If summary table exists, it uses it; otherwise falls back to raw events.
+    Lightweight version for widget use.
+    
+    This replaces the old get_popular_guides() function from app.py
+    """
+    db_url = os.getenv('DATABASE_URL', '')
+    since_utc_iso = (datetime.now(timezone.utc) - timedelta(days=days)).isoformat()
+
+    try:
+        if _is_sqlite(db_url):
+            conn = analytics_db_connect()
+            cur = conn.cursor()
+
+            # Check if summary table exists
+            try:
+                cur.execute("SELECT name FROM sqlite_master WHERE type='table' AND name='guide_clicks_daily'")
+                has_summary = cur.fetchone() is not None
+            except Exception:
+                has_summary = False
+
+            if has_summary:
+                # Sum last N days from summary + recent raw data
+                cur.execute("""
+                    WITH combined_data AS (
+                        -- Aggregated data from summary table
+                        SELECT guide_id, SUM(clicks) as click_count
+                        FROM guide_clicks_daily
+                        WHERE day >= date('now', ?)
+                        GROUP BY guide_id
+                        
+                        UNION ALL
+                        
+                        -- Recent raw data (last 2 days, might not be in summary yet)
+                        SELECT guide_id, COUNT(*) as click_count
+                        FROM guide_clicks
+                        WHERE date(ts_utc) >= date('now', '-2 days')
+                        AND ts_utc >= ?
+                        GROUP BY guide_id
+                    )
+                    SELECT guide_id, SUM(click_count) as total_clicks
+                    FROM combined_data
+                    GROUP BY guide_id
+                    ORDER BY total_clicks DESC
+                    LIMIT ?
+                """, (f'-{days} day', since_utc_iso, limit))
+            else:
+                # Fallback to raw data only
+                cur.execute("""
+                    SELECT guide_id, COUNT(*) AS c
+                    FROM guide_clicks
+                    WHERE ts_utc >= ?
+                    GROUP BY guide_id
+                    ORDER BY c DESC
+                    LIMIT ?
+                """, (since_utc_iso, limit))
+
+            rows = cur.fetchall()
+            conn.close()
+            return [(gid, int(c)) for gid, c in rows]
+
+        else:
+            # PostgreSQL path
+            import psycopg
+            conn = analytics_db_connect()
+            try:
+                cur = conn.cursor()
+                # Check if summary table exists
+                cur.execute("""
+                    SELECT to_regclass('public.guide_clicks_daily')
+                """)
+                result = cur.fetchone()
+                has_summary = result is not None and result[0] is not None
+
+                if has_summary:
+                    # Use summary + recent raw data
+                    cur.execute("""
+                        WITH combined_data AS (
+                            -- Aggregated data from summary table
+                            SELECT guide_id, SUM(clicks) as click_count
+                            FROM guide_clicks_daily
+                            WHERE day >= CURRENT_DATE - INTERVAL %s
+                            GROUP BY guide_id
+                            
+                            UNION ALL
+                            
+                            -- Recent raw data (last 2 days)
+                            SELECT guide_id, COUNT(*) as click_count
+                            FROM guide_clicks
+                            WHERE ts_utc >= CURRENT_DATE - INTERVAL '2 days'
+                            AND ts_utc >= (NOW() AT TIME ZONE 'UTC') - INTERVAL %s
+                            GROUP BY guide_id
+                        )
+                        SELECT guide_id, SUM(click_count) as total_clicks
+                        FROM combined_data
+                        GROUP BY guide_id
+                        ORDER BY total_clicks DESC
+                        LIMIT %s
+                    """, (f'{days} days', f'{days} days', limit))
+                else:
+                    # Fallback to raw data only
+                    cur.execute("""
+                        SELECT guide_id, COUNT(*) AS c
+                        FROM guide_clicks
+                        WHERE ts_utc >= (NOW() AT TIME ZONE 'UTC') - INTERVAL %s
+                        GROUP BY guide_id
+                        ORDER BY c DESC
+                        LIMIT %s
+                    """, (f'{days} days', limit))
+
+                rows = cur.fetchall()
+                cur.close()
+                return [(gid, int(c)) for gid, c in rows]
+            finally:
+                conn.close()
+
+    except Exception as e:
+        # Graceful fallback - return empty list if analytics fails
+        current_app.logger.warning(f"Popular guides query failed: {e}")
+        return []
+
+@analytics_bp.route('/popular', methods=['GET'])
+def popular_guides_api():
+    """
+    JSON API endpoint for popular guides widget.
+    Usage: GET /analytics/popular?days=30&limit=5
+    Returns: {"guides": [{"id": "guide-id", "clicks": 42}, ...]}
+    """
+    days = request.args.get('days', 30, type=int)
+    limit = request.args.get('limit', 5, type=int)
+    
+    # Sanity limits
+    days = max(1, min(days, 365))
+    limit = max(1, min(limit, 20))
+    
+    try:
+        results = top_guides_simple(days=days, limit=limit)
+        
+        # Enrich with guide metadata from catalog
+        guides = []
+        for guide_id, clicks in results:
+            guide_info = get_guide_by_id(guide_id)
+            if guide_info:  # Only include guides that exist in catalog
+                guides.append({
+                    "id": guide_id,
+                    "title": guide_info["title"],
+                    "href": guide_info["href"],
+                    "group": guide_info["group"],
+                    "clicks": clicks
+                })
+        
+        return jsonify({
+            "guides": guides,
+            "days": days,
+            "limit": limit
+        })
+    except Exception as e:
+        current_app.logger.error(f"Popular guides API error: {e}")
+        return jsonify({
+            "guides": [],
+            "days": days,
+            "limit": limit,
+            "error": "analytics_unavailable"
+        }), 500
 
 @analytics_bp.route('/maintenance/rollup', methods=['POST'])
 def rollup():
