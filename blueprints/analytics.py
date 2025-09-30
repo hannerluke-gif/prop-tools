@@ -811,6 +811,13 @@ def debug_db():
         
         conn.close()
         
+        # Test the top_guides_simple function directly
+        try:
+            simple_results = top_guides_simple(days=30, limit=10)
+            debug_simple = [{"guide_id": gid, "clicks": clicks} for gid, clicks in simple_results]
+        except Exception as e:
+            debug_simple = f"Error: {str(e)}"
+        
         return jsonify({
             "total_clicks": total_count,
             "daily_summary_count": daily_count,
@@ -818,6 +825,7 @@ def debug_db():
                 {"guide_id": r[0], "title": r[1], "timestamp": str(r[2])}
                 for r in recent_records
             ],
+            "top_guides_simple_test": debug_simple,
             "note": "SECURITY: Remove this debug endpoint after use"
         }), 200
         
