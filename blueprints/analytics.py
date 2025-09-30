@@ -320,43 +320,18 @@ def get_top_guides(days=7, limit=10):
             return cursor.fetchall()
             
         else:
-            # PostgreSQL: More efficient with window functions
+            # PostgreSQL: Use simple working query
             with db.cursor() as cur:
                 cur.execute("""
-                    WITH combined_data AS (
-                        -- Get aggregated data from daily summaries
-                        SELECT guide_id, SUM(clicks) as click_count
-                        FROM guide_clicks_daily
-                        WHERE day >= (CURRENT_DATE - INTERVAL '%s days')
-                        GROUP BY guide_id
-                        
-                        UNION ALL
-                        
-                        -- Get raw data from last 2 days (not yet aggregated)
-                        SELECT guide_id, COUNT(*) as click_count
-                        FROM guide_clicks
-                        WHERE ts_utc >= (CURRENT_DATE - INTERVAL '2 days')
-                        AND ts_utc >= %s
-                        GROUP BY guide_id
-                    ),
-                    guide_totals AS (
-                        SELECT guide_id, SUM(click_count) as total_clicks
-                        FROM combined_data
-                        GROUP BY guide_id
-                    )
-                    SELECT gt.guide_id, 
-                           COALESCE(gc.guide_title, gt.guide_id) as guide_title,
-                           gt.total_clicks
-                    FROM guide_totals gt
-                    LEFT JOIN (
-                        SELECT DISTINCT guide_id, 
-                               FIRST_VALUE(guide_title) OVER (PARTITION BY guide_id ORDER BY ts_utc DESC) as guide_title
-                        FROM guide_clicks
-                        WHERE guide_title IS NOT NULL AND guide_title != ''
-                    ) gc ON gt.guide_id = gc.guide_id
-                    ORDER BY gt.total_clicks DESC
+                    SELECT guide_id, 
+                           COALESCE(guide_title, guide_id) as guide_title,
+                           COUNT(*) as click_count
+                    FROM guide_clicks
+                    WHERE ts_utc >= NOW() - INTERVAL %s
+                    GROUP BY guide_id, guide_title
+                    ORDER BY click_count DESC 
                     LIMIT %s
-                """, (days, cutoff, limit))
+                """, (f'{days} days', limit))
                 
                 return cur.fetchall()
                 
@@ -495,44 +470,16 @@ def top_guides_simple(days: int = 30, limit: int = 5):
                 result = cur.fetchone()
                 has_summary = result is not None and result[0] is not None
 
-                if has_summary:
-                    # Use summary + recent raw data
-                    # Use proper PostgreSQL interval syntax
-                    interval_str = f'{days} days'
-                    cur.execute("""
-                        WITH combined_data AS (
-                            -- Aggregated data from summary table
-                            SELECT guide_id, SUM(clicks) as click_count
-                            FROM guide_clicks_daily
-                            WHERE day >= CURRENT_DATE - INTERVAL %s
-                            GROUP BY guide_id
-                            
-                            UNION ALL
-                            
-                            -- Recent raw data (last 2 days)
-                            SELECT guide_id, COUNT(*) as click_count
-                            FROM guide_clicks
-                            WHERE ts_utc >= CURRENT_DATE - INTERVAL '2 days'
-                            AND ts_utc >= (NOW() AT TIME ZONE 'UTC') - INTERVAL %s
-                            GROUP BY guide_id
-                        )
-                        SELECT guide_id, SUM(click_count) as total_clicks
-                        FROM combined_data
-                        GROUP BY guide_id
-                        ORDER BY total_clicks DESC
-                        LIMIT %s
-                    """, (interval_str, interval_str, limit))
-                else:
-                    # Fallback to raw data only
-                    interval_str = f'{days} days'
-                    cur.execute("""
-                        SELECT guide_id, COUNT(*) AS c
-                        FROM guide_clicks
-                        WHERE ts_utc >= (NOW() AT TIME ZONE 'UTC') - INTERVAL %s
-                        GROUP BY guide_id
-                        ORDER BY c DESC
-                        LIMIT %s
-                    """, (interval_str, limit))
+                # Use simple working query for PostgreSQL
+                interval_str = f'{days} days'
+                cur.execute("""
+                    SELECT guide_id, COUNT(*) AS c
+                    FROM guide_clicks
+                    WHERE ts_utc >= NOW() - INTERVAL %s
+                    GROUP BY guide_id
+                    ORDER BY c DESC
+                    LIMIT %s
+                """, (interval_str, limit))
 
                 rows = cur.fetchall()
                 cur.close()
