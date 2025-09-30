@@ -497,6 +497,8 @@ def top_guides_simple(days: int = 30, limit: int = 5):
 
                 if has_summary:
                     # Use summary + recent raw data
+                    # Use proper PostgreSQL interval syntax
+                    interval_str = f'{days} days'
                     cur.execute("""
                         WITH combined_data AS (
                             -- Aggregated data from summary table
@@ -519,9 +521,10 @@ def top_guides_simple(days: int = 30, limit: int = 5):
                         GROUP BY guide_id
                         ORDER BY total_clicks DESC
                         LIMIT %s
-                    """, (f'{days} days', f'{days} days', limit))
+                    """, (interval_str, interval_str, limit))
                 else:
                     # Fallback to raw data only
+                    interval_str = f'{days} days'
                     cur.execute("""
                         SELECT guide_id, COUNT(*) AS c
                         FROM guide_clicks
@@ -529,7 +532,7 @@ def top_guides_simple(days: int = 30, limit: int = 5):
                         GROUP BY guide_id
                         ORDER BY c DESC
                         LIMIT %s
-                    """, (f'{days} days', limit))
+                    """, (interval_str, limit))
 
                 rows = cur.fetchall()
                 cur.close()
