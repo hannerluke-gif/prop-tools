@@ -681,3 +681,94 @@ def rollup():
     except Exception as e:
         current_app.logger.error(f"Rollup failed: {e}")
         return jsonify({"ok": False, "error": "rollup_failed"}), 500
+
+@analytics_bp.route('/migrate-tables', methods=['POST'])
+def migrate_tables():
+    """
+    TEMPORARY MIGRATION ENDPOINT - Creates missing analytics tables in production
+    
+    Usage: POST /analytics/migrate-tables
+    Remove this endpoint after running once for security.
+    """
+    
+    db_url = os.getenv('DATABASE_URL', '')
+    if not db_url:
+        return jsonify({"error": "DATABASE_URL not configured, using SQLite"}), 400
+    
+    try:
+        import psycopg
+        
+        conn = psycopg.connect(db_url)
+        cur = conn.cursor()
+        
+        # Check existing tables
+        cur.execute("""
+            SELECT table_name FROM information_schema.tables 
+            WHERE table_name IN ('guide_clicks', 'guide_clicks_daily')
+        """)
+        existing_tables = [row[0] for row in cur.fetchall()]
+        
+        results = {
+            "existing_tables": existing_tables,
+            "created_tables": [],
+            "created_indexes": []
+        }
+        
+        # Create guide_clicks table if missing
+        if 'guide_clicks' not in existing_tables:
+            cur.execute("""
+                CREATE TABLE guide_clicks (
+                    id BIGSERIAL PRIMARY KEY,
+                    guide_id TEXT NOT NULL,
+                    guide_title TEXT,
+                    href TEXT,
+                    ua TEXT,
+                    ts_utc TIMESTAMPTZ NOT NULL
+                )
+            """)
+            results["created_tables"].append("guide_clicks")
+        
+        # Create guide_clicks_daily table if missing
+        if 'guide_clicks_daily' not in existing_tables:
+            cur.execute("""
+                CREATE TABLE guide_clicks_daily (
+                    day DATE NOT NULL,
+                    guide_id TEXT NOT NULL,
+                    clicks INTEGER NOT NULL,
+                    PRIMARY KEY (day, guide_id)
+                )
+            """)
+            results["created_tables"].append("guide_clicks_daily")
+        
+        # Create indexes (IF NOT EXISTS handles duplicates)
+        cur.execute("CREATE INDEX IF NOT EXISTS idx_clicks_ts ON guide_clicks(ts_utc)")
+        cur.execute("CREATE INDEX IF NOT EXISTS idx_clicks_gid ON guide_clicks(guide_id)")
+        cur.execute("CREATE INDEX IF NOT EXISTS idx_daily_gid ON guide_clicks_daily(guide_id)")
+        cur.execute("CREATE INDEX IF NOT EXISTS idx_daily_date ON guide_clicks_daily(day)")
+        
+        results["created_indexes"] = ["idx_clicks_ts", "idx_clicks_gid", "idx_daily_gid", "idx_daily_date"]
+        
+        conn.commit()
+        
+        # Verify final state
+        cur.execute("""
+            SELECT table_name FROM information_schema.tables 
+            WHERE table_name IN ('guide_clicks', 'guide_clicks_daily')
+        """)
+        final_tables = [row[0] for row in cur.fetchall()]
+        
+        conn.close()
+        
+        return jsonify({
+            "success": True,
+            "message": "Migration completed successfully",
+            "results": results,
+            "final_tables": final_tables,
+            "note": "SECURITY: Remove this endpoint after use"
+        }), 200
+        
+    except ImportError:
+        return jsonify({"error": "psycopg not available"}), 500
+    except Exception as e:
+        current_app.logger.error(f"Migration failed: {e}")
+        return jsonify({"error": f"Migration failed: {str(e)}"}), 500
