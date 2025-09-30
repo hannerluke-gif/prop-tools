@@ -772,3 +772,54 @@ def migrate_tables():
     except Exception as e:
         current_app.logger.error(f"Migration failed: {e}")
         return jsonify({"error": f"Migration failed: {str(e)}"}), 500
+
+@analytics_bp.route('/debug-db', methods=['GET'])
+def debug_db():
+    """
+    TEMPORARY DEBUG ENDPOINT - Check database contents
+    Remove after debugging is complete.
+    """
+    
+    db_url = os.getenv('DATABASE_URL', '')
+    if not db_url:
+        return jsonify({"error": "DATABASE_URL not configured"}), 400
+    
+    try:
+        import psycopg
+        
+        conn = psycopg.connect(db_url)
+        cur = conn.cursor()
+        
+        # Check record count
+        cur.execute("SELECT COUNT(*) FROM guide_clicks")
+        result = cur.fetchone()
+        total_count = result[0] if result else 0
+        
+        # Get recent records
+        cur.execute("""
+            SELECT guide_id, guide_title, ts_utc 
+            FROM guide_clicks 
+            ORDER BY ts_utc DESC 
+            LIMIT 10
+        """)
+        recent_records = cur.fetchall()
+        
+        # Check daily summary
+        cur.execute("SELECT COUNT(*) FROM guide_clicks_daily")
+        result = cur.fetchone()
+        daily_count = result[0] if result else 0
+        
+        conn.close()
+        
+        return jsonify({
+            "total_clicks": total_count,
+            "daily_summary_count": daily_count,
+            "recent_records": [
+                {"guide_id": r[0], "title": r[1], "timestamp": str(r[2])}
+                for r in recent_records
+            ],
+            "note": "SECURITY: Remove this debug endpoint after use"
+        }), 200
+        
+    except Exception as e:
+        return jsonify({"error": f"Debug failed: {str(e)}"}), 500
