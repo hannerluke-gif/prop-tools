@@ -823,7 +823,10 @@ def debug_db():
         
         # Also test a simple raw query that should definitely work
         try:
-            cur.execute("""
+            # Use a fresh connection for this test
+            fresh_conn = psycopg.connect(db_url)
+            fresh_cur = fresh_conn.cursor()
+            fresh_cur.execute("""
                 SELECT guide_id, COUNT(*) as clicks
                 FROM guide_clicks 
                 WHERE ts_utc >= NOW() - INTERVAL '30 days'
@@ -831,8 +834,9 @@ def debug_db():
                 ORDER BY clicks DESC 
                 LIMIT 10
             """)
-            raw_results = cur.fetchall()
+            raw_results = fresh_cur.fetchall()
             debug_raw = [{"guide_id": r[0], "clicks": int(r[1])} for r in raw_results]
+            fresh_conn.close()
         except Exception as e:
             debug_raw = f"Raw query error: {str(e)}"
         
