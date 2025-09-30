@@ -458,16 +458,16 @@ def top_guides_simple(days: int = 30, limit: int = 5):
                 has_summary = result is not None and result[0] is not None
 
                 # Use simple working query for PostgreSQL, filter only back navigation
-                interval_str = f'{days} days'
-                cur.execute("""
+                # Use the same pattern as the working raw query in debug endpoint
+                cur.execute(f"""
                     SELECT guide_id, COUNT(*) AS c
                     FROM guide_clicks
-                    WHERE ts_utc >= NOW() - INTERVAL %s
+                    WHERE ts_utc >= NOW() - INTERVAL '{days} days'
                     AND guide_id NOT LIKE 'back_%'
                     GROUP BY guide_id
                     ORDER BY c DESC
-                    LIMIT %s
-                """, (interval_str, limit))
+                    LIMIT {limit}
+                """)
 
                 rows = cur.fetchall()
                 # Debug logging
