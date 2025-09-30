@@ -419,29 +419,18 @@ def top_guides_simple(days: int = 30, limit: int = 5):
 
             if has_summary:
                 # Sum last N days from summary + recent raw data
+                # Use simple query for SQLite too, filter out back navigation
                 cur.execute("""
-                    WITH combined_data AS (
-                        -- Aggregated data from summary table
-                        SELECT guide_id, SUM(clicks) as click_count
-                        FROM guide_clicks_daily
-                        WHERE day >= date('now', ?)
-                        GROUP BY guide_id
-                        
-                        UNION ALL
-                        
-                        -- Recent raw data (last 2 days, might not be in summary yet)
-                        SELECT guide_id, COUNT(*) as click_count
-                        FROM guide_clicks
-                        WHERE date(ts_utc) >= date('now', '-2 days')
-                        AND ts_utc >= ?
-                        GROUP BY guide_id
-                    )
-                    SELECT guide_id, SUM(click_count) as total_clicks
-                    FROM combined_data
+                    SELECT guide_id, COUNT(*) AS c
+                    FROM guide_clicks
+                    WHERE ts_utc >= datetime('now', ?)
+                    AND guide_id NOT LIKE 'back_%'
+                    AND guide_id NOT LIKE 'test-%'
+                    AND guide_id NOT LIKE 'schema-%'
                     GROUP BY guide_id
-                    ORDER BY total_clicks DESC
+                    ORDER BY c DESC
                     LIMIT ?
-                """, (f'-{days} day', since_utc_iso, limit))
+                """, (f'-{days} day', limit))
             else:
                 # Fallback to raw data only
                 cur.execute("""
@@ -470,12 +459,15 @@ def top_guides_simple(days: int = 30, limit: int = 5):
                 result = cur.fetchone()
                 has_summary = result is not None and result[0] is not None
 
-                # Use simple working query for PostgreSQL
+                # Use simple working query for PostgreSQL, filter out back navigation
                 interval_str = f'{days} days'
                 cur.execute("""
                     SELECT guide_id, COUNT(*) AS c
                     FROM guide_clicks
                     WHERE ts_utc >= NOW() - INTERVAL %s
+                    AND guide_id NOT LIKE 'back_%'
+                    AND guide_id NOT LIKE 'test-%'
+                    AND guide_id NOT LIKE 'schema-%'
                     GROUP BY guide_id
                     ORDER BY c DESC
                     LIMIT %s
