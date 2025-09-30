@@ -419,14 +419,12 @@ def top_guides_simple(days: int = 30, limit: int = 5):
 
             if has_summary:
                 # Sum last N days from summary + recent raw data
-                # Use simple query for SQLite too, filter out back navigation
+                # Use simple query for SQLite too, filter only back navigation
                 cur.execute("""
                     SELECT guide_id, COUNT(*) AS c
                     FROM guide_clicks
                     WHERE ts_utc >= datetime('now', ?)
                     AND guide_id NOT LIKE 'back_%'
-                    AND guide_id NOT LIKE 'test-%'
-                    AND guide_id NOT LIKE 'schema-%'
                     GROUP BY guide_id
                     ORDER BY c DESC
                     LIMIT ?
@@ -459,15 +457,13 @@ def top_guides_simple(days: int = 30, limit: int = 5):
                 result = cur.fetchone()
                 has_summary = result is not None and result[0] is not None
 
-                # Use simple working query for PostgreSQL, filter out back navigation
+                # Use simple working query for PostgreSQL, filter only back navigation
                 interval_str = f'{days} days'
                 cur.execute("""
                     SELECT guide_id, COUNT(*) AS c
                     FROM guide_clicks
                     WHERE ts_utc >= NOW() - INTERVAL %s
                     AND guide_id NOT LIKE 'back_%'
-                    AND guide_id NOT LIKE 'test-%'
-                    AND guide_id NOT LIKE 'schema-%'
                     GROUP BY guide_id
                     ORDER BY c DESC
                     LIMIT %s
