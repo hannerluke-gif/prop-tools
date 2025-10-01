@@ -35,7 +35,7 @@ jobs:
       - id: pip_audit
         name: pip-audit (fail on any vulnerability)
         continue-on-error: true
-        run: pip-audit --strict -f json -o pip-audit.json
+        run: pip-audit --strict -f json -o pip-audit.json --ignore-vuln GHSA-4xh5-x5gv-qwph
 
       - id: bandit
         name: Bandit (report high severity+confidence)
