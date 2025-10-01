@@ -2,6 +2,12 @@
 
 This directory contains all technical documentation for the Prop Tools project, organized by category.
 
+## 🚀 Planning & Vision
+
+- **[Product Vision](VISION.md)** - Strategic direction and core product philosophy
+- **[Project Roadmap](ROADMAP.md)** - Implementation phases, features, and timeline
+- **[Technical Stack](TECH-STACK.md)** - Complete technology overview, tools, and architecture decisions
+
 ## 📊 Analytics System
 **Location:** `docs/analytics/`
 
@@ -12,18 +18,26 @@ This directory contains all technical documentation for the Prop Tools project, 
 **Location:** `docs/development/`
 
 - **[Guide System](development/guides.md)** - Complete documentation for the SEO guide/landing page system
-- **[Style Guide](development/styles.md)** - SCSS architecture, BEM conventions, and component standards
+- **[Style Guide](development/styles.md)** - SCSS architecture, BEM conventions, component standards, and button spacing patterns
 
 ## 🚀 Security & Operations
 
 - **[Security Guide](security.md)** - Comprehensive security hardening for deployment and analytics
 
+## 🔧 Maintenance
+**Location:** `docs/maintenance/`
+
+- **[Project Cleanup](maintenance/project-cleanup.md)** - Cleanup checklist and maintenance tasks
+
 ## 🔗 Quick Links
 
 ### For Developers
 - Start here: [Main README](../README.md) for project overview and quick start
+- See what's next: [Project Roadmap](ROADMAP.md) for upcoming features and improvements
+- Tech overview: [Technical Stack](TECH-STACK.md) for architecture, tools, and technology decisions
 - Adding new guides: [Guide System Documentation](development/guides.md)
-- Styling components: [Style Guide](development/styles.md)
+- Styling components: [Style Guide](development/styles.md) (includes button spacing patterns)
+- Project maintenance: [Cleanup Checklist](maintenance/project-cleanup.md)
 
 ### For Analytics  
 - Understanding the system: [Analytics Usage Guide](analytics/usage.md)
@@ -31,7 +45,11 @@ This directory contains all technical documentation for the Prop Tools project, 
 
 ### For Security & Deployment
 - Security hardening: [Security Guide](security.md)
-- Analytics production setup: [Analytics Production Guide](analytics/production.md)
+- Production deployment: [Analytics Production Guide](analytics/production.md)
+
+### For Planning & Strategy
+- Product direction: [Product Vision](VISION.md) - strategic goals and competitive positioning
+- Implementation plan: [Project Roadmap](ROADMAP.md) - phases, features, and success metrics
 
 ---
 
@@ -40,13 +58,18 @@ This directory contains all technical documentation for the Prop Tools project, 
 ```
 docs/
 ├── README.md                    # This index file
+├── VISION.md                    # Product vision and strategic direction
+├── ROADMAP.md                   # Implementation phases and timeline
+├── TECH-STACK.md               # Complete technology overview and architecture
 ├── security.md                 # Unified security guide (deployment + analytics)
 ├── analytics/
 │   ├── usage.md                # User guide and feature overview (includes widget docs)
 │   └── production.md           # Production deployment guide  
-└── development/
-    ├── guides.md               # Guide system documentation
-    └── styles.md               # Style guide and SCSS architecture
+├── development/
+│   ├── guides.md               # Guide system documentation
+│   └── styles.md               # Style guide, SCSS architecture, and component standards
+└── maintenance/
+    └── project-cleanup.md      # Cleanup checklist and maintenance tracking
 ```
 
 ## 🤝 Contributing to Documentation

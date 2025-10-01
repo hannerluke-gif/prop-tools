@@ -9,12 +9,12 @@ A comprehensive Flask project featuring a scalable guide system, modern Sass/BEM
 - [Quick Start](#quick-start)
 - [📚 Documentation](#-documentation)
 - [Guide System (SEO Landing Pages)](#guide-system-seo-landing-pages)
-- [Development Workflow](#11-development-workflow)
-- [Production Deployment](#12-production-deployment)
-- [Testing](#13-testing)
-- [Suggested Next Enhancements](#14-suggested-next-enhancements)
-- [Maintenance](#15-maintenance)
-- [Component Updates](#16-component-updates)
+- [Development Workflow](#10-development-workflow)
+- [Production Deployment](#11-production-deployment)
+- [Testing](#12-testing)
+- [Suggested Next Enhancements](#13-suggested-next-enhancements)
+- [Maintenance](#14-maintenance)
+- [Component Updates](#15-component-updates)
 
 ## Features
 - **Flask app** with dashboard and SEO-optimized guide system
@@ -103,16 +103,19 @@ propfirm_bootstrap/
 │   └── analytics.db         # Analytics database (development)
 │
 ├── docs/                    # Project documentation
-│   ├── README.md
+│   ├── README.md            # Documentation index
+│   ├── VISION.md            # Product vision and strategic direction
+│   ├── ROADMAP.md           # Implementation phases and timeline
+│   ├── TECH-STACK.md        # Complete technology overview and architecture
+│   ├── security.md          # Unified security guide (deployment + analytics)
 │   ├── analytics/           # Analytics system documentation
 │   │   ├── usage.md         # Usage guide and API reference
-│   │   ├── production.md    # Production setup (Heroku, Postgres)
 │   │   └── production.md    # Production setup (Heroku, Postgres)
 │   ├── development/         # Development guides
 │   │   ├── guides.md        # Guide system development
 │   │   └── styles.md        # Sass/CSS development guide
-│   ├── security.md          # Unified security guide (deployment + analytics)
-│   └── deployment/          # Deployment documentation
+│   └── maintenance/
+│       └── project-cleanup.md # Maintenance tasks and cleanup tracking
 │
 ├── .venv/                   # Python virtual environment
 ├── .vscode/                 # VS Code configuration
@@ -202,163 +205,71 @@ $env:SECRET_KEY = "some-secret"
 
 ## 📚 Documentation
 
-This project includes comprehensive documentation organized by topic in the [`docs/`](docs/) directory:
+Comprehensive documentation is organized in the [`docs/`](docs/) directory:
 
-### Quick Access
-- **📖 [Complete Documentation Index](docs/README.md)** - Start here for all documentation
-- **🔧 [Guide System Documentation](docs/development/guides.md)** - Creating and managing SEO landing pages  
-- **🎨 [Style Guide](docs/development/styles.md)** - SCSS architecture and component standards
-- **📊 [Analytics Usage Guide](docs/analytics/usage.md)** - Understanding and using the analytics system
-- **🚀 [Security Guide](docs/security.md)** - Comprehensive security hardening for deployment and analytics
+### 🚀 **Essential Docs**
+- **📖 [Documentation Index](docs/README.md)** - Start here for all documentation
+- **🎯 [Product Vision](docs/VISION.md)** - Strategic direction and competitive positioning  
+- **🛠️ [Technical Stack](docs/TECH-STACK.md)** - Complete architecture and technology decisions
 
-### By Category
-- **Analytics** (`docs/analytics/`) - Analytics system usage and production setup
-- **Development** (`docs/development/`) - Guide system architecture, style guides, and coding standards  
-- **Security** (`docs/security.md`) - Unified security guide for deployment and analytics
+### � **Development Guides**
+- **[Guide System](docs/development/guides.md)** - Creating SEO landing pages with templates and BEM
+- **[Style Guide](docs/development/styles.md)** - SCSS architecture, component standards, button patterns
 
-> **💡 Tip:** The documentation includes cross-references and examples. Start with the [Documentation Index](docs/README.md) to find what you need quickly.
+### 📊 **Analytics & Operations**
+- **[Analytics Usage](docs/analytics/usage.md)** - Privacy-friendly tracking system and JSON API
+- **[Security Guide](docs/security.md)** - Production hardening and deployment security
+
+> **💡 Tip:** Start with the [Documentation Index](docs/README.md) to navigate by role (developer, analyst, stakeholder).
 
 ## Guide System (SEO Landing Pages)
 
-The project includes a scalable guide system for creating SEO-optimized landing pages:
+The project includes a **scalable guide system** for creating SEO-optimized landing pages:
 
-### Base Template System
-- **Shared Layout**: All guides extend `templates/guides/guide_base.html`
-- **Smart Navigation**: Context-aware back links + always-available "Back to Guides" navigation
-- **Consistent Structure**: Back Link → Header → Content → CTA → Back Link → FAQ → Keep Learning → Disclosure
-- **Built-in SEO**: FAQ schema, breadcrumbs, meta descriptions, CSP nonce support
-- **Analytics Ready**: Back link usage tracking for UX optimization
-- **BEM Components**: Strict `.guide__*` naming with modifiers (e.g., `guide__faq-section--spacious`)
+### ✅ **Key Features**
+- **Shared Layout System**: All guides extend `templates/guides/guide_base.html`
+- **Smart Navigation**: Context-aware back links with analytics tracking
+- **Built-in SEO**: FAQ schema, breadcrumbs, meta descriptions
+- **BEM Components**: Strict `.guide__*` naming with SCSS theming
+- **Analytics Ready**: Popular guide indicators and click tracking
 
-### Creating New Guides
-1. Create a new template in `templates/guides/`:
-```html
-{% extends "guides/guide_base.html" %}
+### 🚀 **Quick Start**
+1. Create template in `templates/guides/your-guide.html` extending `guide_base.html`
+2. Add route in `app.py` with title and meta_desc
+3. Customize content blocks: `guide_content`, `faq_content`, `next_links`
 
-{% block guide_title %}Your Guide Title{% endblock %}
-{% block guide_subtitle %}Brief description under title{% endblock %}
-{% block meta_desc %}{{ meta_desc }}{% endblock %}
-
-{% block faq_items %}[{
-  "@type": "Question",
-  "name": "Sample FAQ?",
-  "acceptedAnswer": {
-    "@type": "Answer",
-    "text": "Answer for SEO schema"
-  }
-}]{% endblock %}
-
-{% block guide_content %}
-  <div class="guide__section">
-    <h2 class="guide__section-title">How it Works</h2>
-    <ol class="guide__steps">
-      <li>First step with <a href="/link" class="text-link">inline link</a></li>
-      <li>Second step</li>
-    </ol>
-  </div>
-{% endblock %}
-
-{% block faq_content %}
-  <details class="guide__faq" role="group">
-    <summary class="guide__faq__summary">
-      <span class="h6 mb-0 d-inline-block">Common question?</span>
-    </summary>
-    <div class="guide__faq__content">
-      Detailed answer here
-    </div>
-  </details>
-{% endblock %}
-
-{% block next_links %}
-  <li class="guide__next__item">
-    <a class="guide__next__link text-link--accent" href="/guides/related">Related Guide</a>
-  </li>
-{% endblock %}
-```
-
-2. Add route in `app.py`:
-```python
-@app.route("/guides/your-guide-slug")
-def guide_your_guide_slug():
-    return render_template(
-        "guides/your-guide.html",
-        title="SEO Page Title - Your Site",
-        meta_desc="SEO meta description (150-160 chars)"
-    )
-```
-
-### Styling System
-- **Variables**: All guide styling centralized in `_variables.scss` with `$guide-*` prefix
-- **Components**: BEM structure in `static/scss/layout/_guides.scss` with modifiers
-- **Consistent Spacing**: 3rem section rhythm, responsive typography
-- **Text Links**: Integrated `.text-link` and `.text-link--accent` system
-- **Easy Theming**: Change colors/spacing globally via SCSS variables
+> **📖 For complete guide system documentation:** See [Guide System Documentation](docs/development/guides.md) for detailed templates, BEM patterns, and styling guidelines.
 
 ## Privacy-Friendly Analytics
 
-The application includes a comprehensive analytics system for tracking guide popularity while maintaining user privacy:
+The application includes a **comprehensive analytics system** for tracking guide popularity while maintaining user privacy:
 
-### 🚀 Core Features
-- **Click Tracking**: Automatic guide click analytics with privacy-first design
-- **Popular Guides Widget**: Server-rendered component showing trending content
-- **JSON API**: RESTful endpoint for accessing analytics data anywhere in your app
-- **Daily Rollup**: Automated data aggregation via Heroku Scheduler
-- **Centralized Catalog**: Single source of truth for all guide metadata
+### ✅ **Core Features**
+- **Click Tracking**: Automatic guide analytics with privacy-first design (no PII stored)
+- **Popular Indicators**: 🔥 flame emoji for trending guides (10+ clicks in 7 days)
+- **JSON API**: RESTful endpoints for accessing analytics data
+- **Widget Integration**: Server-rendered `popular_guides.html` component
 
-### 📊 Data Collection
-- **What we track**: Guide clicks, titles, and URLs for popularity ranking
-- **What we DON'T track**: Personal information, IP addresses, cookies, or user accounts
-- **Data stored**: Guide ID, title, timestamp, and truncated User-Agent (for bot filtering)
-- **Retention**: Daily rollup with configurable data purging
-
-### 🔒 Privacy Features
-- **No PII**: No personally identifiable information is collected or stored
-- **Bot filtering**: Automated traffic is filtered out using User-Agent patterns
-- **Rate limiting**: Client-side deduplication prevents abuse (10 clicks/user/hour)
-- **Local storage only**: Session data stays on user's device
+### � **Privacy-First Design**
+- **What we track**: Guide clicks, titles, timestamps only
+- **What we DON'T track**: Personal info, IP addresses, cookies, or user accounts
+- **Bot filtering**: Automated traffic filtering with rate limiting
 - **CSP compliant**: All scripts in external files with nonce protection
 
-### 🛠️ Technical Implementation
-- **Database**: SQLite for development, Postgres for production (via `DATABASE_URL`)
-- **Endpoints**: 
-  - `/analytics/guide-click` (POST) - Record guide clicks
-  - `/analytics/popular` (GET) - JSON API with rich metadata
-  - `/analytics/maintenance/rollup` (POST) - Daily aggregation (admin only)
-- **Client tracking**: Uses `navigator.sendBeacon` for reliable delivery during navigation
-- **Popular indicators**: Shows 🔥 flame emoji for guides with 10+ clicks in 7 days
-- **Widget Integration**: Reusable `popular_guides.html` component
-
-### 🎯 Usage Examples
-
-#### JSON API
-```bash
-# Get top 5 popular guides from last 30 days
-curl "https://yoursite.com/analytics/popular?days=30&limit=5"
-
-# Response includes full metadata
-{
-  "days": 30,
-  "guides": [
-    {
-      "id": "what-is-a-prop-firm",
-      "title": "What is a Prop Firm?",
-      "href": "/guides/what-is-a-prop-firm",
-      "group": "Beginner Basics",
-      "clicks": 42
-    }
-  ]
-}
-```
-
-#### Popular Guides Widget
+### 🛠️ **Quick Usage**
 ```html
-<!-- In any template -->
+<!-- Add popular guides widget to any template -->
 {% include 'components/popular_guides.html' %}
 ```
 
-The system automatically highlights popular content and provides valuable insights while respecting user privacy.
+```bash
+# Get analytics data via JSON API
+curl "https://yoursite.com/analytics/popular?days=30&limit=5"
+```
 
-## 11. Development Workflow
+> **📊 For complete analytics documentation:** See [Analytics Usage Guide](docs/analytics/usage.md) for detailed API reference, implementation examples, and production setup.
+
+## 10. Development Workflow
 
 ### Sass Compilation
 The project uses automated Sass compilation via VS Code tasks:
@@ -379,7 +290,7 @@ The project uses automated Sass compilation via VS Code tasks:
 # In VS Code: Ctrl+Shift+P → "Run Task" → "Dev: Flask + Sass"
 ```
 
-## 12. Production Deployment
+## 11. Production Deployment
 
 ### Environment Configuration
 - Set `APP_ENV=production` in Heroku Config Vars
@@ -392,7 +303,7 @@ The project uses automated Sass compilation via VS Code tasks:
 git push heroku main
 ```
 
-## 13. Testing
+## 12. Testing
 
 ### Simple Test That App Imports
 Create `tests/test_basic.py` (future enhancement idea):
@@ -406,7 +317,7 @@ Run (after installing pytest):
 pytest -q
 ```
 
-## 14. Suggested Next Enhancements
+## 13. Suggested Next Enhancements
 - Add `README` badges & license
 - Implement Blueprints for modularization  
 - Add a `config.py` with multiple environments (Dev/Staging/Prod)
@@ -418,7 +329,7 @@ pytest -q
 - Implement user authentication and personalization
 - Add analytics and tracking integration
 
-## 15. Maintenance
+## 14. Maintenance
 
 ### Deactivate Virtual Environment
 ```powershell
@@ -431,7 +342,7 @@ The `.gitignore` excludes `.venv/` and Python bytecode. Commit `requirements.txt
 ### License
 Consider adding a `LICENSE` file (e.g., MIT) if making this project public.
 
-## 16. Component Updates
+## 15. Component Updates
 
 ### Hero Carousel Animation
 The hero carousel features a "slide in from the right" animation:
@@ -447,4 +358,4 @@ The hero carousel features a "slide in from the right" animation:
 
 ---
 
-**For additional help:** See `style_guide.md`, `security_checklist.md`, and `guide_system_docs.md`
+**For additional help:** See the [complete documentation](docs/README.md) including technical guides, security hardening, and development standards.
