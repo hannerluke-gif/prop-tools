@@ -8,6 +8,13 @@
 A prop firm gives traders access to company capital. After passing an evaluation, you trade under set risk rules and keep a share of profits (often 80–90%).
 {% endblock %}
 
+{% block hero_trust %}
+<div class="hero--guide__trust">
+  <span class="star-icon">⭐</span>
+  <span>10+ firms tracked and updated daily</span>
+</div>
+{% endblock %}
+
 {% block faq_items %}[{
   "@type": "Question",
   "name": "What is a prop firm?",
@@ -32,23 +39,27 @@ A prop firm gives traders access to company capital. After passing an evaluation
 }]{% endblock %}
 
 {% block guide_content %}
-  <div class="guide__section">
-    <h2 class="guide__section-title">How it works</h2>
-    <ol class="guide__steps">
-      <li>Pick an evaluation account (account size, rules, fees).</li>
-      <li>Trade to reach the profit target without breaking drawdown limits.</li>
-      <li>Pass → receive a funded or sim-funded account with a payout schedule.</li>
-    </ol>
+  <div class="guide__section animation-ready fade-in">
+    <div class="guide__card">
+      <h2 class="guide__section-title">How it works</h2>
+      <ol class="guide__steps">
+        <li>Pick an evaluation account (account size, rules, fees).</li>
+        <li>Trade to reach the profit target without breaking drawdown limits.</li>
+        <li>Pass → receive a funded or sim-funded account with a payout schedule.</li>
+      </ol>
+    </div>
   </div>
 
-  <div class="guide__section">
-    <h2 class="guide__section-title">Key terms you'll see</h2>
-    <ul class="guide__bullets">
-      <li><strong>Evaluation:</strong> A rules-based test in a demo environment.</li>
-      <li><strong>Drawdown:</strong> Max loss allowed (daily and/or trailing).</li>
-      <li><strong>Sim-funded:</strong> Payout from firm; trades execute on simulated capital.</li>
-      <li><strong>Fully funded:</strong> Trades are placed against real firm capital.</li>
-    </ul>
+  <div class="guide__section animation-ready fade-in">
+    <div class="guide__card">
+      <h2 class="guide__section-title">Key terms you'll see</h2>
+      <ul class="guide__bullets">
+        <li><strong>Evaluation:</strong> A rules-based test in a demo environment.</li>
+        <li><strong>Drawdown:</strong> Max loss allowed (daily and/or trailing).</li>
+        <li><strong>Sim-funded:</strong> Payout from firm; trades execute on simulated capital.</li>
+        <li><strong>Fully funded:</strong> Trades are placed against real firm capital.</li>
+      </ul>
+    </div>
   </div>
 {% endblock %}
 

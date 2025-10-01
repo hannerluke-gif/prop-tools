@@ -1,6 +1,9 @@
 {% extends "base.html" %}
 
 {# Base template for all guide pages - provides consistent structure and SEO #}
+{# Scroll Animations: Add 'animation-ready fade-in' to sections for smooth scroll animations #}
+{# Animation classes: fade-in (slide up), fade-in-left (slide from left) #}
+{# Animations respect prefers-reduced-motion for accessibility #}
 
 {% block head %}
   <meta name="description" content="{% block meta_desc %}{% endblock %}">
@@ -35,28 +38,44 @@
 {% endblock %}
 
 {% block content %}
-<section class="container guide py-4 py-md-5">
-  <div class="row justify-content-center">
-    <article class="col-12 col-lg-9 prose">
-      
-      {# Top Back Link #}
-      {% if guide_back.href %}
-      <nav class="guide__back-nav mb-3">
-        <a href="{{ guide_back.href }}" class="guide__back-link guide-back__link text-decoration-none" data-back-type="context">
-          {{ guide_back.label }}
-        </a>
-      </nav>
-      {% endif %}
-      
-      {# Guide Header #}
-      <header class="guide__header">
+{# Hero-Style Guide Header - Full width outside container #}
+<div class="hero--guide">
+  <div class="hero--guide__container">
+    <div class="hero--guide__inner">
+      <header class="guide__header animation-ready fade-in">
         <h1 class="guide__title">{% block guide_title %}{% endblock %}</h1>
         <p class="guide__subtitle">
           {% block guide_subtitle %}{% endblock %}
         </p>
       </header>
+      
+      {# Primary CTA Button #}
+      <div class="hero--guide__cta">
+        <a href="{% block hero_cta_link %}/{% endblock %}" class="btn btn-primary">
+          {% block hero_cta_text %}Compare Firms{% endblock %}
+        </a>
+      </div>
+      
+      {# Trust Element - Optional, override in child templates #}
+      {% block hero_trust %}
+      {# Default: no trust element. Child templates can add their own. #}
+      {% endblock %}
+    </div>
+  </div>
+</div>
 
-      <hr class="guide__divider">
+<section class="container guide pt-4 pt-md-5 pb-0">
+  <div class="row justify-content-center">
+    <article class="col-12 col-lg-9 prose">
+      
+      {# Top Back Link #}
+      {% if guide_back.href %}
+      <nav class="guide__back-nav mb-3 animation-ready fade-in">
+        <a href="{{ guide_back.href }}" class="guide__back-link guide-back__link text-decoration-none" data-back-type="context">
+          {{ guide_back.label }}
+        </a>
+      </nav>
+      {% endif %}
 
       {# Main Content Sections #}
       {% block guide_content %}
@@ -65,7 +84,7 @@
 
       {# CTA Section - can be overridden or hidden #}
       {% block guide_cta %}
-      <div class="guide__section">
+      <div class="guide__section animation-ready fade-in">
         <div class="guide__cta">
           <div class="d-flex flex-column flex-md-row align-items-md-center gap-3">
             <div class="flex-grow-1">
@@ -86,7 +105,7 @@
       {% endblock %}
 
       {# Bottom Back Link - Always goes to Guides index #}
-      <nav class="guide__back-nav-bottom mt-4 mb-4">
+      <nav class="guide__back-nav-bottom mt-4 mb-4 animation-ready fade-in">
         <a href="{{ url_for('guides_index') }}" class="guide__back-link guide-back__link text-decoration-none" data-back-type="index">
           ← Back to Guides
         </a>
@@ -94,7 +113,7 @@
 
       {# FAQ Section #}
       {% block guide_faq %}
-      <div class="guide__faq-section">
+      <div class="guide__faq-section animation-ready fade-in">
         <h2 class="guide__section-title">Common questions</h2>
         {% block faq_content %}
           {# Child templates define FAQ items here #}
@@ -104,7 +123,7 @@
 
       {# Keep Learning Section #}
       {% block guide_next %}
-      <nav class="guide__next" aria-label="Related guide links">
+      <nav class="guide__next animation-ready fade-in" aria-label="Related guide links">
         <h2 class="guide__next__title">Keep learning</h2>
         <ul class="guide__next__list">
           {% block next_links %}

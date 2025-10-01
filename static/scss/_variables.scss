@@ -98,6 +98,13 @@ $guide-background-subtle: rgba(255, 255, 255, 0.03) !default;
 
 // Layout spacing (3rem rhythm for major sections)
 $guide-section-spacing: 3rem !default;
+
+// Hero-style header for guide pages
+$guide-hero-bg-base: linear-gradient(135deg, #1a1b26 0%, #202a3a 100%) !default;
+$guide-hero-padding-mobile: 3rem 1rem !default;
+$guide-hero-padding-desktop: 4rem 2rem !default;
+$guide-hero-min-height: 50vh !default; // 45-55vh range for hero presence without pushing content
+$guide-hero-content-max-width: 720px !default; // Left-aligned text block max width
 $guide-content-spacing: 1.5rem !default;
 
 // Guide title (H1) styling - Big & Soft design
@@ -131,12 +138,14 @@ $guide-content-element-font-weight: $weight-medium !default; // 500 for refined 
 $guide-content-element-color: #eaebe5 !default; // Softer gray for elegant contrast
 $guide-content-element-line-height: 1.6 !default; // Comfortable reading line height
 
-// CTA card component
-$guide-cta-bg: linear-gradient(135deg, rgba(255, 107, 154, 0.12) 0%, rgba(34, 211, 238, 0.08) 100%) !default; // Fintech-style gradient: pink to cyan
-$guide-cta-border: $guide-divider-subtle !default;
-$guide-cta-border-radius: 0.75rem !default; // 12px rounded corners
+// CTA card component - Enhanced glassmorphism with brand gradient
+$guide-cta-bg: linear-gradient(135deg, rgba(255, 107, 154, 0.15) 0%, rgba(34, 211, 238, 0.12) 100%) !default; // Stronger brand gradient
+$guide-cta-border: 1px solid rgba(255, 107, 154, 0.25) !default; // Pink accent border for emphasis
+$guide-cta-border-radius: 1rem !default; // 16px rounded corners to match card style
 $guide-cta-padding: 1.5rem !default; // 24px internal spacing
 $guide-cta-spacing: $guide-section-spacing !default;
+$guide-cta-shadow: 0 4px 20px rgba(255, 107, 154, 0.15) !default; // Pink glow for emphasis
+$guide-cta-backdrop-filter: blur(12px) !default; // Stronger blur for CTA prominence
 
 // CTA title styling
 $guide-cta-title-size: 1.25rem !default; // 20px - prominent but not overwhelming
@@ -161,11 +170,14 @@ $guide-faq-spacing: 1.25rem !default;
 $guide-faq-divider: $guide-divider-color !default;
 $guide-faq-hover-color: $accent-cyan !default;
 
-// Keep Learning component
+// Keep Learning component - Fintech tile-style links
 $guide-next-spacing-top: $guide-section-spacing !default;
-$guide-next-link-padding: 0.5rem 0.75rem !default;
-$guide-next-link-radius: 0.375rem !default;
-$guide-next-link-hover-bg: $guide-background-subtle !default;
+$guide-next-link-padding: 1rem 1.25rem !default; // More generous padding for tile feel
+$guide-next-link-radius: 0.75rem !default; // Match card border radius
+$guide-next-link-bg: rgba(255, 255, 255, 0.03) !default; // Subtle background like cards
+$guide-next-link-border: 1px solid rgba(255, 255, 255, 0.08) !default; // Border like cards
+$guide-next-link-hover-bg: rgba(255, 255, 255, 0.06) !default; // Slightly brighter on hover
+$guide-next-link-hover-border: 1px solid rgba(34, 211, 238, 0.3) !default; // Cyan border on hover
 $guide-next-link-hover-color: $accent-cyan !default;
 
 // Guide back navigation styling - Subtle navigation element
@@ -178,6 +190,15 @@ $guide-back-nav-hover-color: $accent-cyan !default;
 $guide-disclaimer-size: 0.875rem !default; // 14px for subtle appearance
 $guide-disclaimer-line-height: 1.4 !default; // Compact but readable line height
 $guide-disclaimer-color: rgba(255, 255, 255, 0.6) !default; // Very subdued for legal/fine print
+
+// Guide card component - Fintech-style glassmorphism cards (balanced visibility)
+$guide-card-bg: rgba(255, 255, 255, 0.05) !default; // Subtle glass effect - noticeable but not loud
+$guide-card-border: 1px solid rgba(255, 255, 255, 0.1) !default; // Refined border
+$guide-card-border-radius: 1rem !default; // 16px rounded corners for modern Fintech feel
+$guide-card-padding: 1.5rem !default; // 24px internal spacing for comfortable content
+$guide-card-shadow: 0 2px 12px rgba(0, 0, 0, 0.2) !default; // Moderate shadow for subtle elevation
+$guide-card-margin-bottom: $guide-content-spacing !default; // Spacing between cards
+$guide-card-backdrop-filter: blur(8px) !default; // Lighter glassmorphism blur
 
 // ============================================================
 // TEXT LINK SYSTEM
@@ -208,7 +229,7 @@ $text-link-inline-hover-decoration: underline !default;
 // ============================================================
 
 // Base button properties
-$btn-border-radius: 1rem !default;
+$btn-border-radius: 9999px !default; // Fintech-style pill buttons
 $btn-font-weight: $weight-extrabold !default;
 $btn-font-size: 1rem !default;
 $btn-color: $text-color !default;
@@ -247,5 +268,3 @@ $btn-tertiary-bg: $btn-color !default;
 $btn-tertiary-color: #000000 !default;
 $btn-tertiary-border-color: $btn-tertiary-bg !default;
 $btn-tertiary-hover-bg: $accent-cyan !default;
-
-// Note: Box shadows removed for flat button design

@@ -1,4 +1,118 @@
 // ============================================================
+// HERO-STYLE HEADER (GUIDE VARIANT)
+// Full-width hero with left-aligned content, CTA, and trust element
+// Placed outside .guide class since hero is outside container in HTML
+// ============================================================
+.hero--guide {
+  position: relative;
+  overflow: hidden;
+  min-height: $guide-hero-min-height;
+  padding: $guide-hero-padding-mobile;
+  margin-bottom: $guide-content-spacing;
+  
+  // Vignette overlay, grid pattern with gradient accents
+  background: 
+    linear-gradient(180deg, rgba(0, 0, 0, 0.1) 0%, rgba(0, 0, 0, 0.85) 88%),
+    linear-gradient(rgba(255, 255, 255, 0.05) 1px, transparent 1px),
+    linear-gradient(90deg, rgba(255, 255, 255, 0.05) 1px, transparent 1px),
+    radial-gradient(1200px 600px at 15% -10%, rgba(139, 92, 246, 0.25), transparent 60%),
+    radial-gradient(900px 500px at 85% 0%, rgba(34, 211, 238, 0.22), transparent 60%),
+    $guide-hero-bg-base;
+  
+  background-size: 100% 100%, 40px 40px, 40px 40px, 100% 100%, 100% 100%, 100% 100%;
+  background-position: center center;
+  background-repeat: no-repeat, repeat, repeat, no-repeat, no-repeat, no-repeat;
+  
+  // Desktop sizing
+  @media (min-width: 768px) {
+    padding: $guide-hero-padding-desktop;
+  }
+  
+  // Container to constrain content within standard layout
+  &__container {
+    max-width: 1320px; // Bootstrap container-xl width
+    margin: 0 auto;
+    padding: 0 1rem;
+    
+    @media (min-width: 768px) {
+      padding: 0 2rem;
+    }
+  }
+  
+  // Inner content wrapper with left alignment
+  &__inner {
+    position: relative;
+    z-index: 2;
+    max-width: $guide-hero-content-max-width;
+    text-align: left; // Left-aligned content
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    min-height: inherit;
+  }
+  
+  // CTA button styling - uses global button variables
+  &__cta {
+    margin-top: 1.5rem;
+    // No custom button styles - inherits from global $btn-* variables
+  }
+  
+  // Trust element styling
+  &__trust {
+    margin-top: 1rem;
+    font-size: 0.9rem;
+    color: rgba(255, 255, 255, 0.8);
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
+    
+    .star-icon {
+      color: #fbbf24; // Gold color for star
+      font-size: 1.1rem;
+    }
+  }
+  
+  // Animated accent shapes (decorative elements)
+  &::before,
+  &::after {
+    content: '';
+    position: absolute;
+    border-radius: 50%;
+    opacity: 0.4;
+    filter: blur(80px);
+    animation: guide-hero-float 20s ease-in-out infinite;
+  }
+  
+  &::before {
+    top: -10%;
+    left: -5%;
+    width: 300px;
+    height: 300px;
+    background: radial-gradient(circle, rgba(139, 92, 246, 0.6), transparent 70%);
+    animation-delay: 0s;
+    
+    @media (min-width: 768px) {
+      width: 450px;
+      height: 450px;
+    }
+  }
+  
+  &::after {
+    bottom: -15%;
+    right: -5%;
+    width: 350px;
+    height: 350px;
+    background: radial-gradient(circle, rgba(34, 211, 238, 0.5), transparent 70%);
+    animation-delay: 7s;
+    
+    @media (min-width: 768px) {
+      width: 500px;
+      height: 500px;
+    }
+  }
+}
+
+// ============================================================
 // GUIDE PAGES COMPONENT
 // Strict BEM structure for reusable guide/landing page layouts
 // All guide pages use this component for consistent styling
@@ -41,13 +155,9 @@
   // ============================================================
   &__section {
     margin-top: $guide-section-spacing;
-    padding-top: $guide-section-spacing;
-    border-top: 1px solid $guide-divider-subtle;
     
     &:first-of-type {
       margin-top: 0;
-      padding-top: 0;
-      border-top: none;
     }
   }
   &__section-title {
@@ -92,14 +202,54 @@
     }
   }
   // ============================================================
-  // CTA CARD COMPONENT
+  // CARD COMPONENT - FINTECH GLASSMORPHISM STYLE
+  // Balanced visibility with subtle glassmorphism effect
+  // ============================================================
+  &__card {
+    background: $guide-card-bg;
+    border: $guide-card-border;
+    border-radius: $guide-card-border-radius;
+    padding: $guide-card-padding;
+    margin-bottom: $guide-card-margin-bottom;
+    box-shadow: $guide-card-shadow;
+    backdrop-filter: $guide-card-backdrop-filter; // Glassmorphism blur
+    -webkit-backdrop-filter: $guide-card-backdrop-filter; // Safari support
+    
+    // Very subtle gradient overlay for depth
+    background-image: linear-gradient(
+      to bottom, 
+      rgba(255, 255, 255, 0.06) 0%, 
+      rgba(255, 255, 255, 0.03) 100%
+    );
+    background-blend-mode: overlay;
+    
+    // Remove top margin from first child element
+    > *:first-child {
+      margin-top: 0;
+    }
+    
+    // Remove bottom margin from last child element
+    > *:last-child {
+      margin-bottom: 0;
+    }
+  }
+  // ============================================================
+  // CTA CARD COMPONENT - ENHANCED GLASSMORPHISM WITH BRAND ACCENT
+  // Stronger visibility with pink brand color emphasis
   // ============================================================
   &__cta {
     background: $guide-cta-bg;
-    border: 1px solid $guide-cta-border;
+    border: $guide-cta-border;
     border-radius: $guide-cta-border-radius;
     padding: $guide-cta-padding;
     margin: $guide-cta-spacing 0;
+    box-shadow: $guide-cta-shadow; // Pink glow for emphasis
+    backdrop-filter: $guide-cta-backdrop-filter; // Glassmorphism blur
+    -webkit-backdrop-filter: $guide-cta-backdrop-filter; // Safari support
+    
+    // Stronger overlay for extra pop
+    background-blend-mode: overlay;
+    position: relative;
     
     &__title {
       font-size: $guide-cta-title-size;
@@ -237,31 +387,50 @@
       list-style: none;
       padding: 0;
       margin: 0;
-    }
-    &__item {
-      margin-bottom: 0.75rem;
-      &:last-child {
-        margin-bottom: 0;
+      display: grid;
+      gap: 0.75rem;
+      
+      // Responsive grid: 1 column on mobile, 2 on tablet+
+      @media (min-width: 768px) {
+        grid-template-columns: repeat(2, 1fr);
       }
     }
     &__link {
-      font-size: $guide-content-element-size;
-      font-weight: $guide-content-element-font-weight;
+      font-size: 1rem;
+      font-weight: $weight-medium;
       color: $guide-content-element-color;
-      line-height: $guide-content-element-line-height;
-      text-decoration: $link-underline-default;
-      text-decoration-color: $link-underline-color-default;
-      transition: color $transition-duration ease, background-color $transition-duration ease, text-decoration-color $transition-duration ease;
-      display: block;
+      line-height: 1.4;
+      text-decoration: none;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
       padding: $guide-next-link-padding;
       border-radius: $guide-next-link-radius;
-      // Hover/focus states with cyan text color and visible underline for enhanced interactivity
+      background: $guide-next-link-bg;
+      border: $guide-next-link-border;
+      transition: all $transition-duration ease;
+      
+      // Add arrow after link text
+      &::after {
+        content: "→";
+        font-size: 1.25rem;
+        margin-left: 0.5rem;
+        transition: transform $transition-duration ease;
+        flex-shrink: 0;
+      }
+      
+      // Hover/focus states - fintech tile effect
       &:hover,
       &:focus {
         color: $guide-next-link-hover-color;
         background: $guide-next-link-hover-bg;
-        text-decoration-color: $link-underline-color-hover;
+        border: $guide-next-link-hover-border;
+        transform: translateY(-2px);
         outline: none;
+        
+        &::after {
+          transform: translateX(4px);
+        }
       }
     }
   }
@@ -309,7 +478,9 @@
     font-size: $guide-disclaimer-size;
     line-height: $guide-disclaimer-line-height;
     color: $guide-disclaimer-color;
-    margin-top: $guide-content-spacing;
+    margin-top: $guide-section-spacing * 2; // Double spacing for more breathing room
+    margin-bottom: 0; // No space below disclosure
+    font-style: italic; // Italicize for subtle emphasis
   }
   // ============================================================
   // UTILITY OVERRIDES
@@ -382,5 +553,109 @@
   // Ensure icons don't get underlined
   .guide-index__link .text-warning { 
     text-decoration: none !important;
+  }
+}
+
+// ============================================================
+// SCROLL ANIMATIONS
+// Light-touch fade/slide animations for guide pages
+// Applied via IntersectionObserver in guideAnimations.js
+// ============================================================
+
+// Keyframes for fade-in animation
+@keyframes guide-fade-in {
+  from {
+    opacity: 0;
+    transform: translateY(20px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+// Keyframes for fade-in from left
+@keyframes guide-fade-in-left {
+  from {
+    opacity: 0;
+    transform: translateX(-20px);
+  }
+  to {
+    opacity: 1;
+    transform: translateX(0);
+  }
+}
+
+// Base state for elements that will animate
+.animation-ready {
+  opacity: 0;
+  transition: opacity 0.6s ease-out, transform 0.6s ease-out;
+  
+  // Prevent layout shift by reserving space
+  will-change: opacity, transform;
+}
+
+// Active state when element enters viewport
+.animation-active {
+  opacity: 1;
+  animation-duration: 0.6s;
+  animation-timing-function: ease-out;
+  animation-fill-mode: both;
+  
+  &.fade-in {
+    animation-name: guide-fade-in;
+  }
+  
+  &.fade-in-left {
+    animation-name: guide-fade-in-left;
+  }
+}
+
+// Reduce motion for accessibility
+@media (prefers-reduced-motion: reduce) {
+  .animation-ready {
+    opacity: 1;
+    transform: none;
+    transition: none;
+  }
+  
+  .animation-active {
+    animation: none;
+  }
+  
+  // Disable hero gradient and floating animations
+  .hero--guide {
+    animation: none !important;
+    
+    &::before,
+    &::after {
+      animation: none !important;
+      opacity: 0.2;
+    }
+  }
+}
+
+// ============================================================
+// HERO GUIDE ANIMATIONS
+// Subtle gradient shift and floating accent shapes
+// ============================================================
+
+// Gradient background animation (slow, subtle shift)
+@keyframes guide-hero-gradient {
+  0%, 100% {
+    background-position: 0% 50%;
+  }
+  50% {
+    background-position: 100% 50%;
+  }
+}
+
+// Floating accent shapes (slow up/down movement)
+@keyframes guide-hero-float {
+  0%, 100% {
+    transform: translateY(0) scale(1);
+  }
+  50% {
+    transform: translateY(-30px) scale(1.05);
   }
 }

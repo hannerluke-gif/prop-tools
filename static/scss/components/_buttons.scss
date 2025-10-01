@@ -39,7 +39,7 @@
   }
 
   &:focus-visible {
-    box-shadow: 0 0 0 3px rgba($btn-bg, 0.4);
+    box-shadow: 0 0 0 3px rgba($btn-bg, 0.4) !important;
   }
 
   &.active,
@@ -177,8 +177,7 @@
     padding: $btn-padding-y-sm $btn-padding-x-sm;
   }
 
-  &:hover,
-  &:focus,
+  &:h
   &:active {
     @extend %btn-active-base;
   }
