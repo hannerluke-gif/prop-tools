@@ -139,7 +139,7 @@
   color: $text-link-color;
   text-decoration: $text-link-decoration;
   text-decoration-color: transparent;
-  transition: color $text-link-transition-duration ease, text-decoration-color $text-link-transition-duration ease;
+  transition: color $transition-duration ease, text-decoration-color $transition-duration ease;
   font-size: 0.95rem;
   
   &:hover,

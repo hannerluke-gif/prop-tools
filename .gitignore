@@ -12,3 +12,7 @@ __pycache__/
 # Ignore compiled CSS and maps
 static/css/*.css
 static/css/*.map
+
+# Security scan outputs
+pip-audit.json
+bandit.json

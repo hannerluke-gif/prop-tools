@@ -92,14 +92,23 @@
   &__cta {
     background: $guide-cta-bg;
     border: 1px solid $guide-cta-border;
-    border-radius: 0.75rem;
-    padding: 1.5rem;
+    border-radius: $guide-cta-border-radius;
+    padding: $guide-cta-padding;
     margin: $guide-cta-spacing 0;
+    
     &__title {
-      margin-bottom: 0.25rem;
+      font-size: $guide-cta-title-size;
+      font-weight: $guide-cta-title-font-weight;
+      color: $guide-cta-title-color;
+      margin-bottom: $guide-cta-title-margin-bottom;
     }
+    
     &__text {
-      margin-bottom: 0;
+      font-size: $guide-cta-text-size;
+      font-weight: $guide-cta-text-font-weight;
+      color: $guide-cta-text-color;
+      line-height: $guide-cta-text-line-height;
+      margin-bottom: $guide-cta-text-margin-bottom;
     }
   }
   // ============================================================
@@ -121,7 +130,7 @@
       font-weight: $guide-faq-question-font-weight;
       color: $guide-faq-question-color;
       // Use guide system transition for consistent interactions
-      transition: color $guide-transition-duration ease;
+      transition: color $transition-duration ease;
       display: flex;
       align-items: center;
       gap: 0.75rem;
@@ -130,7 +139,7 @@
         font-size: inherit;
         font-weight: inherit;
         color: inherit;
-        transition: color $guide-transition-duration ease;
+        transition: color $transition-duration ease;
       }
       // Remove default marker
       &::marker {
@@ -140,15 +149,15 @@
       &::before {
         content: "▶";
         font-size: 0.75rem;
-        // Keep rotation quick but match guide color transition duration for cohesion
-        transition: transform $guide-transition-fast ease, color $guide-transition-duration ease;
+        // Use consistent guide transition duration for both transform and color
+        transition: transform $transition-duration ease, color $transition-duration ease;
         flex-shrink: 0;
       }
       // Ensure links in the summary use guide system transitions
       a:not(.btn) {
         color: $text-color; // Use full white for FAQ summary links
         text-decoration: none;
-        transition: color $guide-transition-duration ease, text-decoration-color $guide-transition-duration ease;
+        transition: color $transition-duration ease, text-decoration-color $transition-duration ease;
         
         &:hover,
         &:focus {
@@ -184,7 +193,7 @@
     // Ensure FAQ links always respect the guide system transition
     &__content a:not(.btn),
     &__summary a:not(.btn) {
-      transition: color $guide-transition-duration ease, text-decoration-color $guide-transition-duration ease;
+      transition: color $transition-duration ease, text-decoration-color $transition-duration ease;
     }
     // Open state styling - maintain hover color when expanded
     &[open] &__summary {
@@ -235,16 +244,18 @@
       font-weight: $guide-content-element-font-weight;
       color: $guide-content-element-color;
       line-height: $guide-content-element-line-height;
-      text-decoration: none; // Use guide system - no underline by default
-      transition: color $guide-transition-duration ease, background-color $guide-transition-duration ease;
+      text-decoration: $link-underline-default;
+      text-decoration-color: $link-underline-color-default;
+      transition: color $transition-duration ease, background-color $transition-duration ease, text-decoration-color $transition-duration ease;
       display: block;
       padding: $guide-next-link-padding;
       border-radius: $guide-next-link-radius;
-      // Hover/focus states with cyan text color for enhanced interactivity
+      // Hover/focus states with cyan text color and visible underline for enhanced interactivity
       &:hover,
       &:focus {
         color: $guide-next-link-hover-color;
         background: $guide-next-link-hover-bg;
+        text-decoration-color: $link-underline-color-hover;
         outline: none;
       }
     }
@@ -270,7 +281,7 @@
     gap: 0.375rem; // Slightly more generous gap for better visual balance
     padding: 0.25rem 0.5rem; // Subtle padding for hover target
     border-radius: 0.25rem; // Small radius for hover background
-    transition: color $guide-transition-duration ease, background-color $guide-transition-duration ease;
+    transition: color $transition-duration ease, background-color $transition-duration ease;
     
     &:hover,
     &:focus {
@@ -346,7 +357,7 @@
     color: $guide-content-element-color;
     line-height: $guide-content-element-line-height;
     text-decoration: none;
-    transition: color $guide-transition-duration ease;
+    transition: color $transition-duration ease;
     
     &:hover,
     &:focus {
@@ -365,6 +376,6 @@
   
   // Ensure icons don't get underlined
   .guide-index__link .text-warning { 
-    text-decoration: none !important; 
+    text-decoration: none !important;
   }
 }

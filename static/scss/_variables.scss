@@ -39,6 +39,25 @@ $base-html-bg: #0b0b12 !default; // Overall page background
 $text-color: #f5f5f5 !default; // Default text color for the project
 
 // ============================================================
+// TRANSITIONS
+// Global transition timing for all interactive elements
+// ============================================================
+
+$transition-duration: 0.3s !default; // Standard transition timing for all components
+
+// ============================================================
+// LINK UNDERLINE ANIMATION SYSTEM
+// Reusable tokens for smooth animated underlines on links
+// ============================================================
+
+// Default state: underline present but invisible
+$link-underline-default: underline !default;
+$link-underline-color-default: transparent !default;
+
+// Hover state: underline visible with current text color
+$link-underline-color-hover: currentColor !default;
+
+// ============================================================
 // SITE BANNER COMPONENT
 // Global sticky banner with search functionality
 // ============================================================
@@ -81,10 +100,6 @@ $guide-background-subtle: rgba(255, 255, 255, 0.03) !default;
 $guide-section-spacing: 3rem !default;
 $guide-content-spacing: 1.5rem !default;
 
-// Guide system transitions - completely independent of text link system
-$guide-transition-duration: 0.3s !default; // Consistent timing for all guide interactions
-$guide-transition-fast: 0.2s !default; // Fast transitions for arrows and quick feedback
-
 // Guide title (H1) styling - Big & Soft design
 $guide-title-size-mobile: 1.75rem !default; // 28px mobile
 $guide-title-size-desktop-min: 2rem !default; // 32px desktop minimum
@@ -113,18 +128,33 @@ $guide-section-title-color: $text-color !default; // Full contrast for clarity
 // Guide content elements styling - Steps, bullets, FAQ, links
 $guide-content-element-size: 1.25rem !default; // 20px for enhanced readability
 $guide-content-element-font-weight: $weight-medium !default; // 500 for refined appearance
-$guide-content-element-color: #e5e7eb !default; // Softer gray for elegant contrast
+$guide-content-element-color: #eaebe5 !default; // Softer gray for elegant contrast
 $guide-content-element-line-height: 1.6 !default; // Comfortable reading line height
 
 // CTA card component
-$guide-cta-bg: rgba(255, 255, 255, 0.06) !default;
+$guide-cta-bg: linear-gradient(135deg, rgba(255, 107, 154, 0.12) 0%, rgba(34, 211, 238, 0.08) 100%) !default; // Fintech-style gradient: pink to cyan
 $guide-cta-border: $guide-divider-subtle !default;
+$guide-cta-border-radius: 0.75rem !default; // 12px rounded corners
+$guide-cta-padding: 1.5rem !default; // 24px internal spacing
 $guide-cta-spacing: $guide-section-spacing !default;
+
+// CTA title styling
+$guide-cta-title-size: 1.25rem !default; // 20px - prominent but not overwhelming
+$guide-cta-title-font-weight: $weight-semibold !default; // 600 for emphasis
+$guide-cta-title-color: $text-color !default; // Full contrast white
+$guide-cta-title-margin-bottom: 0.25rem !default; // Tight spacing to text
+
+// CTA text/description styling
+$guide-cta-text-size: 1rem !default; // 16px - comfortable reading size
+$guide-cta-text-font-weight: $weight-regular !default; // 400 for body text
+$guide-cta-text-color: rgba(255, 255, 255, 0.85) !default; // Slightly muted for hierarchy
+$guide-cta-text-line-height: 1.5 !default; // Comfortable line spacing
+$guide-cta-text-margin-bottom: 0 !default; // No bottom margin
 
 // FAQ component
 $guide-faq-question-size: 1.1rem !default; // 17.6px - between content elements and navigation
 $guide-faq-question-font-weight: $weight-medium !default; // 500 for refined, softer than semibold
-$guide-faq-question-color: $text-color !default; // High contrast white for accessibility
+$guide-faq-question-color: $guide-content-element-color !default; // Match content elements for consistency
 $guide-faq-question-hover-color: $accent-cyan !default; // Cyan hover for interactive consistency
 $guide-faq-padding: 1.25rem !default;
 $guide-faq-spacing: 1.25rem !default;
@@ -142,8 +172,7 @@ $guide-next-link-hover-color: $accent-cyan !default;
 $guide-back-nav-size: 0.9rem !default; // 14.4px - smaller than content, larger than disclaimer
 $guide-back-nav-font-weight: $weight-regular !default; // 400 for lightweight, unobtrusive feel
 $guide-back-nav-color: rgba(255, 255, 255, 0.75) !default; // Muted but readable navigation color
-$guide-back-nav-hover-color: $text-color !default; // Full white on hover for clarity
-$guide-back-nav-hover-bg: rgba(255, 255, 255, 0.05) !default; // Subtle background highlight
+$guide-back-nav-hover-color: $accent-cyan !default;
 
 // Guide disclaimer/disclosure styling - Subdued fine print
 $guide-disclaimer-size: 0.875rem !default; // 14px for subtle appearance
@@ -172,9 +201,6 @@ $text-link-inline-color: $accent-cyan !default;
 $text-link-inline-decoration: none !default;
 $text-link-inline-hover-color: $accent-cyan !default;
 $text-link-inline-hover-decoration: underline !default;
-
-// Text link transition timing
-$text-link-transition-duration: 0.3s !default;
 
 // ============================================================
 // BUTTON SYSTEM
@@ -208,7 +234,7 @@ $btn-font-size-lg: $btn-font-size * 1.125 !default;
 $btn-primary-bg: $btn-bg !default;
 $btn-primary-color: $btn-color !default;
 $btn-primary-border-color: $btn-bg !default;
-$btn-primary-hover-bg: #ff7fad !default;
+$btn-primary-hover-bg: #e54c7a !default; // Darker pink on hover for more depth
 
 // Secondary button (black bg, white text -> cyan text on hover)
 $btn-secondary-bg: #000000 !default;

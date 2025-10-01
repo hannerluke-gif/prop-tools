@@ -435,7 +435,7 @@
     padding: 0.25rem 0.5rem;
     border-radius: $btn-border-radius;
     white-space: nowrap;
-    transition: color $text-link-transition-duration ease, background-color 0.2s ease, text-decoration $text-link-transition-duration ease;
+    transition: color $transition-duration ease, background-color 0.2s ease, text-decoration $transition-duration ease;
 
     &:hover,
     &:focus {
