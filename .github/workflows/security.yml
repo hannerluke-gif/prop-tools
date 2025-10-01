@@ -35,7 +35,7 @@ jobs:
       - id: pip_audit
         name: pip-audit (fail on any vulnerability)
         continue-on-error: true
-        run: pip-audit --strict --ignore-package pip -f json -o pip-audit.json
+        run: pip-audit --strict -f json -o pip-audit.json
 
       - id: bandit
         name: Bandit (report high severity+confidence)
@@ -134,6 +134,101 @@ jobs:
           curl -sI "${PROD_URL}" | tee headers.txt
           # Case-insensitive search so lowercase/uppercase headers both pass
           grep -Ei "strict-transport-security|content-security-policy|x-content-type-options|x-frame-options|referrer-policy|permissions-policy|cross-origin-" headers.txt
+
+      - name: Validate CSP allows required domains
+        if: steps.gate.outputs.skip != 'true'
+        shell: bash
+        run: |
+          echo "Validating CSP policy..."
+          
+          # Extract CSP header (case-insensitive)
+          CSP_HEADER=$(grep -i "content-security-policy" headers.txt | cut -d: -f2- | tr -d '\r\n' | sed 's/^ *//')
+          
+          if [ -z "$CSP_HEADER" ]; then
+            echo "❌ No Content-Security-Policy header found"
+            exit 1
+          fi
+          
+          echo "CSP Header: $CSP_HEADER"
+          
+          # Check for required security directives
+          echo "Checking required security directives..."
+          
+          # Must have frame-ancestors 'none' (clickjacking protection)
+          if ! echo "$CSP_HEADER" | grep -q "frame-ancestors 'none'"; then
+            echo "❌ Missing required directive: frame-ancestors 'none'"
+            exit 1
+          fi
+          echo "✅ frame-ancestors 'none' found"
+          
+          # Must have script-src-attr 'none' (no inline event handlers)
+          if ! echo "$CSP_HEADER" | grep -q "script-src-attr 'none'"; then
+            echo "❌ Missing required directive: script-src-attr 'none'"
+            exit 1
+          fi
+          echo "✅ script-src-attr 'none' found"
+          
+          # Check script-src allows self and uses nonce, may include GTM
+          if ! echo "$CSP_HEADER" | grep -q "script-src.*'self'"; then
+            echo "❌ script-src must include 'self'"
+            exit 1
+          fi
+          echo "✅ script-src includes 'self'"
+          
+          if ! echo "$CSP_HEADER" | grep -q "script-src.*'nonce-"; then
+            echo "❌ script-src must include nonce"
+            exit 1
+          fi
+          echo "✅ script-src includes nonce"
+          
+          # Allow Google Tag Manager for analytics
+          if echo "$CSP_HEADER" | grep -q "script-src.*https://www.googletagmanager.com"; then
+            echo "ℹ️  script-src includes Google Tag Manager (allowed for analytics)"
+          fi
+          
+          # Check style-src allows self and uses nonce, may include Google Fonts
+          if ! echo "$CSP_HEADER" | grep -q "style-src.*'self'"; then
+            echo "❌ style-src must include 'self'"
+            exit 1
+          fi
+          echo "✅ style-src includes 'self'"
+          
+          if ! echo "$CSP_HEADER" | grep -q "style-src.*'nonce-"; then
+            echo "❌ style-src must include nonce"
+            exit 1
+          fi
+          echo "✅ style-src includes nonce"
+          
+          # Allow Google Fonts for typography
+          if echo "$CSP_HEADER" | grep -q "style-src.*https://fonts.googleapis.com"; then
+            echo "ℹ️  style-src includes Google Fonts (allowed for typography)"
+          fi
+          
+          # Check font-src allows self, may include Google Fonts
+          if ! echo "$CSP_HEADER" | grep -q "font-src.*'self'"; then
+            echo "❌ font-src must include 'self'"
+            exit 1
+          fi
+          echo "✅ font-src includes 'self'"
+          
+          if echo "$CSP_HEADER" | grep -q "font-src.*https://fonts.gstatic.com"; then
+            echo "ℹ️  font-src includes Google Fonts CDN (allowed for typography)"
+          fi
+          
+          # Check connect-src allows self, may include Google Analytics
+          if ! echo "$CSP_HEADER" | grep -q "connect-src.*'self'"; then
+            echo "❌ connect-src must include 'self'"
+            exit 1
+          fi
+          echo "✅ connect-src includes 'self'"
+          
+          # Allow Google Analytics endpoints
+          GA_DOMAINS="https://www.google-analytics.com\|https://analytics.google.com"
+          if echo "$CSP_HEADER" | grep -q "connect-src.*$GA_DOMAINS"; then
+            echo "ℹ️  connect-src includes Google Analytics (allowed for privacy-friendly analytics)"
+          fi
+          
+          echo "✅ CSP validation passed - all required directives present with appropriate allowlists"
 
 
       - name: Upload headers

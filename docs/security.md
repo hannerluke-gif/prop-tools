@@ -64,24 +64,35 @@ def _security_headers(resp):
     return resp
 ```
 
-* [x] **Content-Security-Policy (CSP)** - *implemented with nonce support*
+* [x] **Content-Security-Policy (CSP)** - *implemented with nonce support and Google services allowlist*
 
 ```python
 @app.after_request
 def _csp(resp):
+    nonce = getattr(g, "csp_nonce", "")
     csp = (
-      "default-src 'self'; "
-      "script-src 'self'; "
-      "style-src 'self'; "
-      "img-src 'self' data:; "
-      "font-src 'self' data:; "
-      "connect-src 'self'; "
-      "frame-ancestors 'none'; "
-      "object-src 'none'"
+        "default-src 'self'; "
+        f"script-src 'self' 'nonce-{nonce}' https://www.googletagmanager.com; "
+        f"script-src-elem 'self' 'nonce-{nonce}' https://www.googletagmanager.com; "
+        "script-src-attr 'none'; "
+        f"style-src 'self' 'nonce-{nonce}' https://fonts.googleapis.com; "
+        "img-src 'self' data:; "
+        "font-src 'self' https://fonts.gstatic.com data:; "
+        "connect-src 'self' https://www.google-analytics.com https://analytics.google.com; "
+        "frame-ancestors 'none'; "
+        "base-uri 'self'; form-action 'self'"
     )
     resp.headers['Content-Security-Policy'] = csp
     return resp
 ```
+
+**CSP Security Notes:**
+- ✅ **Nonce-based**: All inline scripts/styles must use server-generated nonces
+- ✅ **No unsafe-inline**: Prevents XSS from injected inline content
+- ✅ **script-src-attr 'none'**: Blocks inline event handlers (onclick, etc.)
+- ✅ **frame-ancestors 'none'**: Prevents clickjacking attacks
+- ✅ **Minimal allowlist**: Only trusted Google services for analytics and fonts
+- ⚠️ **Google services**: GTM, GA, and Google Fonts are allowlisted for functionality
 
 ### 3. Flask App Hardening
 * [x] **Disable server banners** (no Flask version leaks)
