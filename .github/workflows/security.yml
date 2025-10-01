@@ -109,19 +109,16 @@ jobs:
   headers-smoke:
     name: "Optional: headers smoke test (prod)"
     runs-on: ubuntu-latest
+    env:
+      # Read from repository variable if it exists; will be empty otherwise
+      TARGET_URL: ${{ vars.PROD_URL }}
 
     steps:
-      - name: Load PROD_URL from repo variables (if any)
-        shell: bash
-        run: |
-          # This line is safe even if the variable doesn't exist
-          echo "PROD_URL=${{ vars.PROD_URL }}" >> "$GITHUB_ENV"
-
       - id: gate
-        name: Check PROD_URL
+        name: Check production URL
         shell: bash
         run: |
-          if [ -z "${PROD_URL}" ]; then
+          if [ -z "${TARGET_URL}" ]; then
             echo "No PROD_URL set. Skipping headers smoke test."
             echo "skip=true" >> "$GITHUB_OUTPUT"
           fi
@@ -130,8 +127,8 @@ jobs:
         if: steps.gate.outputs.skip != 'true'
         shell: bash
         run: |
-          echo "Checking ${PROD_URL}"
-          curl -sI "${PROD_URL}" | tee headers.txt
+          echo "Checking ${TARGET_URL}"
+          curl -sI "${TARGET_URL}" | tee headers.txt
           # Case-insensitive search for required headers
           grep -Ei "(^|[: ])(strict-transport-security|content-security-policy|x-content-type-options|x-frame-options|referrer-policy|permissions-policy|cross-origin-opener-policy|cross-origin-resource-policy)\b" headers.txt
 
