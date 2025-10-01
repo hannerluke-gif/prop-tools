@@ -1,17 +1,15 @@
 # Stdlib
 import os, secrets, json
-import datetime
 from datetime import timedelta, timezone
 
 # Third-party
 from flask import Flask, render_template, request, redirect, g, Response, url_for
-from urllib.parse import urljoin
+from urllib.parse import urljoin, urlparse
 from werkzeug.middleware.proxy_fix import ProxyFix
 
 # Local imports
 from blueprints.analytics import analytics_bp, top_guides_simple
 from guides_catalog import GUIDES_CATALOG, get_all_guides, get_guide_by_id
-from urllib.parse import urlparse
 
 app = Flask(__name__)
 
