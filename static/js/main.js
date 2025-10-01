@@ -5,25 +5,52 @@ import { initHero } from './components/hero.js';
 import { initBannerOffsets } from './components/bannerOffsets.js';
 
 document.addEventListener('DOMContentLoaded', () => {
-  initPromoBanner();        // looks for #promoBanner by default
-  initSiteBannerSearch();   // looks for .site-banner by default
-  initHamburgerMenu();      // looks for .site-banner by default
-  initBannerOffsets();      // measures banner(s) and sets menu top offset
-  initHero();               // populate hero slide 1 content
+  // Component initialization with error handling
+  const components = [
+    { name: 'PromoBanner', init: initPromoBanner },
+    { name: 'SiteBannerSearch', init: initSiteBannerSearch },
+    { name: 'HamburgerMenu', init: initHamburgerMenu },
+    { name: 'BannerOffsets', init: initBannerOffsets },
+    { name: 'Hero', init: initHero }
+  ];
+
+  const failedComponents = [];
   
-  // Analytics functions now in analytics.js (loaded via script tag)
-  if (window.Analytics) {
-    window.Analytics.initGuideTracking();      // client-side popularity tracking
-    window.Analytics.initPopularityReordering(); // reorder guides by local click count
+  components.forEach(({ name, init }) => {
+    try {
+      init();
+      console.log(`✅ ${name} initialized successfully`);
+    } catch (error) {
+      console.error(`❌ Failed to initialize ${name}:`, error);
+      failedComponents.push(name);
+      
+      // Report to analytics if available
+      if (window.Analytics && window.Analytics.reportAnalyticsError) {
+        window.Analytics.reportAnalyticsError(error, `component_init_${name.toLowerCase()}`);
+      }
+    }
+  });
+
+  // Log initialization summary
+  if (failedComponents.length === 0) {
+    console.log('🚀 All components initialized successfully');
+  } else {
+    console.warn(`⚠️ ${failedComponents.length} component(s) failed to initialize: ${failedComponents.join(', ')}`);
   }
+  
+  // Analytics is now auto-initialized in analytics.js
+  // No manual initialization needed here
 });
 
 // ============================================================
-// ANALYTICS MOVED TO analytics.js
-// All analytics functions have been consolidated in analytics.js
-// This includes:
-// - Google Analytics 4 setup
-// - Guide click tracking
-// - Rate limiting
-// - Popularity reordering
+// ANALYTICS INTEGRATION
+// Analytics system is auto-initialized in analytics.js and loaded via script tag.
+// No manual initialization required here.
+// 
+// Available via window.Analytics:
+// - Guide click tracking (auto-enabled)
+// - Popularity reordering (auto-enabled) 
+// - Rate limiting (built-in)
+// - Error reporting (used above for component failures)
+// - Privacy consent checking (built-in)
 // ============================================================

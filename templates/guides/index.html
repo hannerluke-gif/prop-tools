@@ -40,7 +40,7 @@ Clear answers, step-by-step next moves, and unbiased comparisons.
       <ul class="guide-index__list">
         {% for g in guides if g.group == "Beginner Basics" %}
           <li class="guide-index__item">
-            <a class="guide-index__link text-link"
+            <a class="guide-index__link"
                href="{{ g.href }}"
                data-guide-id="{{ g.id }}"
                data-guide-title="{{ g.title }}">
@@ -56,7 +56,7 @@ Clear answers, step-by-step next moves, and unbiased comparisons.
       <ul class="guide-index__list">
         {% for g in guides if g.group == "Choosing an Account" %}
           <li class="guide-index__item">
-            <a class="guide-index__link text-link"
+            <a class="guide-index__link"
                href="{{ g.href }}"
                data-guide-id="{{ g.id }}"
                data-guide-title="{{ g.title }}">

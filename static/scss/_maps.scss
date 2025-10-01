@@ -13,6 +13,8 @@
 
 $site-color-tokens: (
   "promo": $brand-primary,
+  "accent": $accent-cyan,
+  "base": $base-html-bg,
 ) !default;
 
 // Merge site tokens into Bootstrap's $theme-colors map so utilities are generated.

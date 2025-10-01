@@ -27,21 +27,18 @@
   font-size: $btn-font-size; // 1rem base, scales with variants
   padding: $btn-padding-y $btn-padding-x;
   color: $btn-color;
-  text-decoration: none; // ensure anchor-based buttons don't show underlines by default
-  -webkit-tap-highlight-color: transparent; // avoid mobile blue flash
-  position: relative; // anchor for focus outline pseudo if needed
-  outline: 0; // we substitute with :focus-visible ring
+  text-decoration: none;
+  -webkit-tap-highlight-color: transparent;
+  position: relative;
+  outline: 0;
   transition: background-color $btn-transition-duration ease, color $btn-transition-duration ease, border-color $btn-transition-duration ease;
 
   &:hover,
   &:focus {
-    // Do not change box-shadow on hover/focus to keep visual state static.
-    text-decoration: none; // explicitly remove underline on interactive states
+    text-decoration: none;
   }
 
-  // Visible focus ring only when keyboard focusing
   &:focus-visible {
-    // Keep accessible focus ring but do not modify base box-shadow
     box-shadow: 0 0 0 3px rgba($btn-bg, 0.4);
   }
 
@@ -60,6 +57,10 @@
     padding: $btn-padding-y-sm $btn-padding-x-sm;
   }
 
+  // Remove lift/translate hover animation across viewports: keep static (no movement/shadow change)  
+  // But preserve color/background transitions for smooth hover effects
+  transform: none !important;
+
   // High contrast / forced colors mode: rely on system colors but keep shape
   @media (forced-colors: active) {
     & {
@@ -75,32 +76,23 @@
       color: HighlightText;
     }
     &.active,
-    &:active { background: Highlight; color: HighlightText; }
+    &:active { 
+      background: Highlight; 
+      color: HighlightText; 
+    }
   }
 }
 
-// Make sure primary button uses site CTA tokens
+// Primary button using site CTA tokens
 .btn-primary {
-  // Primary: bright pink background, white text
-  background-color: $btn-primary-bg; // maps to $brand-primary (#ff6b9a)
+  background-color: $btn-primary-bg;
   border-color: $btn-primary-border-color;
   color: $btn-primary-color;
 
   &:hover,
-  &:focus {
-    background-color: $btn-primary-hover-bg;
-    border-color: $btn-primary-hover-bg;
-    color: $btn-primary-color;
-  }
-
+  &:focus,
   &:active,
-  &.active {
-    background-color: $btn-primary-hover-bg;
-    border-color: $btn-primary-hover-bg;
-    color: $btn-primary-color;
-  }
-
-  // Stronger selectors retain hover color on active
+  &.active,
   &:not(.disabled):not(:disabled).active,
   &:not(.disabled):not(:disabled):active {
     background-color: $btn-primary-hover-bg;
@@ -109,19 +101,14 @@
   }
 }
 
-// Secondary: black background, white text; hover changes text + border to cyan (bg stays black)
+// Secondary button: black background, white text; hover changes text + border to cyan
 .btn-secondary {
   background-color: $btn-secondary-bg;
   border: 1px solid $btn-secondary-border-color;
   color: $btn-secondary-color;
 
   &:hover,
-  &:focus {
-    background-color: $btn-secondary-bg; // unchanged
-    border-color: $btn-secondary-hover-color;
-    color: $btn-secondary-hover-color;
-  }
-
+  &:focus,
   &:active,
   &.active {
     background-color: $btn-secondary-bg;
@@ -129,22 +116,19 @@
     color: $btn-secondary-hover-color;
   }
 
-  &:focus-visible { box-shadow: 0 0 0 3px rgba($btn-secondary-hover-color, 0.35); }
+  &:focus-visible {
+    box-shadow: 0 0 0 3px rgba($btn-secondary-hover-color, 0.35);
+  }
 }
 
-// Tertiary: white background, black text; hover background becomes cyan, text remains black
+// Tertiary button: white background, black text; hover background becomes cyan
 .btn-tertiary {
   background-color: $btn-tertiary-bg;
   border: 1px solid $btn-tertiary-border-color;
   color: $btn-tertiary-color;
 
   &:hover,
-  &:focus {
-    background-color: $btn-tertiary-hover-bg;
-    border-color: $btn-tertiary-hover-bg;
-    color: $btn-tertiary-color;
-  }
-
+  &:focus,
   &:active,
   &.active {
     background-color: $btn-tertiary-hover-bg;
@@ -152,7 +136,9 @@
     color: $btn-tertiary-color;
   }
 
-  &:focus-visible { box-shadow: 0 0 0 3px rgba($btn-tertiary-hover-bg, 0.35); }
+  &:focus-visible {
+    box-shadow: 0 0 0 3px rgba($btn-tertiary-hover-bg, 0.35);
+  }
 }
 
 // Extra specificity to override prose link hover underline inside long-form content
@@ -160,7 +146,9 @@
 .guide a.btn {
   text-decoration: none;
 
-  &:hover, &:focus, &:active {
+  &:hover,
+  &:focus,
+  &:active {
     text-decoration: none;
   }
 }
@@ -172,17 +160,16 @@
   background-color: transparent;
 
   &:hover,
-  &:focus { @extend %btn-active-base; }
-
+  &:focus,
   &:not(.disabled):not(:disabled).active,
-  &:not(.disabled):not(:disabled):active { @extend %btn-active-base; }
+  &:not(.disabled):not(:disabled):active {
+    @extend %btn-active-base;
+  }
 }
 
-// Guide/prose-specific override: treat outline-primary buttons inside guides
-// as filled CTAs so small inline CTAs match the rest of the site's CTAs.
+// Guide/prose-specific override: treat outline-primary buttons as filled CTAs
 .prose .btn-outline-primary,
 .guide .btn-outline-primary {
-  // Fill immediately (not just on hover) and use token colors
   @extend %btn-active-base;
 
   &.btn-sm {
@@ -192,93 +179,12 @@
 
   &:hover,
   &:focus,
-  &:active { @extend %btn-active-base; }
+  &:active {
+    @extend %btn-active-base;
+  }
 }
 
 // Outline secondary variant removed
-
-// ============================================================
-// TEXT LINK VARIANTS
-// Utility classes for consistent inline text link styling
-// ============================================================
-
-// Default text link: body color + underline -> cyan hover (underline stays)
-.text-link {
-  color: $text-link-color;
-  text-decoration: $text-link-decoration;
-  text-decoration-color: transparent;
-  transition: color $text-link-transition-duration ease, text-decoration-color $text-link-transition-duration ease;
-
-  &:hover,
-  &:focus {
-    color: $text-link-hover-color;
-    text-decoration: $text-link-hover-decoration;
-    text-decoration-color: currentColor;
-  }
-
-  &:focus-visible {
-    outline: 2px solid rgba($text-link-hover-color, 0.4);
-    outline-offset: 2px;
-  }
-}
-
-// Accent text link: cyan text (no underline) -> add underline on hover
-.text-link--accent {
-  color: $text-link-inline-color;
-  text-decoration: $text-link-inline-decoration;
-  text-decoration-color: transparent;
-  transition: color $text-link-transition-duration ease, text-decoration-color $text-link-transition-duration ease;
-
-  &:hover,
-  &:focus {
-    color: $text-link-inline-hover-color;
-    text-decoration: $text-link-inline-hover-decoration;
-    text-decoration-color: currentColor;
-  }
-
-  &:focus-visible {
-    outline: 2px solid rgba($text-link-inline-color, 0.4);
-    outline-offset: 2px;
-  }
-}
-
-// Alt text link: body color -> cyan (no underline) for FAQ content
-.text-link--alt {
-  color: $text-link-alt-color;
-  text-decoration: $text-link-alt-decoration;
-  // Animate color and the underline color for browsers that support it
-  transition: color $text-link-transition-duration ease, text-decoration-color $text-link-transition-duration ease;
-
-  &:hover,
-  &:focus {
-    color: $text-link-alt-hover-color;
-    text-decoration: $text-link-alt-hover-decoration;
-    // Keep underline color in sync when underline is shown
-    text-decoration-color: currentColor;
-  }
-
-  &:focus-visible {
-    outline: 2px solid rgba($text-link-alt-hover-color, 0.4);
-    outline-offset: 2px;
-  }
-}
-
-// Global link defaults for prose/guide content
-.prose a:not(.btn):not(.text-link):not(.text-link--accent):not(.text-link--alt),
-.guide a:not(.btn):not(.text-link):not(.text-link--accent):not(.text-link--alt) {
-  @extend .text-link;
-}
-
-// FAQ links specifically use the alt styling
-.guide__faq__content a:not(.btn) {
-  @extend .text-link--alt;
-}
-
-// Remove lift/translate hover animation across viewports: keep static (no movement/shadow change)  
-// But preserve color/background transitions for smooth hover effects
-.btn { 
-  transform: none !important; 
-}
 
 // Respect reduced motion preferences - disable all transitions for accessibility
 @media (prefers-reduced-motion: reduce) {

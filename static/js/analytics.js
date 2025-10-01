@@ -2,6 +2,31 @@
 // Includes Google Analytics 4, guide click tracking, and popularity features
 
 // ============================================================
+// ANALYTICS CONFIGURATION
+// ============================================================
+
+const ANALYTICS_CONFIG = {
+  GA_ID: 'G-ZEBP98J6ZQ',
+  DEBUG_MODE: false, // Set to true for development, false for production
+  RATE_LIMIT: {
+    WINDOW_MS: 60 * 1000, // 1 minute
+    MAX_CLICKS: 3,
+    CLEANUP_INTERVAL_MS: 5 * 60 * 1000 // 5 minutes
+  },
+  ENDPOINTS: {
+    GUIDE_CLICK: '/analytics/guide-click',
+    GUIDE_BACK_CLICK: '/analytics/guide-back-click'
+  },
+  SESSION_ID_PREFIX: 'sess_',
+  STORAGE_KEYS: {
+    SESSION_ID: 'analyticsSessionId',
+    RATE_LIMIT: 'analyticsRateLimit',
+    GUIDE_CLICKS: 'guideClicks',
+    ANALYTICS_CONSENT: 'analytics_consent'
+  }
+};
+
+// ============================================================
 // GOOGLE ANALYTICS 4 SETUP
 // ============================================================
 
@@ -14,61 +39,130 @@ function gtag() {
 
 // Set up GA4
 gtag('js', new Date());
-gtag('config', 'G-ZEBP98J6ZQ', {
-  'debug_mode': true
+gtag('config', ANALYTICS_CONFIG.GA_ID, {
+  'debug_mode': ANALYTICS_CONFIG.DEBUG_MODE
 });
 
 // Export gtag for use in other modules
 window.gtag = gtag;
 
 // ============================================================
+// PRIVACY AND ERROR HANDLING UTILITIES
+// ============================================================
+
+/**
+ * Check if user has given consent for analytics tracking
+ * @returns {boolean} True if consent given or not required
+ */
+function hasAnalyticsConsent() {
+  try {
+    // Check for explicit consent
+    const consent = localStorage.getItem(ANALYTICS_CONFIG.STORAGE_KEYS.ANALYTICS_CONSENT);
+    // Default to true if no consent system is implemented yet
+    // In production, you might want to default to false and require explicit consent
+    return consent !== 'false';
+  } catch (error) {
+    // If localStorage is unavailable, default to no tracking
+    reportAnalyticsError(error, 'consent_check');
+    return false;
+  }
+}
+
+/**
+ * Report analytics errors to monitoring service
+ * @param {Error} error - The error that occurred
+ * @param {string} context - Context where the error occurred
+ */
+function reportAnalyticsError(error, context) {
+  try {
+    // Log to console for debugging
+    console.warn(`Analytics Error [${context}]:`, error);
+    
+    // Send to GA4 as exception event if available
+    if (window.gtag && hasAnalyticsConsent()) {
+      gtag('event', 'exception', {
+        description: `Analytics Error: ${context} - ${error.message}`,
+        fatal: false
+      });
+    }
+    
+    // TODO: Add integration with error monitoring service (e.g., Sentry, LogRocket)
+    // Example: Sentry.captureException(error, { tags: { context: 'analytics_' + context } });
+  } catch (reportingError) {
+    // Silently fail if error reporting itself fails
+    console.warn('Failed to report analytics error:', reportingError);
+  }
+}
+
+// ============================================================
 // GUIDE ANALYTICS - Client-side popularity tracking
 // ============================================================
 
 /**
+ * Clean up old rate limit entries
+ */
+function cleanupRateLimits() {
+  try {
+    const rateLimits = JSON.parse(localStorage.getItem(ANALYTICS_CONFIG.STORAGE_KEYS.RATE_LIMIT) || '{}');
+    const now = Date.now();
+    let hasChanges = false;
+
+    Object.keys(rateLimits).forEach(key => {
+      const originalLength = rateLimits[key].length;
+      rateLimits[key] = rateLimits[key].filter(timestamp => now - timestamp < ANALYTICS_CONFIG.RATE_LIMIT.WINDOW_MS);
+      
+      if (rateLimits[key].length === 0) {
+        delete rateLimits[key];
+        hasChanges = true;
+      } else if (rateLimits[key].length !== originalLength) {
+        hasChanges = true;
+      }
+    });
+
+    if (hasChanges) {
+      localStorage.setItem(ANALYTICS_CONFIG.STORAGE_KEYS.RATE_LIMIT, JSON.stringify(rateLimits));
+    }
+  } catch (error) {
+    reportAnalyticsError(error, 'rate_limit_cleanup');
+  }
+}
+
+/**
  * Session-based rate limiting for analytics
- * Prevents rapid-fire clicking abuse (max 3 clicks per guide per minute per session)
+ * Prevents rapid-fire clicking abuse using configured limits
  */
 function checkAnalyticsRateLimit(guideId) {
   try {
     // Generate or retrieve session UUID
-    let sessionId = localStorage.getItem('analyticsSessionId');
+    let sessionId = localStorage.getItem(ANALYTICS_CONFIG.STORAGE_KEYS.SESSION_ID);
     if (!sessionId) {
-      sessionId = 'sess_' + Date.now() + '_' + Math.random().toString(36).substr(2, 9);
-      localStorage.setItem('analyticsSessionId', sessionId);
+      sessionId = ANALYTICS_CONFIG.SESSION_ID_PREFIX + Date.now() + '_' + Math.random().toString(36).substr(2, 9);
+      localStorage.setItem(ANALYTICS_CONFIG.STORAGE_KEYS.SESSION_ID, sessionId);
     }
 
-    // Rate limiting: max 3 clicks per guide per minute per session
-    const rateLimitKey = 'analyticsRateLimit';
-    const rateLimits = JSON.parse(localStorage.getItem(rateLimitKey) || '{}');
+    // Get current rate limits
+    const rateLimits = JSON.parse(localStorage.getItem(ANALYTICS_CONFIG.STORAGE_KEYS.RATE_LIMIT) || '{}');
     const now = Date.now();
-    const windowMs = 60 * 1000; // 1 minute
-    const maxClicks = 3;
-
-    // Clean up old entries
-    Object.keys(rateLimits).forEach(key => {
-      rateLimits[key] = rateLimits[key].filter(timestamp => now - timestamp < windowMs);
-      if (rateLimits[key].length === 0) {
-        delete rateLimits[key];
-      }
-    });
 
     // Check current guide rate limit
     const limitKey = `${sessionId}:${guideId}`;
     const clicks = rateLimits[limitKey] || [];
     
-    if (clicks.length >= maxClicks) {
+    // Filter out old clicks (no need to clean all on every check now)
+    const recentClicks = clicks.filter(timestamp => now - timestamp < ANALYTICS_CONFIG.RATE_LIMIT.WINDOW_MS);
+    
+    if (recentClicks.length >= ANALYTICS_CONFIG.RATE_LIMIT.MAX_CLICKS) {
       return false; // Rate limited
     }
     
     // Record this click
-    clicks.push(now);
-    rateLimits[limitKey] = clicks;
-    localStorage.setItem(rateLimitKey, JSON.stringify(rateLimits));
+    recentClicks.push(now);
+    rateLimits[limitKey] = recentClicks;
+    localStorage.setItem(ANALYTICS_CONFIG.STORAGE_KEYS.RATE_LIMIT, JSON.stringify(rateLimits));
     
     return true; // Allow analytics
   } catch (error) {
-    console.warn('Rate limit check failed:', error);
+    reportAnalyticsError(error, 'rate_limit_check');
     return true; // Default to allowing on error
   }
 }
@@ -83,6 +177,11 @@ function initGuideTracking() {
     const backLinkEl = e.target.closest('.guide-back__link');
     const el = guideIndexEl || backLinkEl;
     if (!el) return;
+
+    // Check for analytics consent first
+    if (!hasAnalyticsConsent()) {
+      return; // Don't track if no consent
+    }
 
     // Different handling for guide links vs back links
     let id, title, href, eventType;
@@ -107,16 +206,17 @@ function initGuideTracking() {
     
     // Log to localStorage for client-side popularity tracking
     try {
-      const key = 'guideClicks';
-      const clicks = JSON.parse(localStorage.getItem(key) || '{}');
+      const clicks = JSON.parse(localStorage.getItem(ANALYTICS_CONFIG.STORAGE_KEYS.GUIDE_CLICKS) || '{}');
       clicks[id] = (clicks[id] || 0) + 1;
-      localStorage.setItem(key, JSON.stringify(clicks));
+      localStorage.setItem(ANALYTICS_CONFIG.STORAGE_KEYS.GUIDE_CLICKS, JSON.stringify(clicks));
       
-      // Optional: Log for debugging
-      console.log(`📊 Guide click: ${id} (${clicks[id]} total)`);
+      // Optional: Log for debugging (only in debug mode)
+      if (ANALYTICS_CONFIG.DEBUG_MODE) {
+        console.log(`📊 Guide click: ${id} (${clicks[id]} total)`);
+      }
     } catch (error) {
-      // Silently handle localStorage errors (private browsing, etc.)
-      console.warn('Guide tracking failed:', error);
+      // Handle localStorage errors (private browsing, etc.)
+      reportAnalyticsError(error, 'guide_tracking_localStorage');
     }
 
     // Send event to our analytics endpoint (with rate limiting)
@@ -129,23 +229,31 @@ function initGuideTracking() {
       });
 
       // Use appropriate endpoint based on event type
-      const endpoint = eventType === 'guide_back_click' ? '/analytics/guide-back-click' : '/analytics/guide-click';
+      const endpoint = eventType === 'guide_back_click' 
+        ? ANALYTICS_CONFIG.ENDPOINTS.GUIDE_BACK_CLICK 
+        : ANALYTICS_CONFIG.ENDPOINTS.GUIDE_CLICK;
 
       // Prefer sendBeacon so the request completes during navigation
       if (navigator.sendBeacon) {
         const blob = new Blob([payload], { type: 'application/json' });
         navigator.sendBeacon(endpoint, blob);
-        console.log(`📊 Analytics beacon sent: ${id} (${eventType})`);
+        if (ANALYTICS_CONFIG.DEBUG_MODE) {
+          console.log(`📊 Analytics beacon sent: ${id} (${eventType})`);
+        }
       } else {
         fetch(endpoint, {
           method: 'POST',
           headers: { 'Content-Type': 'application/json' },
           body: payload,
           keepalive: true  // hint to allow during unload
-        }).catch(() => {});
-        console.log(`📊 Analytics fetch sent: ${id} (${eventType})`);
+        }).catch((error) => {
+          reportAnalyticsError(error, 'analytics_fetch');
+        });
+        if (ANALYTICS_CONFIG.DEBUG_MODE) {
+          console.log(`📊 Analytics fetch sent: ${id} (${eventType})`);
+        }
       }
-    } else {
+    } else if (ANALYTICS_CONFIG.DEBUG_MODE) {
       console.log(`📊 Analytics rate limited for: ${id}`);
     }
 
@@ -156,7 +264,9 @@ function initGuideTracking() {
         event_label: id,
         value: 1
       });
-      console.log(`📈 GA4 event sent: ${eventType} for ${id}`);
+      if (ANALYTICS_CONFIG.DEBUG_MODE) {
+        console.log(`📈 GA4 event sent: ${eventType} for ${id}`);
+      }
     }
 
     // Don't prevent navigation - let the click go through
@@ -169,9 +279,12 @@ function initGuideTracking() {
 function initPopularityReordering() {
   // Only run on guides index page
   if (!document.querySelector('.guide-index')) return;
+  
+  // Only reorder if user has consented to analytics
+  if (!hasAnalyticsConsent()) return;
 
   try {
-    const clicks = JSON.parse(localStorage.getItem('guideClicks') || '{}');
+    const clicks = JSON.parse(localStorage.getItem(ANALYTICS_CONFIG.STORAGE_KEYS.GUIDE_CLICKS) || '{}');
     
     // Get all guide groups
     document.querySelectorAll('.guide-index__group').forEach(group => {
@@ -210,19 +323,62 @@ function initPopularityReordering() {
       });
     });
 
-    console.log('📈 Guide lists reordered by local popularity');
+    if (ANALYTICS_CONFIG.DEBUG_MODE) {
+      console.log('📈 Guide lists reordered by local popularity');
+    }
   } catch (error) {
-    console.warn('Popularity reordering failed:', error);
+    reportAnalyticsError(error, 'popularity_reordering');
   }
 }
 
 // ============================================================
-// EXPORTS
+// INITIALIZATION AND EXPORTS
 // ============================================================
+
+// Set up periodic cleanup for rate limits
+let cleanupInterval;
+
+/**
+ * Initialize the analytics system
+ */
+function initAnalytics() {
+  // Set up periodic cleanup (only if not already running)
+  if (!cleanupInterval) {
+    cleanupInterval = setInterval(cleanupRateLimits, ANALYTICS_CONFIG.RATE_LIMIT.CLEANUP_INTERVAL_MS);
+    
+    // Clean up interval on page unload
+    window.addEventListener('beforeunload', () => {
+      if (cleanupInterval) {
+        clearInterval(cleanupInterval);
+        cleanupInterval = null;
+      }
+    });
+  }
+  
+  // Initialize tracking and popularity features
+  initGuideTracking();
+  initPopularityReordering();
+  
+  if (ANALYTICS_CONFIG.DEBUG_MODE) {
+    console.log('📊 Analytics system initialized');
+  }
+}
+
+// Auto-initialize when DOM is ready
+if (document.readyState === 'loading') {
+  document.addEventListener('DOMContentLoaded', initAnalytics);
+} else {
+  initAnalytics();
+}
 
 // Make functions available globally
 window.Analytics = {
   initGuideTracking,
   initPopularityReordering,
-  checkAnalyticsRateLimit
+  checkAnalyticsRateLimit,
+  hasAnalyticsConsent,
+  reportAnalyticsError,
+  cleanupRateLimits,
+  initAnalytics,
+  config: ANALYTICS_CONFIG
 };

@@ -1,16 +1,16 @@
 // ============================================================
 // PROSE TYPOGRAPHY SYSTEM
 // 
-// Unified typography component for long-form content and articles.
-// Apply .prose class to any container to normalize spacing, headings, lists,
-// and inline elements for optimal readability.
+// Lightweight typography component for free-form content within guides.
+// Apply .prose class to containers with basic HTML elements that need styling.
 // 
 // Features:
-// * Responsive heading scales with clamp() functions
-// * Consistent vertical rhythm and spacing
-// * Integration with text link design tokens
-// * Optimized line heights and font sizes for readability
-// * Excludes buttons from text link styling to avoid conflicts
+// * Basic paragraph and inline element styling
+// * Button spacing adjustments for content flow
+// * Generic details/summary support
+// * Bootstrap utility overrides where needed
+// 
+// Note: Structured content (headings, lists, etc.) is handled by the guide system
 // ============================================================
 
 .prose {
@@ -19,56 +19,21 @@
   font-size: 1.05rem;
   color: inherit; // Ensure prose inherits color from parent (guide sets white)
 
-  // Headings
-  h1, h2, h3, h4, h5, h6 {
+  // Headings - h1/h2 handled by guide system, keeping h3/h4 for free-form content
+  h3, h4, h5, h6 {
     font-weight: $weight-bold;
     line-height: 1.25;
     scroll-margin-top: 6rem; // better anchor offset below sticky header
   }
-  h1 { font-size: clamp(1.9rem, 2.2vw + 1.2rem, 2.6rem); margin-bottom: .75rem; }
-  h2 { font-size: clamp(1.35rem, 1.2vw + .9rem, 1.75rem); margin-top: 2.2rem; margin-bottom: .85rem; }
-  h3 { font-size: 1.25rem; margin-top: 1.8rem; margin-bottom: .6rem; }
-  h4 { font-size: 1.1rem; margin-top: 1.6rem; margin-bottom: .5rem; }
+  
+  h3 { font-size: 1.25rem; margin-top: 1.8rem; margin-bottom: 0.6rem; }
+  h4 { font-size: 1.1rem; margin-top: 1.6rem; margin-bottom: 0.5rem; }
 
   p { margin-bottom: 1.1rem; }
-  p.lead { font-size: 1.15rem; line-height: 1.55; }
-
-  // Lists
-  ul, ol { padding-left: 1.2rem; margin-bottom: 1.2rem; }
-  li { margin-bottom: .4rem; }
-  ol { counter-reset: item; }
-
-  // Horizontal rule spacing
-  hr { margin: 2.2rem 0; opacity: .25; }
-
-  // Links: use the text link system variables instead of forcing underlines
-  // BUT exclude buttons - they should follow button system, not text link system
-  a:not(.btn) {
-    color: $text-link-inline-color;
-    text-decoration: $text-link-inline-decoration;
-    text-decoration-color: transparent;
-    text-underline-offset: 2px;
-    transition: color $text-link-transition-duration ease, text-decoration-color $text-link-transition-duration ease;
+  p.lead { 
+    font-size: 1.15rem; 
+    line-height: 1.55; 
   }
-  a:not(.btn):hover {
-    color: $text-link-inline-hover-color;
-    text-decoration: $text-link-inline-hover-decoration;
-    text-decoration-color: currentColor;
-  }
-  a:not(.btn):focus-visible {
-    outline: 0;
-    box-shadow: 0 0 0 3px rgba($btn-bg, 0.4);
-    text-decoration: $text-link-inline-hover-decoration;
-  }
-  // If a link is styled as a button ensure underline is not forced back
-  a.btn { text-decoration: none; }
-
-  // Emphasis
-  strong { font-weight: $weight-semibold; }
-  em { font-style: italic; }
-
-  // Small / meta text
-  small, .small { font-size: .82em; line-height: 1.4; }
 
   // Generic details/summary formatting (FAQ styling is handled by guide component)
   details { margin-bottom: 1rem; }
@@ -85,10 +50,17 @@
   }
 
   // Utility overrides: keep secondary text readable in generic prose
-  .text-secondary, .text-muted { opacity: .9; }
+  .text-secondary, 
+  .text-muted { 
+    opacity: 0.9; 
+  }
 
   // Buttons inside prose blocks: tighten top margin when following text
-  p + .btn, p + .btn-group, p + .d-flex { margin-top: .4rem; }
+  p + .btn, 
+  p + .btn-group, 
+  p + .d-flex { 
+    margin-top: 0.4rem; 
+  }
 
   // Last child adjustments
   // Note: !important needed to override Bootstrap utility classes in content

@@ -4,13 +4,6 @@
 // All guide pages use this component for consistent styling
 // ============================================================
 .guide {
-  color: $text-color;
-  font-size: $guide-body-size;
-  line-height: $guide-body-line-height;
-  // Ensure all text elements inherit guide color unless specifically overridden
-  *, *:before, *:after {
-    color: inherit;
-  }
   // ============================================================
   // HEADER SECTION
   // ============================================================
@@ -18,12 +11,30 @@
     margin-bottom: $guide-content-spacing;
   }
   &__title {
-    font-weight: $weight-extrabold;
-    letter-spacing: -0.01em;
+    // Big & Soft styling - responsive sizing with modern semi-bold weight
+    font-size: $guide-title-size-mobile;
+    font-weight: $guide-title-font-weight;
+    letter-spacing: $guide-title-letter-spacing;
+    color: $guide-title-color;
+    
+    // Desktop responsive sizing: clamp for smooth scaling between min/max
+    @media (min-width: 768px) {
+      font-size: clamp(#{$guide-title-size-desktop-min}, 4vw, #{$guide-title-size-desktop-max});
+    }
   }
   &__subtitle {
-    font-size: 1.15rem;
-    line-height: 1.55;
+    // Enhanced readability with muted appearance and optimal line length
+    font-size: $guide-subtitle-size-mobile;
+    font-weight: $guide-subtitle-font-weight;
+    line-height: $guide-subtitle-line-height-mobile;
+    color: $guide-subtitle-color;
+    max-width: $guide-subtitle-max-width;
+    
+    // Desktop responsive sizing and line-height
+    @media (min-width: 768px) {
+      font-size: $guide-subtitle-size-desktop;
+      line-height: $guide-subtitle-line-height-desktop;
+    }
   }
   // ============================================================
   // CONTENT SECTIONS
@@ -35,9 +46,17 @@
     }
   }
   &__section-title {
-    font-size: $guide-headline-size;
-    font-weight: $weight-bold;
-    margin-bottom: $guide-content-spacing;
+    // Strong second-tier hierarchy - clearly below title but prominent
+    font-size: $guide-section-title-size-mobile;
+    font-weight: $guide-section-title-font-weight;
+    color: $guide-section-title-color;
+    margin-top: $guide-section-title-margin-top;
+    margin-bottom: $guide-section-title-margin-bottom;
+    
+    // Desktop responsive sizing
+    @media (min-width: 768px) {
+      font-size: $guide-section-title-size-desktop;
+    }
   }
   // ============================================================
   // CONTENT LISTS
@@ -46,14 +65,24 @@
     counter-reset: step;
     padding-left: 1rem;
     margin-bottom: $guide-content-spacing;
+    
     > li {
+      font-size: $guide-content-element-size;
+      font-weight: $guide-content-element-font-weight;
+      color: $guide-content-element-color;
+      line-height: $guide-content-element-line-height;
       margin-bottom: 0.5rem;
     }
   }
   &__bullets {
     padding-left: 1.2rem;
     margin-bottom: $guide-content-spacing;
+    
     > li {
+      font-size: $guide-content-element-size;
+      font-weight: $guide-content-element-font-weight;
+      color: $guide-content-element-color;
+      line-height: $guide-content-element-line-height;
       margin-bottom: 0.4rem;
     }
   }
@@ -80,10 +109,6 @@
     // Double the default section spacing for clearer visual separation
     // This creates consistent breathing room between content and FAQ across all guides
     margin-top: $guide-section-spacing * 2;
-    // Legacy modifier: kept for backwards compatibility but now redundant
-    &--spacious {
-      margin-top: $guide-section-spacing * 2;
-    }
   }
   &__faq {
     border-bottom: 1px solid $guide-faq-divider;
@@ -92,15 +117,20 @@
     background: transparent;
     &__summary {
       cursor: pointer;
-      font-weight: $weight-semibold;
-      // Use the same duration as text links so interactions feel consistent
-      transition: color $text-link-transition-duration ease;
+      font-size: $guide-faq-question-size;
+      font-weight: $guide-faq-question-font-weight;
+      color: $guide-faq-question-color;
+      // Use guide system transition for consistent interactions
+      transition: color $guide-transition-duration ease;
       display: flex;
       align-items: center;
       gap: 0.75rem;
       // If a heading is inside the summary, animate its color too for cohesion
       .h6 {
-        transition: color $text-link-transition-duration ease;
+        font-size: inherit;
+        font-weight: inherit;
+        color: inherit;
+        transition: color $guide-transition-duration ease;
       }
       // Remove default marker
       &::marker {
@@ -110,45 +140,61 @@
       &::before {
         content: "▶";
         font-size: 0.75rem;
-        // Keep rotation quick but match link color transition duration for cohesion
-        transition: transform 0.2s ease, color $text-link-transition-duration ease;
+        // Keep rotation quick but match guide color transition duration for cohesion
+        transition: transform $guide-transition-fast ease, color $guide-transition-duration ease;
         flex-shrink: 0;
       }
-      // Ensure links in the summary use the long, smooth alt link transition
+      // Ensure links in the summary use guide system transitions
       a:not(.btn) {
-        @extend .text-link--alt;
+        color: $text-color; // Use full white for FAQ summary links
+        text-decoration: none;
+        transition: color $guide-transition-duration ease, text-decoration-color $guide-transition-duration ease;
+        
+        &:hover,
+        &:focus {
+          color: $accent-cyan; // Use guide system accent color
+          text-decoration: none;
+          text-decoration-color: currentColor;
+        }
+        
+        &:focus-visible {
+          outline: 2px solid rgba($accent-cyan, 0.4);
+          outline-offset: 2px;
+        }
       }
-      // Hover state
+      // Hover state - use refined FAQ question hover color
       &:hover {
-        // Do not set color on the whole summary; it overrides link transitions.
-        // Instead, only target the heading and the arrow icon.
-        --bs-heading-color: #{$guide-faq-hover-color};
+        color: $guide-faq-question-hover-color;
+        // Ensure child elements inherit the hover color
         .h6 {
-          color: $guide-faq-hover-color;
+          color: $guide-faq-question-hover-color;
         }
         &::before {
-          color: $guide-faq-hover-color;
+          color: $guide-faq-question-hover-color;
         }
       }
     }
     &__content {
       margin-top: 0.75rem;
+      font-size: $guide-content-element-size;
+      font-weight: $guide-content-element-font-weight;
+      color: $guide-content-element-color;
+      line-height: $guide-content-element-line-height;
     }
-    // Ensure FAQ links always respect the long text link transition
+    // Ensure FAQ links always respect the guide system transition
     &__content a:not(.btn),
     &__summary a:not(.btn) {
-      transition: color $text-link-transition-duration ease, text-decoration-color $text-link-transition-duration ease !important;
+      transition: color $guide-transition-duration ease, text-decoration-color $guide-transition-duration ease;
     }
-    // Open state styling
+    // Open state styling - maintain hover color when expanded
     &[open] &__summary {
-      // Keep summary text color inherited to avoid fighting link transitions.
-      --bs-heading-color: #{$guide-faq-hover-color};
+      color: $guide-faq-question-hover-color;
       .h6 {
-        color: $guide-faq-hover-color;
+        color: $guide-faq-question-hover-color;
       }
       &::before {
         transform: rotate(90deg);
-        color: $guide-faq-hover-color;
+        color: $guide-faq-question-hover-color;
       }
     }
     &:last-of-type {
@@ -161,9 +207,17 @@
   &__next {
     margin-top: $guide-next-spacing-top;
     &__title {
-      font-weight: $weight-bold;
-      font-size: $guide-headline-size;
-      margin-bottom: $guide-next-spacing-bottom;
+      // Match section title styling for consistency
+      font-size: $guide-section-title-size-mobile;
+      font-weight: $guide-section-title-font-weight;
+      color: $guide-section-title-color;
+      margin-top: $guide-section-title-margin-top;
+      margin-bottom: $guide-section-title-margin-bottom;
+      
+      // Desktop responsive sizing
+      @media (min-width: 768px) {
+        font-size: $guide-section-title-size-desktop;
+      }
     }
     &__list {
       list-style: none;
@@ -177,21 +231,20 @@
       }
     }
     &__link {
-      color: $text-link-color;
-      text-decoration: $text-link-decoration;
-      font-weight: $weight-regular;
-      transition: color $text-link-transition-duration ease, background-color $text-link-transition-duration ease, text-decoration $text-link-transition-duration ease;
+      font-size: $guide-content-element-size;
+      font-weight: $guide-content-element-font-weight;
+      color: $guide-content-element-color;
+      line-height: $guide-content-element-line-height;
+      text-decoration: none; // Use guide system - no underline by default
+      transition: color $guide-transition-duration ease, background-color $guide-transition-duration ease;
       display: block;
       padding: $guide-next-link-padding;
       border-radius: $guide-next-link-radius;
-      // Default hover/focus states using Option 2 text link system
+      // Hover/focus states with cyan text color for enhanced interactivity
       &:hover,
       &:focus {
-        color: $text-link-hover-color;
-        text-decoration: $text-link-hover-decoration;
+        color: $guide-next-link-hover-color;
         background: $guide-next-link-hover-bg;
-      }
-      &:focus {
         outline: none;
       }
     }
@@ -199,8 +252,7 @@
   // ============================================================
   // BACK NAVIGATION COMPONENT
   // ============================================================
-  &__back-nav,
-  &__back-nav-bottom {
+  &__back-nav {
     margin-bottom: 1rem;
   }
   &__back-nav-bottom {
@@ -208,21 +260,22 @@
     margin-bottom: 2rem;
   }
   &__back-link {
-    color: $text-link-alt-color !important;
-    font-weight: $weight-medium;
-    font-size: 0.95rem;
-    transition: color $text-link-transition-duration ease;
+    // Subtle navigation styling - smaller and more muted than content elements
+    font-size: $guide-back-nav-size;
+    font-weight: $guide-back-nav-font-weight;
+    color: $guide-back-nav-color;
+    text-decoration: none;
     display: inline-flex;
     align-items: center;
-    gap: 0.3rem;
+    gap: 0.375rem; // Slightly more generous gap for better visual balance
+    padding: 0.25rem 0.5rem; // Subtle padding for hover target
+    border-radius: 0.25rem; // Small radius for hover background
+    transition: color $guide-transition-duration ease, background-color $guide-transition-duration ease;
     
     &:hover,
     &:focus {
-      color: $text-link-alt-hover-color !important;
-      text-decoration: none !important;
-    }
-    
-    &:focus {
+      color: $guide-back-nav-hover-color;
+      text-decoration: none;
       outline: none;
     }
   }
@@ -236,32 +289,19 @@
     margin: 2.2rem 0;
   }
   &__disclosure {
-    color: rgba(255, 255, 255, 0.5) !important; // Intentionally override inherited color
-    font-size: 0.82em;
-    line-height: 1.4;
+    // Subdued fine print styling for legal/disclaimer text
+    font-size: $guide-disclaimer-size;
+    line-height: $guide-disclaimer-line-height;
+    color: $guide-disclaimer-color;
     margin-top: $guide-content-spacing;
   }
   // ============================================================
-  // LEGACY SUPPORT
-  // Support for existing markup patterns that don't use BEM structure
-  // TODO: Remove once all guides use strict BEM naming conventions
+  // UTILITY OVERRIDES
+  // Minimal overrides for specific Bootstrap classes only
   // ============================================================
-  // Override Bootstrap text colors for guide context
-  h1, h2, h3, h4, h5, h6,
-  p,
-  ul li,
-  ol li {
-    color: $text-color;
-  }
-  .text-secondary {
-    color: $text-color !important;
-    &.lead {
-      color: $text-color !important;
-    }
-    // Special case: small secondary text should be muted
-    &.small {
-      color: rgba(255, 255, 255, 0.5) !important;
-    }
+  .text-secondary.small {
+    // Specific override for small secondary text in guides
+    color: rgba(255, 255, 255, 0.5) !important;
   }
   hr {
     border-color: $guide-divider-color;
@@ -278,76 +318,53 @@
     @media (min-width: 992px) { grid-template-columns: 1fr 1fr; }
   }
   .guide-index__group {
-    background: rgba(255,255,255,.02);
-    border: 1px solid rgba(255,255,255,.08);
-    border-radius: .9rem;
+    background: rgba(255, 255, 255, 0.02);
+    border: 1px solid rgba(255, 255, 255, 0.08);
+    border-radius: 0.9rem;
     padding: 1rem 1.1rem;
   }
   .guide-index__heading { 
-    margin-bottom: 1.25rem; 
-    font-weight: $weight-bold;
-    font-size: calc(1.3rem + 0.6vw);
-    @media (min-width: 1200px) {
-      font-size: 1.75rem;
+    // Use guide section title tokens for consistency with other guide pages
+    font-size: $guide-section-title-size-mobile;
+    font-weight: $guide-section-title-font-weight;
+    color: $guide-section-title-color;
+    margin-bottom: $guide-section-title-margin-bottom;
+    
+    // Desktop responsive sizing
+    @media (min-width: 768px) {
+      font-size: $guide-section-title-size-desktop;
     }
   }
   .guide-index__list { list-style: none; margin: 0; padding: 0; }
-  .guide-index__item { margin: .25rem 0; }
+  .guide-index__item { margin: 0.25rem 0; }
   .guide-index__link {
-    display: inline-flex; align-items: center; gap: .4rem;
-    // Defer color/decoration to text-link utility classes (Option 3 via .text-link--accent)
-    transition: color $text-link-transition-duration ease, text-decoration $text-link-transition-duration ease;
+    display: inline-flex; 
+    align-items: center; 
+    gap: 0.4rem;
+    font-size: $guide-content-element-size;
+    font-weight: $guide-content-element-font-weight;
+    color: $guide-content-element-color;
+    line-height: $guide-content-element-line-height;
+    text-decoration: none;
+    transition: color $guide-transition-duration ease;
+    
+    &:hover,
+    &:focus {
+      color: $accent-cyan;
+      outline: none;
+      
+      .guide-index__label {
+        text-decoration: underline;
+      }
+    }
   }
-  // Prevent underline being applied to the entire inline-flex (which would underline the icon)
-  .guide-index__link { text-decoration: none; }
-  .guide-index__label { text-decoration: inherit; }
-  // Strengthen Option 3 inside guide index blocks if other global rules compete
-  // Option 1 reinforcement (if needed): body color, no underline; cyan + underline on hover
-  .guide-index__link.text-link { 
-    color: $text-link-color; 
-    text-decoration: none; 
-    text-decoration-color: transparent;
+  
+  .guide-index__label {
+    text-decoration: inherit;
   }
-  // Apply underline on hover to label text only (Option 1)
-  .guide-index__link.text-link:hover,
-  .guide-index__link.text-link:focus,
-  .guide-index__link.text-link:focus-visible,
-  .guide-index__link.text-link:active { 
-    color: $text-link-hover-color; 
-    text-decoration: none !important; // hard override global .text-link:hover underline
-    text-decoration-color: transparent !important;
+  
+  // Ensure icons don't get underlined
+  .guide-index__link .text-warning { 
+    text-decoration: none !important; 
   }
-  .guide-index__link.text-link:hover .guide-index__label,
-  .guide-index__link.text-link:focus .guide-index__label,
-  .guide-index__link.text-link:focus-visible .guide-index__label,
-  .guide-index__link.text-link:active .guide-index__label { text-decoration: $text-link-hover-decoration; }
-
-  // Visited state: keep default/body color and no underline on the anchor
-  .guide-index__link.text-link:visited {
-    color: $text-link-color;
-    text-decoration: none !important;
-    text-decoration-color: transparent !important;
-  }
-  // Visited + interactive states: same as hover/focus (underline label only)
-  .guide-index__link.text-link:visited:hover,
-  .guide-index__link.text-link:visited:focus,
-  .guide-index__link.text-link:visited:focus-visible,
-  .guide-index__link.text-link:visited:active {
-    color: $text-link-hover-color;
-    text-decoration: none !important;
-    text-decoration-color: transparent !important;
-  }
-  .guide-index__link.text-link:visited:hover .guide-index__label,
-  .guide-index__link.text-link:visited:focus .guide-index__label,
-  .guide-index__link.text-link:visited:focus-visible .guide-index__label,
-  .guide-index__link.text-link:visited:active .guide-index__label {
-    text-decoration: $text-link-hover-decoration;
-  }
-
-  // Ensure any icon next to the label (e.g., flame) never receives underline
-  .guide-index__link .text-warning { text-decoration: none !important; }
-  // No explicit :hover styles here; allow .text-link--accent to control hover underline/color
 }
-
-
-

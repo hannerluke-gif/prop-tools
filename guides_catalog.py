@@ -1,5 +1,8 @@
 # guides_catalog.py - Centralized guide definitions
 # Import this wherever you need guide metadata (analytics, templates, routes)
+#
+# This module provides the single source of truth for all guide metadata,
+# ensuring consistency across the analytics system, routing, and templates.
 
 GUIDES_CATALOG = {
     "what-is-a-prop-firm": {

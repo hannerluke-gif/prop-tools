@@ -159,8 +159,8 @@ def _security_headers(resp):
     return resp
 
 # -------- Analytics Helper --------
-# REMOVED: get_popular_guides() function - moved to blueprints/analytics.py
-# Use top_guides_simple() from analytics blueprint instead
+# Popular guides functionality now handled by blueprints/analytics.py
+# This section provides template-friendly formatting for the analytics data
 
 def get_popular_guides_widget(days=30, limit=5):
     """

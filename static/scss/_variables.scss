@@ -72,37 +72,83 @@ $site-banner-menu-link-color: $text-color !default;
 // Comprehensive tokens for landing/guide pages to ensure consistency
 // ============================================================
 
-// Typography
-$guide-headline-size: clamp(1.6rem, 4vw, 2.2rem) !default;
-$guide-body-size: 1.05rem !default;
-$guide-body-line-height: 1.65 !default;
-
-// Layout spacing (3rem rhythm for major sections)
-$guide-section-spacing: 3rem !default;
-$guide-content-spacing: 1.5rem !default;
-
 // Visual elements
 $guide-divider-color: rgba(255, 255, 255, 0.25) !default;
 $guide-divider-subtle: rgba(255, 255, 255, 0.15) !default;
 $guide-background-subtle: rgba(255, 255, 255, 0.03) !default;
 
-// FAQ component
-$guide-faq-padding: 1.25rem !default;
-$guide-faq-spacing: 1.25rem !default;
-$guide-faq-divider: $guide-divider-color !default;
-$guide-faq-hover-color: $accent-cyan !default;
+// Layout spacing (3rem rhythm for major sections)
+$guide-section-spacing: 3rem !default;
+$guide-content-spacing: 1.5rem !default;
+
+// Guide system transitions - completely independent of text link system
+$guide-transition-duration: 0.3s !default; // Consistent timing for all guide interactions
+$guide-transition-fast: 0.2s !default; // Fast transitions for arrows and quick feedback
+
+// Guide title (H1) styling - Big & Soft design
+$guide-title-size-mobile: 1.75rem !default; // 28px mobile
+$guide-title-size-desktop-min: 2rem !default; // 32px desktop minimum
+$guide-title-size-desktop-max: 2.5rem !default; // 40px desktop maximum
+$guide-title-font-weight: $weight-semibold !default; // 600 for soft, modern look
+$guide-title-letter-spacing: -0.02em !default; // Tight modern spacing
+$guide-title-color: $text-color !default; // Inherit project text color
+
+// Guide subtitle styling - Enhanced readability with muted appearance
+$guide-subtitle-size-mobile: 1rem !default; // 16px mobile (good for smaller screens)
+$guide-subtitle-size-desktop: 1.125rem !default; // 18px desktop (enhanced readability)
+$guide-subtitle-font-weight: $weight-regular !default; // 400 for regular, soft look
+$guide-subtitle-line-height-mobile: 1.6 !default; // Improved readability on mobile
+$guide-subtitle-line-height-desktop: 1.75 !default; // Optimal readability on desktop
+$guide-subtitle-color: #c9ccd1 !default; // Muted gray for professional appearance
+$guide-subtitle-max-width: 65ch !default; // Optimal reading line length
+
+// Guide section titles (H2) styling - Strong second-tier hierarchy
+$guide-section-title-size-mobile: 1.5rem !default; // 24px mobile
+$guide-section-title-size-desktop: 1.75rem !default; // 28px desktop
+$guide-section-title-font-weight: $weight-medium !default; // 500 for strong but not too heavy
+$guide-section-title-margin-top: 2.5rem !default; // Clear section separation
+$guide-section-title-margin-bottom: 1rem !default; // Comfortable content spacing
+$guide-section-title-color: $text-color !default; // Full contrast for clarity
+
+// Guide content elements styling - Steps, bullets, FAQ, links
+$guide-content-element-size: 1.25rem !default; // 20px for enhanced readability
+$guide-content-element-font-weight: $weight-medium !default; // 500 for refined appearance
+$guide-content-element-color: #e5e7eb !default; // Softer gray for elegant contrast
+$guide-content-element-line-height: 1.6 !default; // Comfortable reading line height
 
 // CTA card component
 $guide-cta-bg: rgba(255, 255, 255, 0.06) !default;
 $guide-cta-border: $guide-divider-subtle !default;
 $guide-cta-spacing: $guide-section-spacing !default;
 
+// FAQ component
+$guide-faq-question-size: 1.1rem !default; // 17.6px - between content elements and navigation
+$guide-faq-question-font-weight: $weight-medium !default; // 500 for refined, softer than semibold
+$guide-faq-question-color: $text-color !default; // High contrast white for accessibility
+$guide-faq-question-hover-color: $accent-cyan !default; // Cyan hover for interactive consistency
+$guide-faq-padding: 1.25rem !default;
+$guide-faq-spacing: 1.25rem !default;
+$guide-faq-divider: $guide-divider-color !default;
+$guide-faq-hover-color: $accent-cyan !default;
+
 // Keep Learning component
 $guide-next-spacing-top: $guide-section-spacing !default;
-$guide-next-spacing-bottom: $guide-content-spacing !default;
 $guide-next-link-padding: 0.5rem 0.75rem !default;
 $guide-next-link-radius: 0.375rem !default;
 $guide-next-link-hover-bg: $guide-background-subtle !default;
+$guide-next-link-hover-color: $accent-cyan !default;
+
+// Guide back navigation styling - Subtle navigation element
+$guide-back-nav-size: 0.9rem !default; // 14.4px - smaller than content, larger than disclaimer
+$guide-back-nav-font-weight: $weight-regular !default; // 400 for lightweight, unobtrusive feel
+$guide-back-nav-color: rgba(255, 255, 255, 0.75) !default; // Muted but readable navigation color
+$guide-back-nav-hover-color: $text-color !default; // Full white on hover for clarity
+$guide-back-nav-hover-bg: rgba(255, 255, 255, 0.05) !default; // Subtle background highlight
+
+// Guide disclaimer/disclosure styling - Subdued fine print
+$guide-disclaimer-size: 0.875rem !default; // 14px for subtle appearance
+$guide-disclaimer-line-height: 1.4 !default; // Compact but readable line height
+$guide-disclaimer-color: rgba(255, 255, 255, 0.6) !default; // Very subdued for legal/fine print
 
 // ============================================================
 // TEXT LINK SYSTEM
