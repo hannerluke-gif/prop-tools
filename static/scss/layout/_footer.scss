@@ -32,8 +32,13 @@
   // Upper section: main content, links, descriptions
   &__upper {
     background: rgba(0, 0, 0, 0.3); // Slightly stronger overlay for text contrast
-    padding-top: $footer-upper-padding-mobile;
-    padding-bottom: $footer-upper-padding-mobile;
+    padding-top: $footer-upper-padding-xs;
+    padding-bottom: $footer-upper-padding-xs;
+    
+    @include media-breakpoint-up(sm) {
+      padding-top: $footer-upper-padding-mobile;
+      padding-bottom: $footer-upper-padding-mobile;
+    }
     
     @include media-breakpoint-up(lg) {
       padding-top: $footer-upper-padding-desktop;
@@ -63,10 +68,15 @@
   
   // Section titles in upper footer
   &__section-title {
-    font-size: $footer-section-title-size-mobile;
+    font-size: $footer-section-title-size-xs;
     font-weight: $footer-section-title-font-weight;
-    margin-bottom: $footer-section-title-margin-bottom-mobile;
+    margin-bottom: $footer-section-title-margin-bottom-xs;
     color: $footer-section-title-color;
+    
+    @include media-breakpoint-up(sm) {
+      font-size: $footer-section-title-size-mobile;
+      margin-bottom: $footer-section-title-margin-bottom-mobile;
+    }
     
     @include media-breakpoint-up(lg) {
       font-size: $footer-section-title-size-desktop;
@@ -81,7 +91,11 @@
     margin: 0;
     
     li {
-      margin-bottom: $footer-link-spacing;
+      margin-bottom: $footer-link-spacing-xs;
+      
+      @include media-breakpoint-up(sm) {
+        margin-bottom: $footer-link-spacing;
+      }
       
       &:last-child {
         margin-bottom: 0;
@@ -154,8 +168,12 @@
   text-decoration: $text-link-decoration;
   text-decoration-color: transparent;
   transition: color $transition-duration ease, text-decoration-color $transition-duration ease;
-  font-size: $footer-link-size;
+  font-size: $footer-link-size-xs;
   font-weight: $footer-link-font-weight;
+  
+  @include media-breakpoint-up(sm) {
+    font-size: $footer-link-size;
+  }
   
   &:hover,
   &:focus {

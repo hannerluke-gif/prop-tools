@@ -20,12 +20,17 @@ export function initFooterReveal() {
     return;
   }
 
+  // Force scroll to top on page load to prevent browser scroll restoration issues
+  // This prevents mobile browsers from jumping to previous scroll position
+  window.scrollTo(0, 0);
+
   // Get footer height for calculations
   const getFooterHeight = () => footer.offsetHeight;
   
   // Trigger distance: start revealing when this many pixels from bottom
-  // Increased from 200 to 800 for slower, more gradual reveal
-  const TRIGGER_OFFSET = 800;
+  // Responsive: smaller offset on mobile to avoid premature triggering
+  const isMobile = window.innerWidth < 768;
+  const TRIGGER_OFFSET = isMobile ? 400 : 800;
   
   let footerHeight = getFooterHeight();
   let isRevealing = false;
@@ -43,9 +48,9 @@ export function initFooterReveal() {
     const distanceFromBottom = documentHeight - (scrollTop + windowHeight);
     
     // Start revealing when within trigger distance
-    if (distanceFromBottom <= TRIGGER_OFFSET) {
+    if (distanceFromBottom <= triggerOffset) {
       // Calculate reveal progress (0 = start, 1 = fully revealed)
-      const revealProgress = 1 - (distanceFromBottom / TRIGGER_OFFSET);
+      const revealProgress = 1 - (distanceFromBottom / triggerOffset);
       const clampedProgress = Math.max(0, Math.min(1, revealProgress));
       
       // Translate page up by footer height * progress
@@ -78,10 +83,15 @@ export function initFooterReveal() {
   }
 
   /**
-   * Handle resize - recalculate footer height
+   * Handle resize - recalculate footer height and trigger offset
    */
+  let triggerOffset = isMobile ? 400 : 800;
+  
   function handleResize() {
     footerHeight = getFooterHeight();
+    // Update trigger offset based on new viewport width
+    const nowMobile = window.innerWidth < 768;
+    triggerOffset = nowMobile ? 400 : 800;
     // Recalculate reveal on next frame
     if (rafId === null) {
       rafId = requestAnimationFrame(updateReveal);
@@ -92,8 +102,11 @@ export function initFooterReveal() {
   window.addEventListener('scroll', handleScroll, { passive: true });
   window.addEventListener('resize', handleResize, { passive: true });
 
-  // Initial check in case page loads near bottom
-  updateReveal();
+  // Initial check after a brief delay to ensure DOM is fully rendered
+  // This prevents premature reveal on page load
+  setTimeout(() => {
+    updateReveal();
+  }, 100);
 
   console.log('FooterReveal: Initialized with footer height:', footerHeight);
 
