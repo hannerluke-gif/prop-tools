@@ -3,6 +3,7 @@
 // 
 // Two-section footer with upper content area and lower legal/branding area.
 // Uses backdrop blur effects and gradient borders for visual depth.
+// Features a "theater curtain" reveal effect on scroll.
 // 
 // BEM Structure:
 // .site-footer                     → Root component
@@ -13,20 +14,30 @@
 // ============================================================
 
 .site-footer {
-  background: rgba(255, 255, 255, 0.02);
-  border-top: 1px solid rgba(255, 255, 255, 0.08);
+  position: fixed;
+  bottom: 0;
+  left: 0;
+  width: 100%;
+  z-index: 1; // Behind page content
+  // Brand gradient background - vibrant pink to cyan gradient
+  background: linear-gradient(135deg, 
+    rgba(255, 107, 154, 0.35) 0%,      // Pink (brand primary) - much brighter
+    rgba(139, 92, 246, 0.25) 35%,      // Purple middle transition
+    rgba(34, 211, 238, 0.30) 70%,      // Cyan (accent) - much brighter
+    rgba(10, 11, 15, 0.85) 100%        // Base dark color
+  );
+  border-top: 1px solid rgba(255, 107, 154, 0.4);
   backdrop-filter: blur(10px);
-  margin-top: auto; // Push footer to bottom if using flexbox layout
   
   // Upper section: main content, links, descriptions
   &__upper {
-    background: rgba(255, 255, 255, 0.03);
-    padding-top: 3rem;
-    padding-bottom: 3rem;
+    background: rgba(0, 0, 0, 0.3); // Slightly stronger overlay for text contrast
+    padding-top: $footer-upper-padding-mobile;
+    padding-bottom: $footer-upper-padding-mobile;
     
     @include media-breakpoint-up(lg) {
-      padding-top: 4rem;
-      padding-bottom: 4rem;
+      padding-top: $footer-upper-padding-desktop;
+      padding-bottom: $footer-upper-padding-desktop;
     }
   }
   
@@ -46,20 +57,20 @@
   // Lower section: logo, copyright, legal
   &__lower {
     background: rgba(255, 255, 255, 0.01);
-    padding-top: 1.5rem;
-    padding-bottom: 1.5rem;
+    padding-top: $footer-lower-padding;
+    padding-bottom: $footer-lower-padding;
   }
   
   // Section titles in upper footer
   &__section-title {
-    font-size: 1.375rem; // was 1.25rem
-    font-weight: $weight-black; // heaviest weight per request
-    margin-bottom: 1.5rem;
-    color: $text-color;
+    font-size: $footer-section-title-size-mobile;
+    font-weight: $footer-section-title-font-weight;
+    margin-bottom: $footer-section-title-margin-bottom-mobile;
+    color: $footer-section-title-color;
     
     @include media-breakpoint-up(lg) {
-      font-size: 1.5rem; // was 1.375rem
-      margin-bottom: 2rem;
+      font-size: $footer-section-title-size-desktop;
+      margin-bottom: $footer-section-title-margin-bottom-desktop;
     }
   }
   
@@ -70,7 +81,7 @@
     margin: 0;
     
     li {
-      margin-bottom: 0.75rem;
+      margin-bottom: $footer-link-spacing;
       
       &:last-child {
         margin-bottom: 0;
@@ -80,13 +91,14 @@
   
   // Description text in upper footer
   &__description {
-    color: $text-color;
-    line-height: 1.6;
+    color: $footer-description-color;
+    line-height: $footer-description-line-height;
     margin-bottom: 0;
-    font-size: 0.95rem;
+    font-size: $footer-description-size-mobile;
+    font-weight: $footer-description-font-weight;
     
     @include media-breakpoint-up(lg) {
-      font-size: 1rem;
+      font-size: $footer-description-size-desktop;
     }
   }
   
@@ -125,22 +137,25 @@
   }
   
   &__legal-links {
-    margin-top: 0.25rem;
+    margin-top: 0.5rem;
   }
   
-  // Improve contrast for better readability
+  // Legal/copyright text styling - aligned with guide disclaimer
   .text-secondary {
-    color: rgba(255, 255, 255, 0.6) !important;
+    color: $footer-legal-color !important;
+    font-size: $footer-legal-size !important;
+    font-weight: $footer-legal-font-weight !important;
   }
 }
 
 // Footer link styles
 .footer-link {
-  color: $text-link-color;
+  color: $footer-link-color;
   text-decoration: $text-link-decoration;
   text-decoration-color: transparent;
   transition: color $transition-duration ease, text-decoration-color $transition-duration ease;
-  font-size: 0.95rem;
+  font-size: $footer-link-size;
+  font-weight: $footer-link-font-weight;
   
   &:hover,
   &:focus {
@@ -151,12 +166,13 @@
   
   // Small variant for legal links
   &--small {
-    font-size: 0.875rem;
-    opacity: 0.9;
+    font-size: $footer-legal-link-size;
+    font-weight: $footer-legal-font-weight;
+    color: $footer-legal-color;
     
     &:hover,
     &:focus {
-      opacity: 1;
+      color: $text-link-hover-color;
     }
   }
 }

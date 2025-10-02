@@ -201,6 +201,43 @@ $guide-card-margin-bottom: $guide-content-spacing !default; // Spacing between c
 $guide-card-backdrop-filter: blur(8px) !default; // Lighter glassmorphism blur
 
 // ============================================================
+// FOOTER COMPONENT SYSTEM
+// Site-wide footer styling aligned with guide page design tokens
+// ============================================================
+
+// Footer section titles (H3) - Aligned with guide section titles
+$footer-section-title-size-mobile: 1.25rem !default; // 20px mobile - slightly smaller than guide H2
+$footer-section-title-size-desktop: 1.375rem !default; // 22px desktop - proportional scale
+$footer-section-title-font-weight: $weight-semibold !default; // 600 for modern, soft hierarchy
+$footer-section-title-color: $text-color !default; // Full contrast for clarity
+$footer-section-title-margin-bottom-mobile: 1.25rem !default; // Comfortable spacing on mobile
+$footer-section-title-margin-bottom-desktop: 1.5rem !default; // Slightly more space on desktop
+
+// Footer links - Aligned with guide navigation and content elements
+$footer-link-size: 1rem !default; // 16px - comfortable reading size
+$footer-link-font-weight: $weight-regular !default; // 400 for clean, readable links
+$footer-link-color: $guide-content-element-color !default; // Match guide content color (#eaebe5)
+$footer-link-spacing: 0.75rem !default; // Spacing between links in list
+
+// Footer description text - Aligned with guide body content
+$footer-description-size-mobile: 1rem !default; // 16px mobile
+$footer-description-size-desktop: 1rem !default; // 16px desktop (consistent)
+$footer-description-font-weight: $weight-regular !default; // 400 for body text
+$footer-description-color: $guide-content-element-color !default; // Match guide content color (#eaebe5)
+$footer-description-line-height: 1.6 !default; // Comfortable reading rhythm
+
+// Footer legal/copyright text - Aligned with guide disclaimer styling
+$footer-legal-size: $guide-disclaimer-size !default; // 0.875rem (14px) - fine print
+$footer-legal-font-weight: $weight-regular !default; // 400 for subtle appearance
+$footer-legal-color: $guide-disclaimer-color !default; // rgba(255,255,255,0.6) - muted
+$footer-legal-link-size: $guide-disclaimer-size !default; // Match legal text size
+
+// Footer layout spacing
+$footer-upper-padding-mobile: 3rem !default; // Align with guide section spacing
+$footer-upper-padding-desktop: 4rem !default; // More generous on larger screens
+$footer-lower-padding: 1.5rem !default; // Tighter spacing for legal section
+
+// ============================================================
 // TEXT LINK SYSTEM
 // Comprehensive tokens for inline text links (body content, guides, etc.)
 // ============================================================

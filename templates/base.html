@@ -218,9 +218,13 @@
             </div>
         </header>
 
-        <main class="{% block main_class %}pt-2{% endblock %}">
-            {% block content %}{% endblock %}
-        </main>
+        <!-- Page content wrapper for theater curtain footer reveal -->
+        <div class="page-content-wrapper">
+            <main class="{% block main_class %}pt-2{% endblock %}">
+                {% block content %}{% endblock %}
+            </main>
+        </div>
+        <!-- End page content wrapper -->
 
         {# 
         FOOTER SECTION
@@ -239,8 +243,8 @@
         <footer class="site-footer mt-5">
             <!-- Upper Footer Section: Links and Content -->
             <div class="site-footer__upper">
-                <div class="container py-5">
-                    <div class="row gy-4">
+                <div class="container">
+                    <div class="row gy-5 gy-md-4">
                         <div class="col-12 col-md-6 col-lg-4">
                             <h3 class="site-footer__section-title">Popular Guides</h3>
                             <ul class="site-footer__link-list">
@@ -286,7 +290,7 @@
             
             <!-- Lower Footer Section: Logo, Copyright, Legal -->
             <div class="site-footer__lower">
-                <div class="container py-4">
+                <div class="container">
                     <div class="row align-items-center gy-3">
                         <div class="col-12 col-md-6">
                             <div class="site-footer__brand">

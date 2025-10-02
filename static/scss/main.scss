@@ -50,6 +50,23 @@
 	// Improve font rendering on dark background
 	-webkit-font-smoothing: antialiased;
 	-moz-osx-font-smoothing: grayscale;
+	overflow-x: hidden; // Prevent horizontal scroll during transform
+}
+
+// Page content wrapper for theater curtain footer reveal effect
+.page-content-wrapper {
+	position: relative;
+	z-index: 10; // Above footer
+	background-color: $base-html-bg; // Match body background
+	min-height: 100vh;
+	padding-bottom: 100px; // Minimal space for footer reveal to start
+	transition: transform 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+	will-change: transform;
+	
+	// Add subtle shadow when lifted
+	&.footer-revealing {
+		box-shadow: 0 -10px 40px rgba(0, 0, 0, 0.5);
+	}
 }
 
 // Mobile browser bottom navigation bar styling

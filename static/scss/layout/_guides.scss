@@ -304,7 +304,7 @@
   &__faq {
     // Fintech card style matching Keep Learning links
     border-bottom: none;
-    padding: $guide-faq-padding;
+    padding: 0; // Remove padding from card, add to summary instead
     margin-bottom: $guide-faq-spacing;
     background: rgba(255, 255, 255, 0.03);
     border: 1px solid rgba(255, 255, 255, 0.08);
@@ -316,6 +316,19 @@
       background: rgba(255, 255, 255, 0.06);
       border-color: rgba(34, 211, 238, 0.3);
       transform: translateY(-2px);
+      
+      // When hovering card, change summary text color to cyan
+      .guide__faq__summary {
+        color: $accent-cyan;
+        
+        .h6 {
+          color: $accent-cyan;
+        }
+        
+        &::before {
+          color: $accent-cyan;
+        }
+      }
     }
     
     &__summary {
@@ -328,6 +341,13 @@
       display: flex;
       align-items: center;
       gap: 0.75rem;
+      // Add padding to summary so entire clickable area fills card
+      padding: $guide-faq-padding;
+      // Negative margin to extend clickable area to card edges
+      margin: (-1px); // Compensate for border
+      // Ensure summary fills width and has proper border radius
+      border-radius: 0.75rem;
+      width: calc(100% + 2px); // Compensate for negative margins
       // If a heading is inside the summary, animate its color too for cohesion
       .h6 {
         font-size: inherit;
@@ -378,7 +398,8 @@
       }
     }
     &__content {
-      margin-top: 0.75rem;
+      margin-top: 0;
+      padding: 0 $guide-faq-padding $guide-faq-padding $guide-faq-padding; // Add padding to content (no top padding)
       font-size: $guide-content-element-size;
       font-weight: $guide-content-element-font-weight;
       color: $guide-content-element-color;
@@ -522,6 +543,17 @@
     margin-bottom: 0; // No space below disclosure
     font-style: italic; // Italicize for subtle emphasis
   }
+  
+  &__updated {
+    // Last updated date styling - matches disclaimer color
+    font-size: 0.813rem; // Slightly smaller than disclosure text
+    color: $guide-disclaimer-color; // Same color as disclaimer (60% opacity)
+    margin-top: 0.75rem;
+    margin-bottom: 0;
+    text-align: left;
+    font-style: normal;
+  }
+  
   // ============================================================
   // UTILITY OVERRIDES
   // Minimal overrides for specific Bootstrap classes only

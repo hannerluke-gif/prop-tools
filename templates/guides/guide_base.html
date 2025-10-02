@@ -158,6 +158,13 @@
       </p>
       {% endblock %}
 
+      {# Last Updated Date - Only show on individual guide pages, not index #}
+      {% if guide_updated %}
+      <p class="guide__updated">
+        Last updated: {{ guide_updated }}
+      </p>
+      {% endif %}
+
     </article>
   </div>
 </section>

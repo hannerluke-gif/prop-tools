@@ -266,82 +266,102 @@ def guides_index():
 
 @app.route("/guides/what-is-a-prop-firm")
 def guide_what_is_a_prop_firm():
+    guide_meta = get_guide_by_id("what-is-a-prop-firm")
     return render_template(
         "guides/what-is-a-prop-firm.html",
         title="What is a Prop Firm? (Beginner’s Guide)",
         meta_desc="A quick beginner’s guide: how prop firms work, how evaluations and sim-funded accounts differ, and how to choose your first account.",
+        guide_updated=guide_meta.get("updated") if guide_meta else None,
     )
 
 @app.route("/guides/what-is-futures-trading")
 def guide_what_is_futures_trading():
+    guide_meta = get_guide_by_id("what-is-futures-trading")
     return render_template(
         "guides/what-is-futures-trading.html",
         title="What is Futures Trading? (Simple Explanation)",
         meta_desc="Futures trading basics: what contracts are, how margin and leverage work, and common risks beginners should know.",
+        guide_updated=guide_meta.get("updated") if guide_meta else None,
     )
 
 @app.route("/guides/best-way-to-start-trading-futures")
 def guide_best_way_to_start_trading_futures():
+    guide_meta = get_guide_by_id("best-way-to-start-trading-futures")
     return render_template(
         "guides/best-way-to-start-trading-futures.html",
         title="Best Way to Start Trading Futures (Beginner Roadmap)",
         meta_desc="A simple step-by-step path to start trading futures: tools, accounts, risk, and practice options.",
+        guide_updated=guide_meta.get("updated") if guide_meta else None,
     )
 
 @app.route("/guides/best-prop-firm-to-start")
 def guide_best_prop_firm_to_start():
+    guide_meta = get_guide_by_id("best-prop-firm-to-start")
     return render_template(
         "guides/best-prop-firm-to-start.html",
         title="Best Prop Firm to Start With (For Beginners)",
         meta_desc="Compare beginner-friendly prop firms by rules, cost, and payouts. Learn what matters most on day one.",
+        guide_updated=guide_meta.get("updated") if guide_meta else None,
     )
 
 @app.route("/guides/best-account-size-to-start")
 def guide_best_account_size_to_start():
+    guide_meta = get_guide_by_id("best-account-size-to-start")
     return render_template(
         "guides/best-account-size-to-start.html",
         title="What Account Size Should I Start With?",
         meta_desc="How to pick your first account size based on risk, drawdown, and trade plan—plus common beginner mistakes.",
+        guide_updated=guide_meta.get("updated") if guide_meta else None,
     )
 
 @app.route("/guides/should-i-skip-evaluation")
 def guide_should_i_skip_evaluation():
+    guide_meta = get_guide_by_id("should-i-skip-evaluation")
     return render_template(
         "guides/should-i-skip-evaluation.html",
         title="Should I Skip the Evaluation and Go Straight to Sim-Funded?",
         meta_desc="Pros and cons of skipping an evaluation for straight-to-sim-funded accounts—costs, speed, and rules.",
+        guide_updated=guide_meta.get("updated") if guide_meta else None,
     )
 
 @app.route("/guides/what-is-a-sim-account")
 def guide_what_is_a_sim_account():
+    guide_meta = get_guide_by_id("what-is-a-sim-account")
     return render_template(
         "guides/what-is-a-sim-account.html",
         title="What is a Sim Account?",
         meta_desc="Sim accounts explained: practice risk-free, learn rules, and prepare for funded trading the right way.",
+        guide_updated=guide_meta.get("updated") if guide_meta else None,
     )
 
 @app.route("/guides/what-is-an-evaluation")
 def guide_what_is_an_evaluation():
+    guide_meta = get_guide_by_id("what-is-an-evaluation")
     return render_template(
         "guides/what-is-an-evaluation.html",
         title="What is a Prop Firm Evaluation?",
         meta_desc="How prop firm evaluations work: profit targets, drawdown limits, time windows, and passing criteria.",
+        guide_updated=guide_meta.get("updated") if guide_meta else None,
     )
 
 @app.route("/guides/what-is-straight-to-sim-funded")
 def guide_what_is_straight_to_sim_funded():
+    guide_meta = get_guide_by_id("what-is-straight-to-sim-funded")
     return render_template(
         "guides/what-is-straight-to-sim-funded.html",
         title="What is a Straight-to-Sim-Funded Account?",
         meta_desc="Understand straight-to-sim-funded accounts, how payouts work, and when they’re worth the extra cost.",
+        guide_updated=guide_meta.get("updated") if guide_meta else None,
     )
 
 @app.route("/guides/personal-vs-prop-account")
 def guide_personal_vs_prop_account():
+    guide_meta = get_guide_by_id("personal-vs-prop-account")
     return render_template(
         "guides/personal-vs-prop-account.html",
         title="Personal Account vs Prop Account — Which Should I Start With?",
         meta_desc="Pros/cons of personal futures accounts vs prop accounts: capital, rules, risk, taxes, and control.",
+        guide_updated=guide_meta.get("updated") if guide_meta else None,
     )
 
 @app.route("/guides/futures-trading-products")
@@ -356,11 +376,14 @@ def guide_futures_trading_products():
         # Fallback to empty data if file issues
         products_data = {"disclaimer": "", "categories": []}
     
+    guide_meta = get_guide_by_id("futures-trading-products")
+    
     return render_template(
         "guides/futures-trading-products.html",
         title="Futures Trading Products — Complete Reference Guide",
         meta_desc="Complete reference guide to futures trading products available at prop firms. Index, currency, energy, metal, agricultural, and crypto futures.",
-        products=products_data
+        products=products_data,
+        guide_updated=guide_meta.get("updated") if guide_meta else None,
     )
 
 # Guides data now centralized in guides_catalog.py

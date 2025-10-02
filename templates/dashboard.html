@@ -19,10 +19,12 @@
 </section>
 {% endblock %}
 
-{% block main_class %}{% endblock %}
+{% block main_class %}pt-0{% endblock %}
 {% block content %}
+    <!-- Hero: top aligned with site banner, bottom flush with viewport on desktop -->
     <section class="hero">
         <div class="container-fluid p-0">
+
             <div class="hero-slide" data-slide-id="top-pick">
                 <div class="hero-slide-inner">
                     <h2 class="hero-headline"></h2>
@@ -50,6 +52,18 @@
                 <button class="hero__arrow hero__arrow--prev" type="button" aria-label="Previous slide">&lt;</button>
                 <!-- dots are injected here by JS -->
                 <button class="hero__arrow hero__arrow--next" type="button" aria-label="Next slide">&gt;</button>
+            </div>
+        </div>
+    </section>
+
+    <!-- Future content section: substantial space for dashboard additions -->
+    <section class="container" style="padding-top: 8rem; padding-bottom: 12rem;">
+        <div class="row">
+            <div class="col-12">
+                <div style="min-height: 100vh;">
+                    <!-- Future dashboard content will go here -->
+                    <!-- This space ensures smooth footer reveal and room for expansion -->
+                </div>
             </div>
         </div>
     </section>
