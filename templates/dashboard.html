@@ -2,6 +2,9 @@
 
 {% block title %}{% endblock %}
 
+{# Remove footer padding/min-height for dashboard page #}
+{% block page_wrapper_class %} page-content-wrapper--no-footer{% endblock %}
+
 {% block promo %}
 <section class="promo-banner" id="promoBanner" aria-label="Promotional rotating banner">
     <div class="promo-banner__slides">
@@ -55,22 +58,9 @@
             </div>
         </div>
     </section>
-
-    <!-- Future content section: substantial space for dashboard additions -->
-    <section class="container" style="padding-top: 8rem; padding-bottom: 12rem;">
-        <div class="row">
-            <div class="col-12">
-                <div style="min-height: 100vh;">
-                    <!-- Future dashboard content will go here -->
-                    <!-- This space ensures smooth footer reveal and room for expansion -->
-                </div>
-            </div>
-        </div>
-    </section>
 {% endblock %}
 
-{# Space reserved for future dashboard additions #}
+{# Override footer block to hide footer on dashboard page #}
 {% block extra_footer %}
-{# Include the parent footer from base.html #}
-{{ super() }}
+{# Footer intentionally removed from dashboard page #}
 {% endblock %}

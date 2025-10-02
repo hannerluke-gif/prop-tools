@@ -13,11 +13,11 @@ export function initGuideAnimations() {
   const prefersReducedMotion = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
   
   if (prefersReducedMotion) {
-    // Make all animation-ready elements visible immediately
+    // Make all animation-ready elements visible immediately (CSP-compliant)
     const elements = document.querySelectorAll('.animation-ready');
     elements.forEach(el => {
       el.classList.remove('animation-ready');
-      el.style.opacity = '1';
+      el.classList.add('animation-visible');
     });
     return;
   }

@@ -41,8 +41,8 @@ export function initHamburgerMenu(root = document.querySelector('.site-banner'))
 		if (isMenuOpen) return;
 		banner.classList.add('menu-open');
 		isMenuOpen = true;
-		// Prevent body scroll when menu is open
-		document.body.style.overflow = 'hidden';
+		// Prevent body scroll when menu is open (CSP-compliant)
+		document.body.classList.add('mobile-menu-open');
 	}
 
 	// Close mobile menu
@@ -50,8 +50,8 @@ export function initHamburgerMenu(root = document.querySelector('.site-banner'))
 		if (!isMenuOpen) return;
 		banner.classList.remove('menu-open');
 		isMenuOpen = false;
-		// Restore body scroll
-		document.body.style.overflow = '';
+		// Restore body scroll (CSP-compliant)
+		document.body.classList.remove('mobile-menu-open');
 	}
 
 	// Toggle menu state

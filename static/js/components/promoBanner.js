@@ -65,7 +65,7 @@ export function initPromoBanner(root = document.getElementById('promoBanner')) {
 		const pct = promo.discount_pct || '';
 
 		// Mobile: two lines. Desktop: inline single line.
-		const isMobile = window.matchMedia('(max-width: 430px)').matches;
+		const isMobile = window.matchMedia('(max-width: 540px)').matches;
 
 		if (isMobile) {
 			// Line 1: "Firm • 20% OFF"

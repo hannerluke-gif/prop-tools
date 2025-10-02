@@ -28,6 +28,11 @@ export function initBannerOffsets(root = document.querySelector('.site-banner'))
     // bottom relative to viewport top -> number of pixels the banner occupies
     const offset = Math.max(0, Math.round(rect.bottom));
     banner.style.setProperty('--mobile-menu-top', `${offset}px`);
+    
+    // Debug logging (can be removed in production)
+    if (window.innerWidth < MOBILE_BREAKPOINT) {
+      console.log(`📐 Mobile menu offset set to: ${offset}px (banner bottom: ${rect.bottom})`);
+    }
   }
 
   function onScrollOrResize() {
@@ -41,6 +46,17 @@ export function initBannerOffsets(root = document.querySelector('.site-banner'))
 
   // Initial apply
   measureAndApply();
+  
+  // Recalculate after a short delay to catch any late-rendering elements
+  // (e.g., promo banner images, web fonts loading)
+  setTimeout(() => {
+    measureAndApply();
+  }, 100);
+  
+  // Additional check after images might have loaded
+  setTimeout(() => {
+    measureAndApply();
+  }, 500);
 
   // Events
   window.addEventListener('resize', onScrollOrResize);

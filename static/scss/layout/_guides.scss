@@ -665,6 +665,11 @@
   
   // Prevent layout shift by reserving space
   will-change: opacity, transform;
+  
+  // Visible state (used when bypassing animations)
+  &.animation-visible {
+    opacity: 1;
+  }
 }
 
 // Disable animations ONLY for guide__section elements that contain guide__card

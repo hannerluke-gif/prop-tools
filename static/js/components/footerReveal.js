@@ -51,7 +51,8 @@ export function initFooterReveal() {
     if (!hasScrollableContent) {
       // Page too short - keep footer hidden, no reveal effect
       if (isRevealing) {
-        pageWrapper.style.transform = '';
+        pageWrapper.classList.remove('footer-reveal-active');
+        pageWrapper.style.removeProperty('--footer-reveal-offset');
         pageWrapper.classList.remove('footer-revealing');
         isRevealing = false;
       }
@@ -70,7 +71,10 @@ export function initFooterReveal() {
       
       // Translate page up by footer height * progress
       const translateY = -footerHeight * clampedProgress;
-      pageWrapper.style.transform = `translateY(${translateY}px)`;
+      
+      // CSP-compliant: Use CSS custom property instead of inline style
+      pageWrapper.style.setProperty('--footer-reveal-offset', `translateY(${translateY}px)`);
+      pageWrapper.classList.add('footer-reveal-active');
       
       if (!isRevealing) {
         pageWrapper.classList.add('footer-revealing');
@@ -79,7 +83,8 @@ export function initFooterReveal() {
     } else {
       // Reset when scrolled away
       if (isRevealing) {
-        pageWrapper.style.transform = '';
+        pageWrapper.classList.remove('footer-reveal-active');
+        pageWrapper.style.removeProperty('--footer-reveal-offset');
         pageWrapper.classList.remove('footer-revealing');
         isRevealing = false;
       }

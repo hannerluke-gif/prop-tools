@@ -171,6 +171,92 @@ ts_utc: "2025-09-28T18:30:15.123456+00:00"
 * ✅ **No eval() usage**: All code statically analyzable
 * ✅ **Nonce support**: CSP nonce system preserved
 
+#### JavaScript Style Manipulation Rules (CSP-Compliant)
+
+**Critical:** With `script-src-attr 'none'` in our CSP, we must avoid inline style violations.
+
+**Prohibited Patterns:**
+* ❌ **Inline `style=` attributes in HTML**: Violates `style-src` CSP directive
+* ❌ **Direct `.style.property = value`**: Creates inline styles, blocked by CSP
+* ❌ **Template literals with styles**: `<div style="${dynamicStyle}">` blocked
+
+**Allowed Patterns:**
+* ✅ **CSS Custom Properties**: `element.style.setProperty('--var-name', value)`
+* ✅ **Class Toggling**: `element.classList.add('active-state')`
+* ✅ **Data Attributes + CSS**: `element.dataset.state = 'open'` with `[data-state="open"]` selector
+
+**Code Examples:**
+```javascript
+// ❌ BAD - Violates CSP, creates inline styles
+element.style.transform = 'translateX(100px)';
+element.style.opacity = '0.5';
+element.style.overflow = 'hidden';
+
+// ✅ GOOD - CSS custom properties (CSP-compliant)
+element.style.setProperty('--offset-x', '100px');
+// In CSS: transform: var(--offset-x);
+
+// ✅ BETTER - Class toggling with predefined CSS
+element.classList.add('is-transformed');
+element.classList.add('is-faded');
+document.body.classList.add('scroll-locked');
+// Define .is-transformed, .is-faded, .scroll-locked in SCSS
+
+// ✅ BEST - Data attributes for state management
+element.dataset.state = 'active';
+element.dataset.position = 'top';
+// In CSS: [data-state="active"] { opacity: 1; }
+//         [data-position="top"] { top: 0; }
+```
+
+**Implementation Examples from Codebase:**
+
+```javascript
+// Footer reveal animation (footerReveal.js)
+// ✅ Uses CSS custom property for dynamic transform
+pageWrapper.style.setProperty('--footer-reveal-offset', `translateY(${translateY}px)`);
+pageWrapper.classList.add('footer-reveal-active');
+
+// Mobile menu scroll lock (hamburgerMenu.js)
+// ✅ Uses class toggle instead of style.overflow
+document.body.classList.add('mobile-menu-open');
+
+// Guide animations (guideAnimations.js)
+// ✅ Uses class toggle for visibility
+el.classList.add('animation-visible');
+
+// Banner offsets (bannerOffsets.js)
+// ✅ CSS custom property for dynamic positioning
+banner.style.setProperty('--mobile-menu-top', `${offset}px`);
+```
+
+**HTML Template Rules:**
+```html
+<!-- ❌ BAD - Inline styles violate CSP -->
+<section style="padding-top: 8rem; padding-bottom: 12rem;">
+  <div style="min-height: 100vh;">Content</div>
+</section>
+
+<!-- ✅ GOOD - Use CSS classes -->
+<section class="dashboard__future-content">
+  <div class="dashboard__future-content-inner">Content</div>
+</section>
+```
+
+```scss
+// Define styles in SCSS
+.dashboard {
+  &__future-content {
+    padding-top: 8rem;
+    padding-bottom: 12rem;
+    
+    &-inner {
+      min-height: 100vh;
+    }
+  }
+}
+```
+
 #### Bot & Abuse Protection
 * ✅ **User-Agent bot filtering**: Blocks common bots and crawlers
 * ✅ **Rate limiting**: Max 3 clicks per guide per minute per session
