@@ -43,9 +43,15 @@
 @import "components/hero";              // Hero section (legacy global selectors - grandfathered)
 
 // Global layout/base document styles
-// Uses $base-html-bg defined in _variables.scss
+// Uses $base-html-bg defined in _variables.scss with grid overlay pattern
 .app-body {
-	background-color: $base-html-bg;
+	background: 
+		linear-gradient(rgba(255, 255, 255, 0.05) 1px, transparent 1px),
+		linear-gradient(90deg, rgba(255, 255, 255, 0.05) 1px, transparent 1px),
+		$base-html-bg;
+	background-size: 40px 40px, 40px 40px, 100% 100%;
+	background-position: center center;
+	background-repeat: repeat, repeat, no-repeat;
 	min-height: 100vh;
 	// Improve font rendering on dark background
 	-webkit-font-smoothing: antialiased;
