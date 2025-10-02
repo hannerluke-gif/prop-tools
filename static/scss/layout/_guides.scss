@@ -298,15 +298,26 @@
   // FAQ SECTION COMPONENT
   // ============================================================
   &__faq-section {
-    // Double the default section spacing for clearer visual separation
-    // This creates consistent breathing room between content and FAQ across all guides
-    margin-top: $guide-section-spacing * 2;
+    // No top margin needed - divider handles spacing
+    margin-top: 0;
   }
   &__faq {
-    border-bottom: 1px solid $guide-faq-divider;
-    padding: $guide-faq-padding 0;
+    // Fintech card style matching Keep Learning links
+    border-bottom: none;
+    padding: $guide-faq-padding;
     margin-bottom: $guide-faq-spacing;
-    background: transparent;
+    background: rgba(255, 255, 255, 0.03);
+    border: 1px solid rgba(255, 255, 255, 0.08);
+    border-radius: 0.75rem;
+    transition: all $transition-duration ease;
+    
+    // Card hover effect matching Keep Learning style
+    &:hover {
+      background: rgba(255, 255, 255, 0.06);
+      border-color: rgba(34, 211, 238, 0.3);
+      transform: translateY(-2px);
+    }
+    
     &__summary {
       cursor: pointer;
       font-size: $guide-faq-question-size;
@@ -397,7 +408,8 @@
   // KEEP LEARNING SECTION COMPONENT
   // ============================================================
   &__next {
-    margin-top: $guide-next-spacing-top;
+    // No top margin needed - divider handles spacing
+    margin-top: 0;
     &__title {
       // Match section title styling for consistency
       font-size: $guide-section-title-size-mobile;
@@ -506,7 +518,7 @@
     font-size: $guide-disclaimer-size;
     line-height: $guide-disclaimer-line-height;
     color: $guide-disclaimer-color;
-    margin-top: $guide-section-spacing * 2; // Double spacing for more breathing room
+    margin-top: 0; // No top margin needed - divider handles spacing
     margin-bottom: 0; // No space below disclosure
     font-style: italic; // Italicize for subtle emphasis
   }
