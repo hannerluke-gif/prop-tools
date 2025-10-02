@@ -191,9 +191,9 @@ $guide-disclaimer-size: 0.875rem !default; // 14px for subtle appearance
 $guide-disclaimer-line-height: 1.4 !default; // Compact but readable line height
 $guide-disclaimer-color: rgba(255, 255, 255, 0.6) !default; // Very subdued for legal/fine print
 
-// Guide card component - Fintech-style glassmorphism cards (subtle like guide index)
-$guide-card-bg: rgba(255, 255, 255, 0.02) !default; // Very subtle glass effect - matches guide index
-$guide-card-border: 1px solid rgba(255, 255, 255, 0.08) !default; // Subtle border - matches guide index
+// Guide card component - Fintech-style glassmorphism cards (lighter glass effect)
+$guide-card-bg: rgba(255, 255, 255, 0.08) !default; // Lighter glass effect - subtly brighter than background
+$guide-card-border: 1px solid rgba(255, 255, 255, 0.12) !default; // Thin border to reinforce edges
 $guide-card-border-radius: 1rem !default; // 16px rounded corners for modern Fintech feel
 $guide-card-padding: 1.5rem !default; // 24px internal spacing for comfortable content
 $guide-card-shadow: 0 2px 12px rgba(0, 0, 0, 0.2) !default; // Moderate shadow for subtle elevation
