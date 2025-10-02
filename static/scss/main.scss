@@ -43,9 +43,9 @@
 @import "components/hero";              // Hero section (legacy global selectors - grandfathered)
 
 // Global layout/base document styles
-// Dark charcoal gradient background
+// Dark charcoal solid background (no gradient to ensure browser chrome detects dark theme)
 .app-body {
-	background: linear-gradient(180deg, #0a0b0f 0%, #111418 100%);
+	background-color: #0a0b0f;
 	min-height: 100vh;
 	// Improve font rendering on dark background
 	-webkit-font-smoothing: antialiased;
