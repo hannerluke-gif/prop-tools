@@ -4,8 +4,8 @@
   "description": "Compare and find the best prop trading firms",
   "start_url": "/",
   "display": "standalone",
-  "background_color": "#ffffff",
-  "theme_color": "#0d6efd",
+  "background_color": "#111111",
+  "theme_color": "#111111",
   "icons": [
     {
       "src": "img/logos/site/favicon/pt_favicon-16.png",

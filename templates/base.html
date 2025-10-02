@@ -70,7 +70,11 @@
         
         <!-- Mobile browser chrome styling - dark theme -->
         <meta name="theme-color" content="#111111" />
+        <meta name="theme-color" media="(prefers-color-scheme: dark)" content="#111111" />
+        <meta name="theme-color" media="(prefers-color-scheme: light)" content="#111111" />
+        <meta name="apple-mobile-web-app-capable" content="yes" />
         <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent" />
+        <meta name="mobile-web-app-capable" content="yes" />
         
         <link rel="canonical" href="https://www.proptradetools.com{{ request.path }}" />
         {% block head %}{% endblock %}
