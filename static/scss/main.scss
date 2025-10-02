@@ -45,7 +45,7 @@
 // Global layout/base document styles
 // Dark charcoal solid background (no gradient to ensure browser chrome detects dark theme)
 .app-body {
-	background-color: #0a0b0f;
+	background-color: $base-html-bg;
 	min-height: 100vh;
 	// Improve font rendering on dark background
 	-webkit-font-smoothing: antialiased;

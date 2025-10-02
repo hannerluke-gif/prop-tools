@@ -114,6 +114,41 @@
 }
 
 // ============================================================
+// GUIDE HERO DIVIDER
+// Visual separator between hero and content sections
+// Matches footer divider styling for consistency
+// ============================================================
+.guide-hero__divider {
+  height: 1px;
+  background: linear-gradient(
+    90deg,
+    transparent 0%,
+    rgba(255, 255, 255, 0.15) 20%,
+    rgba(255, 255, 255, 0.15) 80%,
+    transparent 100%
+  );
+  margin: 0 1rem;
+  margin-bottom: $guide-content-spacing;
+}
+
+// ============================================================
+// GUIDE CONTENT DIVIDER
+// Visual separator between content sections (e.g., before FAQ)
+// Matches footer divider styling for consistency
+// ============================================================
+.guide-content__divider {
+  height: 1px;
+  background: linear-gradient(
+    90deg,
+    transparent 0%,
+    rgba(255, 255, 255, 0.15) 20%,
+    rgba(255, 255, 255, 0.15) 80%,
+    transparent 100%
+  );
+  margin: ($guide-content-spacing * 1.5) 1rem;
+}
+
+// ============================================================
 // GUIDE PAGES COMPONENT
 // Strict BEM structure for reusable guide/landing page layouts
 // All guide pages use this component for consistent styling

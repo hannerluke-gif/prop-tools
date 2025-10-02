@@ -67,6 +67,9 @@
   </div>
 </div>
 
+<!-- Guide Hero Divider -->
+<div class="guide-hero__divider"></div>
+
 <section class="container guide pt-4 pt-md-5 pb-0">
   <div class="row justify-content-center">
     <article class="col-12 col-lg-9 prose">
@@ -114,6 +117,9 @@
         </a>
       </nav>
 
+      {# Divider before FAQ Section #}
+      <div class="guide-content__divider"></div>
+
       {# FAQ Section #}
       {% block guide_faq %}
       <div class="guide__faq-section animation-ready fade-in">
@@ -123,6 +129,9 @@
         {% endblock %}
       </div>
       {% endblock %}
+
+      {# Divider before Keep Learning Section #}
+      <div class="guide-content__divider"></div>
 
       {# Keep Learning Section #}
       {% block guide_next %}
@@ -135,6 +144,9 @@
         </ul>
       </nav>
       {% endblock %}
+
+      {# Divider before Disclosure #}
+      <div class="guide-content__divider"></div>
 
       {# Disclosure #}
       {% block guide_disclosure %}
