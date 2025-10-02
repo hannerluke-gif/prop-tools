@@ -52,6 +52,14 @@
 	-moz-osx-font-smoothing: grayscale;
 }
 
+// Mobile browser bottom navigation bar styling
+// Ensures browser chrome matches dark theme with glassmorphism
+.bottom-nav {
+	background: rgba(20, 20, 20, 0.7);
+	backdrop-filter: blur(8px);
+	-webkit-backdrop-filter: blur(8px); // Safari support
+	color: #fff;
+}
 
 // NOTE: Button tokens ($btn-*) are available in _variables.scss for consistent
 // styling across components. Use these variables to maintain design system consistency.

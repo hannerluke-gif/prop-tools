@@ -8,6 +8,7 @@
   overflow: hidden;
   min-height: $guide-hero-min-height;
   padding: $guide-hero-padding-mobile;
+  margin-top: 0; // Remove any top margin to sit flush against site banner
   margin-bottom: $guide-content-spacing;
   
   // Vignette overlay, grid pattern with gradient accents

@@ -5,6 +5,9 @@
 {# Animation classes: fade-in (slide up), fade-in-left (slide from left) #}
 {# Animations respect prefers-reduced-motion for accessibility #}
 
+{# Remove default padding-top from main element so hero sits flush against site banner #}
+{% block main_class %}{% endblock %}
+
 {% block head %}
   <meta name="description" content="{% block meta_desc %}{% endblock %}">
   

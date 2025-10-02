@@ -22,7 +22,9 @@
   top: 0;
   z-index: 1200; // Above mobile menu panel and standard content; Bootstrap navbar uses 1000
   width: 100%;
-  background: $site-banner-bg; // solid background (token)
+  background: rgba(0, 0, 0, 0.85); // Semi-transparent dark background
+  backdrop-filter: blur(12px); // Glassmorphism blur effect
+  -webkit-backdrop-filter: blur(12px); // Safari support
   color: #fff;
   min-height: 40px;
   // Keep banner visually constrained to 40px while allowing child logo to overflow
