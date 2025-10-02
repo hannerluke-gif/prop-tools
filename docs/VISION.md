@@ -142,6 +142,9 @@ const filterAccounts = (criteria) => {
 
 ## 🎯 Competitive Advantages
 
+### **Market Positioning: "NerdWallet for Prop Firms"**
+As easy to navigate as Kayak. As trusted as NerdWallet's credit card pages. Smarter than both competitors: live promos + AI guidance.
+
 ### **1. Comprehensive Data Model**
 Unlike generic comparison sites, we understand prop firm nuances:
 - Trailing vs. EOD drawdown impact
@@ -157,11 +160,88 @@ Unlike generic comparison sites, we understand prop firm nuances:
 - SEO-optimized guides building domain trust
 - Educational content that explains "why" not just "what"
 - Guide system driving organic discovery and trust
+- Full FAQ schema + breadcrumb markup (competitors lack this)
 
-### **4. AI-Powered Personalization**
+### **4. AI-Powered Personalization** (2026 Roadmap)
 - Context-aware recommendations based on trading style
 - Natural language query interface
 - Learning from user behavior and preferences
+
+---
+
+## 🔎 Competitive Landscape Analysis
+
+### **Key Competitors & Their Weaknesses**
+
+#### **OnlyPropFirms.com**
+**Strengths:** Comprehensive data coverage  
+**Critical Weaknesses:**
+- Data-heavy, cluttered tables with minimal UX guidance
+- Static text lists for promos (no real-time tracking or urgency)
+- Weak SEO content — few guides, minimal FAQ schema
+- Feels like a directory, not a decision tool
+- No personalization or analytics-driven UX
+
+**Our Advantage:** Clean Bootstrap + Sass/BEM system, context-aware navigation, structured CTAs, and the Curiosity → Action → Decision flow they lack.
+
+#### **PropFirmMatch.com**
+**Strengths:** Cleaner visual design  
+**Critical Weaknesses:**
+- Basic filters (no advanced drawdown type or daily loss filtering)
+- No urgency signals (promo expiration, "best deal now" indicators)
+- Generic guides/blogs — not structured for SEO dominance
+- No personalization, no analytics insights for users
+- Static comparison experience
+
+**Our Advantage:** Advanced filtering (trailing vs EOD drawdown, "no daily loss limit"), promo intelligence with expiration alerts, and interactive comparison tables with sortability.
+
+### **Our Differentiation Strategy**
+
+| Feature                    | OnlyPropFirms | PropFirmMatch | **PropTradeTools** |
+|---------------------------|---------------|---------------|-------------------|
+| **Design & UX**           | Cluttered tables | Clean but basic | Clean, mobile-first BEM components |
+| **SEO Content Authority** | Sparse blogs | Generic content | Full structured FAQ/Schema system with 🔥 trending |
+| **Promo Intelligence**    | Static text | Static text | JSON-driven + real-time best deal alerts |
+| **Navigation**            | Dropdown heavy | Basic navigation | Smart context-aware back links + guided flow |
+| **Analytics & Insights**  | None | None | Privacy-friendly clicks + trending guides |
+| **Filtering**             | Basic tables | Basic filters | Advanced (drawdown type, daily loss, sortable) |
+| **Personalization**       | None | None | Planned quiz + AI assistant (2026) |
+| **Urgency Signals**       | None | None | Promo expiration alerts, "best deal now" banners |
+
+---
+
+## 🚀 Strategic Differentiation Angles
+
+### **1. NerdWallet/Kayak UX Layer**
+- Clean Bootstrap + Sass/BEM system with mobile-first design
+- Context-aware navigation + structured CTAs
+- Smart landing page flow: **Curiosity → Action → Decision**
+- Interactive comparison experience (vs. their static tables)
+
+### **2. SEO Content Authority** (Already Built)
+- Full guide system with FAQ schema + breadcrumb markup
+- Dynamic sitemap auto-generated from content
+- 🔥 Flame indicators for popular/trending guides
+- **Google loves this.** Neither competitor has schema-level optimization.
+
+### **3. Promo Intelligence** (Phase 1 Advantage)
+- JSON-driven promos already in place (`promos.json`, `firms_with_promos.json`)
+- Roadmap: "Best Deal Right Now" banners with urgency indicators
+- Promo expiration alerts and countdown timers
+- **This is our Kayak "deal finder" angle** — they don't have this.
+
+### **4. Interactive Comparison Tables** (Q4 2025)
+- Sortable, filterable UI with advanced criteria
+- Drawdown type filtering (trailing vs. EOD)
+- Daily loss limit filtering ("no daily loss limit" checkbox)
+- Mobile-first, touch-friendly design
+- **Competitors are static or clunky** → we'll feel like Kayak vs Craigslist.
+
+### **5. Future Moat: AI & Personalization** (2026)
+- "Best firm for me?" quiz with recommendation engine
+- GPT-powered assistant for contextual questions
+- Personalized recommendations: "cheapest 50K eval today," "best for scalpers"
+- **Competitors don't even hint at this capability.**
 
 ---
 
@@ -213,3 +293,21 @@ Unlike generic comparison sites, we understand prop firm nuances:
 **This vision leverages everything you've already built while providing a clear path to a differentiated, valuable product that solves real trader problems.**
 
 *The foundation is solid. Now we build the interactive layer that makes your data sing.*
+
+---
+
+## 📌 Quick Reference: Competitive Positioning
+
+**Our Tagline:** "NerdWallet for Prop Firms"
+
+**Elevator Pitch:**  
+PropTradeTools.com is the intelligent prop firm comparison platform that combines Kayak's ease of use with NerdWallet's trustworthy guidance. Unlike cluttered competitors (OnlyPropFirms, PropFirmMatch), we offer clean mobile-first design, real-time promo intelligence, advanced filtering, and AI-powered recommendations.
+
+**Key Differentiators:**
+1. 🎨 **Superior UX** - Clean BEM components vs. cluttered tables
+2. 📊 **SEO Authority** - Full schema markup vs. sparse blogs  
+3. 💰 **Promo Intelligence** - Real-time "best deal" alerts vs. static text
+4. 🔍 **Advanced Filtering** - Drawdown type, daily loss filters vs. basic sorting
+5. 🤖 **AI Future** - Personalization roadmap vs. no innovation signal
+
+**Win Condition:** Make PropFirmMatch and OnlyPropFirms feel like Craigslist compared to our Kayak-level experience.

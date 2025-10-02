@@ -36,6 +36,22 @@ Clear answers, step-by-step next moves, and unbiased comparisons.
 <section class="guide-index container px-0">
   <div class="guide-index__groups">
     <div class="guide-index__group">
+      <h2 class="guide-index__heading h4">Popular <span class="text-warning">🔥</span></h2>
+      <ul class="guide-index__list">
+        {% for g in guides if g.score_30d|default(0) >= flame_threshold %}
+          <li class="guide-index__item">
+            <a class="guide-index__link"
+               href="{{ g.href }}"
+               data-guide-id="{{ g.id }}"
+               data-guide-title="{{ g.title }}">
+              <span class="guide-index__label">{{ g.title }}</span>
+            </a>
+          </li>
+        {% endfor %}
+      </ul>
+    </div>
+
+    <div class="guide-index__group">
       <h2 class="guide-index__heading h4">Beginner Basics</h2>
       <ul class="guide-index__list">
         {% for g in guides if g.group == "Beginner Basics" %}

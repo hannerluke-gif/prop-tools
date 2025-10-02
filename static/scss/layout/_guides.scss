@@ -215,14 +215,6 @@
     backdrop-filter: $guide-card-backdrop-filter; // Glassmorphism blur
     -webkit-backdrop-filter: $guide-card-backdrop-filter; // Safari support
     
-    // Very subtle gradient overlay for depth
-    background-image: linear-gradient(
-      to bottom, 
-      rgba(255, 255, 255, 0.06) 0%, 
-      rgba(255, 255, 255, 0.03) 100%
-    );
-    background-blend-mode: overlay;
-    
     // Remove top margin from first child element
     > *:first-child {
       margin-top: 0;
@@ -595,6 +587,15 @@
   will-change: opacity, transform;
 }
 
+// Disable animations ONLY for guide__section elements that contain guide__card
+// This uses :has() selector to check if the section contains a .guide__card
+// Keep animations for sections with CTA, FAQ, and other content
+.guide__section.animation-ready:has(.guide__card) {
+  opacity: 1;
+  transform: none;
+  transition: none;
+}
+
 // Active state when element enters viewport
 .animation-active {
   opacity: 1;
@@ -609,6 +610,11 @@
   &.fade-in-left {
     animation-name: guide-fade-in-left;
   }
+}
+
+// Disable animations ONLY for guide__section elements that contain guide__card
+.guide__section.animation-active:has(.guide__card) {
+  animation: none;
 }
 
 // Reduce motion for accessibility

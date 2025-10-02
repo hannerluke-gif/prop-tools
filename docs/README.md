@@ -4,8 +4,13 @@ This directory contains all technical documentation for the Prop Tools project, 
 
 ## 🚀 Planning & Vision
 
-- **[Product Vision](VISION.md)** - Strategic direction and core product philosophy
+- **[Product Vision](VISION.md)** - Strategic direction, competitive analysis, and core product philosophy
+  - **NEW:** Detailed competitor analysis (OnlyPropFirms.com, PropFirmMatch.com)
+  - **NEW:** Strategic differentiation angles and market positioning
+  - **NEW:** "NerdWallet for Prop Firms" positioning statement
 - **[Project Roadmap](ROADMAP.md)** - Implementation phases, features, and timeline
+  - **NEW:** Competitive strategy summary with side-by-side comparison
+  - **NEW:** Phase 1 features mapped to competitor weaknesses
 - **[Technical Stack](TECH-STACK.md)** - Complete technology overview, tools, and architecture decisions
 
 ## 📊 Analytics System

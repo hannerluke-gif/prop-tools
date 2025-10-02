@@ -1,6 +1,10 @@
 # Prop Tools (Flask + Bootstrap + Guide System)
 
+**"NerdWallet for Prop Firms" — The Ultimate Prop Firm Intelligence Platform**
+
 A comprehensive Flask project featuring a scalable guide system, modern Sass/BEM architecture, and production-ready security. Built for rapid prototyping and extension into larger applications.
+
+> **Market Position:** Combining the ease of Kayak, the trust of NerdWallet, and intelligence that existing competitors lack — we're building the definitive prop firm comparison and strategy platform.
 
 ## Table of Contents
 - [Features](#features)
@@ -25,6 +29,15 @@ A comprehensive Flask project featuring a scalable guide system, modern Sass/BEM
 - **Security hardening** with CSP, HTTPS, and production-ready headers
 - **VS Code integration** with tasks, Sass watch, and development workflow
 - **Production deployment** ready for Heroku with proper configuration
+
+## 🎯 Competitive Advantages
+- **Clean UX** - Mobile-first BEM components vs. competitors' cluttered tables
+- **SEO Authority** - Full FAQ schema and structured markup (competitors lack this)
+- **Promo Intelligence** - JSON-driven system ready for real-time "best deal" alerts
+- **Data-Driven** - Analytics infrastructure competitors don't have
+- **Innovation Roadmap** - AI/personalization planned for 2026 (competitors show no innovation)
+
+See [VISION.md](docs/VISION.md) for detailed competitive analysis and market positioning.
 
 ## Project Structure
 ```
