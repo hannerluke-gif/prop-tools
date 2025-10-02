@@ -44,6 +44,21 @@ export function initFooterReveal() {
     const windowHeight = window.innerHeight;
     const documentHeight = document.documentElement.scrollHeight;
     
+    // Only activate reveal if page is actually scrollable beyond one viewport
+    // This prevents footer from showing on pages with minimal content
+    const hasScrollableContent = documentHeight > windowHeight + footerHeight;
+    
+    if (!hasScrollableContent) {
+      // Page too short - keep footer hidden, no reveal effect
+      if (isRevealing) {
+        pageWrapper.style.transform = '';
+        pageWrapper.classList.remove('footer-revealing');
+        isRevealing = false;
+      }
+      rafId = null;
+      return;
+    }
+    
     // Distance from bottom of page
     const distanceFromBottom = documentHeight - (scrollTop + windowHeight);
     
