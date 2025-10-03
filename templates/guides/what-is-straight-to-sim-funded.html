@@ -1,29 +1,72 @@
 {% extends "guides/guide_base.html" %}
 
 {% block meta_desc %}{{ meta_desc }}{% endblock %}
-{% block guide_title %}What is a Straight-to-Sim-Funded Account?{% endblock %}
+{% block guide_title %}What is a Straight-to-Sim-Funded Account? (Quick Start to Trading){% endblock %}
 {% block guide_subtitle %}
-A plan that skips the evaluation phase. You begin in a sim-funded account with payout thresholds and rules from day one.
+Understand how straight-to-sim-funded accounts work and whether they’re right for you.
 {% endblock %}
 
-{% block faq_items %}[{
-  "@type":"Question","name":"How do payouts work?",
-  "acceptedAnswer":{"@type":"Answer","text":"You trade simulated capital but can request payouts once you meet thresholds and time requirements defined by the firm."}
-},{
-  "@type":"Question","name":"Any hidden trade-offs?",
-  "acceptedAnswer":{"@type":"Answer","text":"Usually higher upfront fees and similar (or stricter) rules. Confirm news trading, scaling, and daily loss details."}
-}]{% endblock %}
+{% block faq_items %}[
+  {
+    "@type": "Question",
+    "name": "How is a straight-to-sim-funded account different from evaluation?",
+    "acceptedAnswer": {
+      "@type": "Answer",
+      "text": "It lets you trade immediately without testing, but requires higher upfront payment."
+    }
+  },
+  {
+    "@type": "Question",
+    "name": "Is this better for advanced traders?",
+    "acceptedAnswer": {
+      "@type": "Answer",
+      "text": "Yes, advanced traders benefit most from skipping evaluations and trading right away."
+    }
+  }
+]{% endblock %}
 
 {% block guide_content %}
-<div class="guide__section">
-  <div class="guide__card">
-    <h2 class="guide__section-title">When it makes sense</h2>
-    <ul class="guide__bullets">
-      <li>You already trade a tested plan</li>
-      <li>You value speed to payouts over cost</li>
-      <li>You understand and accept the rules</li>
-    </ul>
+  <div class="guide__section animation-ready fade-in">
+    <div class="guide__card">
+      <h2 class="guide__section-title">What is Straight-to-Sim-Funded?</h2>
+      <ul class="guide__bullets">
+        <li>A prop firm account that skips evaluation and gives you a funded sim account immediately.</li>
+        <li>Lets you trade right away, but usually costs more.</li>
+      </ul>
+    </div>
   </div>
+  <div class="guide__section animation-ready fade-in">
+    <div class="guide__card">
+      <h2 class="guide__section-title">Why Choose This?</h2>
+      <ol class="guide__steps">
+        <li>Immediate access to capital.</li>
+        <li>Avoid evaluation pressure.</li>
+        <li>Best for traders with proven consistency.</li>
+      </ol>
+    </div>
+  </div>
+{% endblock %}
+
+
+{% block guide_faq %}
+<div class="guide__faq-section guide__faq-section--spacious">
+  <h2 class="guide__section-title">Common questions</h2>
+  <details class="guide__faq" role="group">
+    <summary class="guide__faq__summary">
+      <span class="h6 mb-0 d-inline-block">How is a straight-to-sim-funded account different from evaluation?</span>
+    </summary>
+    <div class="guide__faq__content">
+      It skips the test phase, letting you trade immediately, but with higher costs.
+    </div>
+  </details>
+  <details class="guide__faq" role="group">
+    <summary class="guide__faq__summary">
+      <span class="h6 mb-0 d-inline-block">Is this better for advanced traders?</span>
+    </summary>
+    <div class="guide__faq__content">
+      Yes, it’s designed for those with strategies ready to deploy.
+    </div>
+  </details>
 </div>
 {% endblock %}
 

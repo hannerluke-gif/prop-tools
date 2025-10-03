@@ -3,25 +3,32 @@ GUIDE: best-account-size-to-start
 ================================================================================
 
 TITLE:
-What Account Size Should I Start With?
+What Account Size Should I Start With? (Beginner’s Guide)
 
 SUBTITLE:
-Choose the smallest size that comfortably fits your stop size, typical drawdown, and trade frequency—then scale on results.
+Learn how to choose the right prop firm account size based on your goals and risk tolerance.
 
 MAIN CONTENT:
 --------------------------------------------------------------------------------
-Sizing checklist
- 
- Typical stop size (ticks) × tick value
- Max simultaneous trades/contracts
- Daily loss limit cushion (≥ 2–3× avg risk)
- Trailing vs static drawdown behavior
+How to Pick Account Size
+- Smaller accounts ($25k–$50k) are lower cost and easier for beginners.
+- Larger accounts ($100k–$150k) provide more buying power but stricter rules.
+- Match account size to your comfort with drawdowns and daily limits.
+
+FAQ SECTION:
+--------------------------------------------------------------------------------
+Common questions
+
+Should I start with a 25k or 100k account?
+If you’re new, start smaller to learn the rules. Larger accounts are best once you’re consistent.
+
+Does account size affect payout speed?
+No, payout speed depends on the firm, not account size.
 
 STRUCTURED FAQ (Schema.org):
 --------------------------------------------------------------------------------
-Q: How do I match size to my stops?
-A: Estimate your average stop (ticks × tick value) and max concurrent positions. Ensure daily limit and trailing DD can withstand expected variance.
+Q: Should I start with a 25k or 100k account?
+A: Beginners should start smaller. Move to larger accounts after building consistency.
 
-Q: Start small or big?
-A: Start small. Prove consistency, then scale. Oversizing early leads to rule breaches more than faster growth.
-
+Q: Does account size affect payout speed?
+A: No, payout speed is set by the firm’s payout process, not account size.

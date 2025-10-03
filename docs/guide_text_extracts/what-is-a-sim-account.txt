@@ -3,24 +3,36 @@ GUIDE: what-is-a-sim-account
 ================================================================================
 
 TITLE:
-What is a Sim Account?
+What is a Sim Account? (Practice Trading Without Risk)
 
 SUBTITLE:
-A simulated account mirrors live trading without real capital. It’s where you learn rules and test a strategy safely.
+A simulated account lets you practice trading with virtual money before risking real capital.
 
 MAIN CONTENT:
 --------------------------------------------------------------------------------
-Why sim matters
- 
- Build execution discipline
- Practice risk rules without losses
- Collect stats to choose account size
+What is a Sim Account?
+- A simulated (sim) account mirrors live markets but uses virtual money.
+- It allows traders to practice strategies without financial risk.
+
+Why Use a Sim Account?
+1. Build confidence without losing money.
+2. Learn order entry, risk controls, and platform navigation.
+3. Test new strategies in real-time market conditions.
+
+FAQ SECTION:
+--------------------------------------------------------------------------------
+Common questions
+
+Do sim accounts feel like real trading?
+Yes, the data is live, but emotions are different since no money is on the line.
+
+Can I pass a prop firm evaluation using only a sim account?
+No. Prop firms require you to trade on their evaluation accounts, which are simulated but tied to rules and funding pathways.
 
 STRUCTURED FAQ (Schema.org):
 --------------------------------------------------------------------------------
-Q: Are fills realistic?
-A: They approximate market behavior but won’t match real slippage/liquidity perfectly. Use sim to validate rules and process first.
+Q: Do sim accounts feel like real trading?
+A: Yes, market conditions are live, but emotions differ because no real money is at risk.
 
-Q: How long should I stay in sim?
-A: Until you can follow your plan and show stable results across market conditions—often weeks to months.
-
+Q: Can I pass a prop firm evaluation using only a sim account?
+A: No, evaluations must be completed on firm-provided accounts under their rules.

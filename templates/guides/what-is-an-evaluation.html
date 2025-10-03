@@ -1,29 +1,73 @@
 {% extends "guides/guide_base.html" %}
 
 {% block meta_desc %}{{ meta_desc }}{% endblock %}
-{% block guide_title %}What is a Prop Firm Evaluation?{% endblock %}
+{% block guide_title %}What is a Prop Firm Evaluation? (Steps to Getting Funded){% endblock %}
 {% block guide_subtitle %}
-An evaluation is a rules-based test in a demo account. Hit the profit target without breaking drawdown or time rules to pass.
+Learn how prop firm evaluations work and what you need to do to earn a funded trading account.
 {% endblock %}
 
-{% block faq_items %}[{
-  "@type":"Question","name":"Typical rules?",
-  "acceptedAnswer":{"@type":"Answer","text":"Profit target, trailing or static drawdown, daily loss limits, and sometimes time or news restrictions."}
-},{
-  "@type":"Question","name":"One-phase vs two-phase?",
-  "acceptedAnswer":{"@type":"Answer","text":"Two-phase splits the target across steps; one-phase is faster but may cost more. Choose what fits your style and budget."}
-}]{% endblock %}
+{% block faq_items %}[
+  {
+    "@type": "Question",
+    "name": "How long does a prop firm evaluation take?",
+    "acceptedAnswer": {
+      "@type": "Answer",
+      "text": "It depends on the firm, but most require 7 to 10 active trading days."
+    }
+  },
+  {
+    "@type": "Question",
+    "name": "What happens if I fail the evaluation?",
+    "acceptedAnswer": {
+      "@type": "Answer",
+      "text": "Most firms allow resets or repurchasing the evaluation account to try again."
+    }
+  }
+]{% endblock %}
 
 {% block guide_content %}
-<div class="guide__section">
-  <div class="guide__card">
-    <h2 class="guide__section-title">Pass checklist</h2>
-    <ul class="guide__bullets">
-      <li>Define trade plan and max daily loss</li>
-      <li>Know your drawdown math (trailing/static)</li>
-      <li>Track adherence every session</li>
-    </ul>
+  <div class="guide__section animation-ready fade-in">
+    <div class="guide__card">
+      <h2 class="guide__section-title">What is an Evaluation?</h2>
+      <ul class="guide__bullets">
+        <li>An evaluation is a test account where traders must meet profit targets under specific rules.</li>
+        <li>Passing the evaluation earns access to a funded trading account.</li>
+      </ul>
+    </div>
   </div>
+  <div class="guide__section animation-ready fade-in">
+    <div class="guide__card">
+      <h2 class="guide__section-title">Typical Evaluation Rules</h2>
+      <ol class="guide__steps">
+        <li>Reach a profit target (e.g., $3,000 on a $100k account).</li>
+        <li>Stay within drawdown limits (daily and overall).</li>
+        <li>Trade a minimum number of days.</li>
+        <li>Follow consistency or strategy rules.</li>
+      </ol>
+    </div>
+  </div>
+{% endblock %}
+
+
+{% block guide_faq %}
+<div class="guide__faq-section guide__faq-section--spacious">
+  <h2 class="guide__section-title">Common questions</h2>
+  <details class="guide__faq" role="group">
+    <summary class="guide__faq__summary">
+      <span class="h6 mb-0 d-inline-block">How long does a prop firm evaluation take?</span>
+    </summary>
+    <div class="guide__faq__content">
+      It varies, but most require a set number of active trading days (e.g., 7 to 10).
+    </div>
+  </details>
+  <details class="guide__faq" role="group">
+    <summary class="guide__faq__summary">
+      <span class="h6 mb-0 d-inline-block">What happens if I fail the evaluation?</span>
+    </summary>
+    <div class="guide__faq__content">
+      You usually can reset or repurchase the evaluation account to try again.
+    </div>
+  </details>
 </div>
 {% endblock %}
 

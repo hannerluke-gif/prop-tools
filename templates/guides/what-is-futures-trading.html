@@ -1,41 +1,73 @@
 {% extends "guides/guide_base.html" %}
 
 {% block meta_desc %}{{ meta_desc }}{% endblock %}
-{% block guide_title %}What is Futures Trading?{% endblock %}
+{% block guide_title %}What is Futures Trading? (Beginner’s Guide to Contracts and Markets){% endblock %}
 {% block guide_subtitle %}
-Futures are standardized contracts to buy or sell an asset at a set price on a future date. Traders use them for speculation, hedging, and diversification.
+Learn how futures contracts work and why traders use them for speculation and hedging.
 {% endblock %}
 
-{% block faq_items %}[{
-  "@type":"Question","name":"What is a futures contract?",
-  "acceptedAnswer":{"@type":"Answer","text":"A futures contract obligates buyer and seller to transact an asset at a set price on a future date. Most retail traders close the position before expiration."}
-},{
-  "@type":"Question","name":"How does margin work in futures?",
-  "acceptedAnswer":{"@type":"Answer","text":"Futures use performance bonds (margin) instead of paying full value. This creates leverage—small price moves can create large gains or losses."}
-}]{% endblock %}
+{% block faq_items %}[
+  {
+    "@type": "Question",
+    "name": "What makes futures different from stocks?",
+    "acceptedAnswer": {
+      "@type": "Answer",
+      "text": "Stocks are ownership in a company. Futures are contracts that track an asset\u2019s price and can be used for speculation or hedging."
+    }
+  },
+  {
+    "@type": "Question",
+    "name": "Can I start trading futures with a small account?",
+    "acceptedAnswer": {
+      "@type": "Answer",
+      "text": "Yes, micro futures contracts let beginners trade with lower costs and less risk."
+    }
+  }
+]{% endblock %}
 
 {% block guide_content %}
-<div class="guide__section">
-  <div class="guide__card">
-    <h2 class="guide__section-title">Quick overview</h2>
-    <ul class="guide__bullets">
-      <li><strong>Standardized:</strong> Traded on exchanges (e.g., CME).</li>
-      <li><strong>Leverage:</strong> Small margin controls larger notional value.</li>
-      <li><strong>Two-way:</strong> Go long or short with equal ease.</li>
-    </ul>
+  <div class="guide__section animation-ready fade-in">
+    <div class="guide__card">
+      <h2 class="guide__section-title">What Are Futures?</h2>
+      <ul class="guide__bullets">
+        <li>Futures are financial contracts that obligate traders to buy or sell an asset at a set price on a future date.</li>
+        <li><strong>Common futures:</strong> stock index futures (e.g., S&P 500), commodities (oil, gold), and currencies.</li>
+      </ul>
+    </div>
   </div>
-</div>
+  <div class="guide__section animation-ready fade-in">
+    <div class="guide__card">
+      <h2 class="guide__section-title">Why Trade Futures?</h2>
+      <ol class="guide__steps">
+        <li>Leverage: Control larger positions with less capital.</li>
+        <li>Liquidity: Active markets allow quick entry and exit.</li>
+        <li>Flexibility: Speculate on price going up or down.</li>
+        <li>Risk Management: Futures can hedge other investments.</li>
+      </ol>
+    </div>
+  </div>
+{% endblock %}
 
-<div class="guide__section">
-  <div class="guide__card">
-    <h2 class="guide__section-title">Common futures for new traders</h2>
-    <ul class="guide__bullets">
-      <li>Equity index minis & micros (e.g., ES/MES, NQ/MNQ)</li>
-      <li>Crude oil (CL) and gold (GC)</li>
-      <li>Currency futures (e.g., Euro FX 6E, Japanese Yen 6J)</li>
-    </ul>
-    <p><a href="/guides/futures-trading-products" class="text-link--accent">View All Futures Trading Products</a></p>
-  </div>
+
+{% block guide_faq %}
+<div class="guide__faq-section guide__faq-section--spacious">
+  <h2 class="guide__section-title">Common questions</h2>
+  <details class="guide__faq" role="group">
+    <summary class="guide__faq__summary">
+      <span class="h6 mb-0 d-inline-block">What makes futures different from stocks?</span>
+    </summary>
+    <div class="guide__faq__content">
+      Stocks represent ownership in a company, while futures are contracts tied to an underlying asset’s price.
+    </div>
+  </details>
+  <details class="guide__faq" role="group">
+    <summary class="guide__faq__summary">
+      <span class="h6 mb-0 d-inline-block">Can I start trading futures with a small account?</span>
+    </summary>
+    <div class="guide__faq__content">
+      Yes, micro contracts (e.g., MNQ, MES) allow beginners to trade futures with lower costs and smaller risk.
+    </div>
+  </details>
 </div>
 {% endblock %}
 

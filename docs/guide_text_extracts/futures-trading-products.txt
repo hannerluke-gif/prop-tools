@@ -3,41 +3,36 @@ GUIDE: futures-trading-products
 ================================================================================
 
 TITLE:
-Futures Trading Products
+Futures Trading Products — What You Can Trade at Prop Firms
 
 SUBTITLE:
-Most prop firms allow traders to access a wide range of CME Group products (CME, CBOT, NYMEX, COMEX). Some also support Eurex and crypto futures.
+Explore the most common futures markets offered by prop firms, from equity indexes to commodities.
 
 MAIN CONTENT:
 --------------------------------------------------------------------------------
-This page is a reference guide to common futures contracts you'll find across firms.
- Always check the specific firm's rules before trading — permitted products can change.
+Common Futures Products
+- Equity index futures (ES, NQ, YM, RTY)
+- Micro equity index futures (MES, MNQ, M2K, MYM)
+- Commodity futures (CL, GC, NG, ZS)
+- Currency futures (6E, 6J, 6B)
+- Bonds and rates (ZN, ZB, GE)
 
-{% for category in products['categories'] %}
+Note: Check each prop firm’s rules for exact product availability.
 
- {% for item in category['items'] %}
- 
- : 
- {% for symbol in item['symbols'] -%}
- {% if not loop.last %}, {% endif %}
- {%- endfor %}
- {% if item['exchange'] and item['exchange'] != "CME" %} (){% endif %}
- 
- {% endfor %}
+FAQ SECTION:
+--------------------------------------------------------------------------------
+Common questions
 
-{% endfor %}
+Which futures contracts are most popular for beginners?
+Micro equity index contracts (MES, MNQ) are the most popular for new traders.
 
-{% if products['disclaimer'] %}
-
- ⚠️ Disclaimer: 
-
-{% endif %}
+Do all prop firms support every futures product?
+No, availability differs. Always confirm with the specific firm.
 
 STRUCTURED FAQ (Schema.org):
 --------------------------------------------------------------------------------
-Q: Can I trade crypto futures with prop firm capital?
-A: Some prop firms allow CME crypto futures like Micro Bitcoin (MBT) and Micro Ether (MET), but availability varies. Always check with your specific firm.
+Q: Which futures contracts are most popular for beginners?
+A: Micro equity index futures like MES and MNQ are the most popular starting points.
 
-Q: What are the most popular futures for beginners?
-A: Most beginners start with equity index futures like ES/MES (S&P 500) or NQ/MNQ (Nasdaq) due to their liquidity and smaller contract sizes with micros.
-
+Q: Do all prop firms support every futures product?
+A: No, product availability varies by firm. Always confirm before trading.

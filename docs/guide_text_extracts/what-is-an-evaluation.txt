@@ -3,24 +3,37 @@ GUIDE: what-is-an-evaluation
 ================================================================================
 
 TITLE:
-What is a Prop Firm Evaluation?
+What is a Prop Firm Evaluation? (Steps to Getting Funded)
 
 SUBTITLE:
-An evaluation is a rules-based test in a demo account. Hit the profit target without breaking drawdown or time rules to pass.
+Learn how prop firm evaluations work and what you need to do to earn a funded trading account.
 
 MAIN CONTENT:
 --------------------------------------------------------------------------------
-Pass checklist
- 
- Define trade plan and max daily loss
- Know your drawdown math (trailing/static)
- Track adherence every session
+What is an Evaluation?
+- An evaluation is a test account where traders must meet profit targets under specific rules.
+- Passing the evaluation earns access to a funded trading account.
+
+Typical Evaluation Rules
+1. Reach a profit target (e.g., $3,000 on a $100k account).
+2. Stay within drawdown limits (daily and overall).
+3. Trade a minimum number of days.
+4. Follow consistency or strategy rules.
+
+FAQ SECTION:
+--------------------------------------------------------------------------------
+Common questions
+
+How long does a prop firm evaluation take?
+It varies, but most require a set number of active trading days (e.g., 7 to 10).
+
+What happens if I fail the evaluation?
+You usually can reset or repurchase the evaluation account to try again.
 
 STRUCTURED FAQ (Schema.org):
 --------------------------------------------------------------------------------
-Q: Typical rules?
-A: Profit target, trailing or static drawdown, daily loss limits, and sometimes time or news restrictions.
+Q: How long does a prop firm evaluation take?
+A: It depends on the firm, but most require 7 to 10 active trading days.
 
-Q: One-phase vs two-phase?
-A: Two-phase splits the target across steps; one-phase is faster but may cost more. Choose what fits your style and budget.
-
+Q: What happens if I fail the evaluation?
+A: Most firms allow resets or repurchasing the evaluation account to try again.

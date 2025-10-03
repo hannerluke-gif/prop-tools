@@ -1,28 +1,80 @@
 {% extends "guides/guide_base.html" %}
 
 {% block meta_desc %}{{ meta_desc }}{% endblock %}
-{% block guide_title %}Should I Skip the Evaluation and Go Straight to Sim-Funded?{% endblock %}
+{% block guide_title %}Should I Skip the Evaluation and Go Straight to Funded?{% endblock %}
 {% block guide_subtitle %}
-Skipping saves time but costs more. It suits traders with a tested plan who value speed over price.
+Some firms let you bypass the evaluation. Here’s when it makes sense — and when it doesn’t.
 {% endblock %}
 
-{% block faq_items %}[{
-  "@type":"Question","name":"Who should skip the eval?",
-  "acceptedAnswer":{"@type":"Answer","text":"Traders with verified stats, rule discipline, and a need to start payouts sooner. New traders usually benefit from an evaluation first."}
-},{
-  "@type":"Question","name":"Any rule differences?",
-  "acceptedAnswer":{"@type":"Answer","text":"Often similar risk limits apply. Some firms add payout thresholds or time minimums—read specifics."}
-}]{% endblock %}
+{% block faq_items %}[
+  {
+    "@type": "Question",
+    "name": "Is skipping the evaluation worth it?",
+    "acceptedAnswer": {
+      "@type": "Answer",
+      "text": "It\u2019s worth it if you\u2019re confident and experienced, but beginners should complete evaluations first."
+    }
+  },
+  {
+    "@type": "Question",
+    "name": "Do all firms offer straight-to-funded options?",
+    "acceptedAnswer": {
+      "@type": "Answer",
+      "text": "No, only certain firms allow traders to skip the evaluation."
+    }
+  }
+]{% endblock %}
 
 {% block guide_content %}
-<div class="guide__section">
-  <div class="guide__card">
-    <h2 class="guide__section-title">Quick comparison</h2>
-    <ul class="guide__bullets">
-      <li><strong>Evaluation:</strong> cheaper, slower to payouts, good for learning rules.</li>
-      <li><strong>Straight-to-sim:</strong> faster, higher upfront cost, still rule-bound.</li>
-    </ul>
+  <div class="guide__section animation-ready fade-in">
+    <div class="guide__card">
+      <h2 class="guide__section-title">Straight-to-Funded Accounts</h2>
+      <ul class="guide__bullets">
+        <li>Some prop firms offer direct funded accounts without evaluation.</li>
+        <li>These usually cost more but save time.</li>
+      </ul>
+    </div>
   </div>
+  <div class="guide__section animation-ready fade-in">
+    <div class="guide__card">
+      <h2 class="guide__section-title">Pros:</h2>
+      <ol class="guide__steps">
+        <li>Skip the test and start trading immediately.</li>
+        <li>Save time if you already have proven strategies.</li>
+      </ol>
+    </div>
+  </div>
+  <div class="guide__section animation-ready fade-in">
+    <div class="guide__card">
+      <h2 class="guide__section-title">Cons:</h2>
+      <ol class="guide__steps">
+        <li>Higher upfront cost.</li>
+        <li>No practice phase — mistakes cost more.</li>
+      </ol>
+    </div>
+  </div>
+{% endblock %}
+
+
+{% block guide_faq %}
+<div class="guide__faq-section guide__faq-section--spacious">
+  <h2 class="guide__section-title">Common questions</h2>
+  <details class="guide__faq" role="group">
+    <summary class="guide__faq__summary">
+      <span class="h6 mb-0 d-inline-block">Is skipping the evaluation worth it?</span>
+    </summary>
+    <div class="guide__faq__content">
+      Only if you’re confident and experienced. Beginners usually benefit from evaluations first.
+    </div>
+  </details>
+  <details class="guide__faq" role="group">
+    <summary class="guide__faq__summary">
+      <span class="h6 mb-0 d-inline-block">Do all firms offer straight-to-funded options?</span>
+    </summary>
+    <div class="guide__faq__content">
+      No, only select firms provide this option.
+    </div>
+  </details>
 </div>
 {% endblock %}
 

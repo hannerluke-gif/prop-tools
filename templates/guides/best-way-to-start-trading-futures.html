@@ -1,31 +1,64 @@
 {% extends "guides/guide_base.html" %}
 
 {% block meta_desc %}{{ meta_desc }}{% endblock %}
-{% block guide_title %}Best Way to Start Trading Futures{% endblock %}
+{% block guide_title %}Best Way to Start Trading Futures — Step-by-Step for Beginners{% endblock %}
 {% block guide_subtitle %}
-A practical, low-risk path: learn basics, practice in sim, pick rules you can follow, then scale gradually.
+Learn how to safely begin trading futures with small contracts and clear goals.
 {% endblock %}
 
-{% block faq_items %}[{
-  "@type":"Question","name":"Do I need a lot of money to start?",
-  "acceptedAnswer":{"@type":"Answer","text":"No. Many begin with micro contracts and small margins, or use prop evaluations with defined risk."}
-},{
-  "@type":"Question","name":"Should I start with a strategy?",
-  "acceptedAnswer":{"@type":"Answer","text":"Yes. Even a simple, rules-based plan with stops and targets beats improvising. Practice it in sim before funding."}
-}]{% endblock %}
+{% block faq_items %}[
+  {
+    "@type": "Question",
+    "name": "What\u2019s the smallest futures contract I can trade?",
+    "acceptedAnswer": {
+      "@type": "Answer",
+      "text": "Micro contracts like MNQ and MES allow beginners to trade with lower cost and smaller size."
+    }
+  },
+  {
+    "@type": "Question",
+    "name": "Should I use a prop firm right away?",
+    "acceptedAnswer": {
+      "@type": "Answer",
+      "text": "Yes, but only after practice. Prop firms reduce personal risk, but evaluations still require discipline."
+    }
+  }
+]{% endblock %}
 
 {% block guide_content %}
-<div class="guide__section">
-  <div class="guide__card">
-    <h2 class="guide__section-title">Step-by-step</h2>
-    <ol class="guide__steps">
-      <li>Learn futures basics (margin, leverage, drawdown).</li>
-      <li>Practice in a <a href="/guides/what-is-a-sim-account" class="text-link" data-guide-id="{{ '/guides/what-is-a-sim-account' | guide_id }}">sim account</a>.</li>
-      <li>Choose account path: <a href="/guides/what-is-an-evaluation" class="text-link" data-guide-id="{{ '/guides/what-is-an-evaluation' | guide_id }}">evaluation</a> or brokerage.</li>
-      <li>Trade micro size with strict risk (R-multiple targets).</li>
-      <li>Track results and iterate before scaling.</li>
-    </ol>
+  <div class="guide__section animation-ready fade-in">
+    <div class="guide__card">
+      <h2 class="guide__section-title">How to Start Trading Futures</h2>
+      <ol class="guide__steps">
+        <li>Begin with micro contracts (e.g., MNQ, MES) to reduce risk.</li>
+        <li>Learn risk management basics: stop losses, position sizing, daily limits.</li>
+        <li>Practice on a sim account before trading funded or personal capital.</li>
+        <li>Consider starting with a prop firm evaluation to access more buying power.</li>
+      </ol>
+    </div>
   </div>
+{% endblock %}
+
+
+{% block guide_faq %}
+<div class="guide__faq-section guide__faq-section--spacious">
+  <h2 class="guide__section-title">Common questions</h2>
+  <details class="guide__faq" role="group">
+    <summary class="guide__faq__summary">
+      <span class="h6 mb-0 d-inline-block">What’s the smallest futures contract I can trade?</span>
+    </summary>
+    <div class="guide__faq__content">
+      Micro contracts such as MNQ and MES are the smallest and most popular for beginners.
+    </div>
+  </details>
+  <details class="guide__faq" role="group">
+    <summary class="guide__faq__summary">
+      <span class="h6 mb-0 d-inline-block">Should I use a prop firm right away?</span>
+    </summary>
+    <div class="guide__faq__content">
+      Many beginners use prop firms early to reduce personal financial risk, but you should practice first.
+    </div>
+  </details>
 </div>
 {% endblock %}
 

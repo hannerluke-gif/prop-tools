@@ -1,29 +1,72 @@
 {% extends "guides/guide_base.html" %}
 
 {% block meta_desc %}{{ meta_desc }}{% endblock %}
-{% block guide_title %}What is a Sim Account?{% endblock %}
+{% block guide_title %}What is a Sim Account? (Practice Trading Without Risk){% endblock %}
 {% block guide_subtitle %}
-A simulated account mirrors live trading without real capital. It’s where you learn rules and test a strategy safely.
+A simulated account lets you practice trading with virtual money before risking real capital.
 {% endblock %}
 
-{% block faq_items %}[{
-  "@type":"Question","name":"Are fills realistic?",
-  "acceptedAnswer":{"@type":"Answer","text":"They approximate market behavior but won’t match real slippage/liquidity perfectly. Use sim to validate rules and process first."}
-},{
-  "@type":"Question","name":"How long should I stay in sim?",
-  "acceptedAnswer":{"@type":"Answer","text":"Until you can follow your plan and show stable results across market conditions—often weeks to months."}
-}]{% endblock %}
+{% block faq_items %}[
+  {
+    "@type": "Question",
+    "name": "Do sim accounts feel like real trading?",
+    "acceptedAnswer": {
+      "@type": "Answer",
+      "text": "Yes, market conditions are live, but emotions differ because no real money is at risk."
+    }
+  },
+  {
+    "@type": "Question",
+    "name": "Can I pass a prop firm evaluation using only a sim account?",
+    "acceptedAnswer": {
+      "@type": "Answer",
+      "text": "No, evaluations must be completed on firm-provided accounts under their rules."
+    }
+  }
+]{% endblock %}
 
 {% block guide_content %}
-<div class="guide__section">
-  <div class="guide__card">
-    <h2 class="guide__section-title">Why sim matters</h2>
-    <ul class="guide__bullets">
-      <li>Build execution discipline</li>
-      <li>Practice risk rules without losses</li>
-      <li>Collect stats to choose account size</li>
-    </ul>
+  <div class="guide__section animation-ready fade-in">
+    <div class="guide__card">
+      <h2 class="guide__section-title">What is a Sim Account?</h2>
+      <ul class="guide__bullets">
+        <li>A simulated (sim) account mirrors live markets but uses virtual money.</li>
+        <li>It allows traders to practice strategies without financial risk.</li>
+      </ul>
+    </div>
   </div>
+  <div class="guide__section animation-ready fade-in">
+    <div class="guide__card">
+      <h2 class="guide__section-title">Why Use a Sim Account?</h2>
+      <ol class="guide__steps">
+        <li>Build confidence without losing money.</li>
+        <li>Learn order entry, risk controls, and platform navigation.</li>
+        <li>Test new strategies in real-time market conditions.</li>
+      </ol>
+    </div>
+  </div>
+{% endblock %}
+
+
+{% block guide_faq %}
+<div class="guide__faq-section guide__faq-section--spacious">
+  <h2 class="guide__section-title">Common questions</h2>
+  <details class="guide__faq" role="group">
+    <summary class="guide__faq__summary">
+      <span class="h6 mb-0 d-inline-block">Do sim accounts feel like real trading?</span>
+    </summary>
+    <div class="guide__faq__content">
+      Yes, the data is live, but emotions are different since no money is on the line.
+    </div>
+  </details>
+  <details class="guide__faq" role="group">
+    <summary class="guide__faq__summary">
+      <span class="h6 mb-0 d-inline-block">Can I pass a prop firm evaluation using only a sim account?</span>
+    </summary>
+    <div class="guide__faq__content">
+      No. Prop firms require you to trade on their evaluation accounts, which are simulated but tied to rules and funding pathways.
+    </div>
+  </details>
 </div>
 {% endblock %}
 

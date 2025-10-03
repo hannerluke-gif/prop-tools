@@ -73,6 +73,54 @@ def parse_text_file(text_path):
     return sections
 
 
+def parse_faq_content(faq_text):
+    """Parse FAQ section text into structured Q&A pairs."""
+    faq_items = []
+    lines = faq_text.split('\n')
+    
+    # Skip the "Common questions" heading
+    lines = [line for line in lines if line.strip() and line.strip().lower() != 'common questions']
+    
+    current_q = None
+    current_a = []
+    
+    for line in lines:
+        line = line.strip()
+        if not line:
+            # Empty line might separate Q&A pairs
+            if current_q and current_a:
+                faq_items.append({
+                    'question': current_q,
+                    'answer': ' '.join(current_a)
+                })
+                current_q = None
+                current_a = []
+            continue
+        
+        # Check if this looks like a question (ends with ?)
+        if line.endswith('?'):
+            # Save previous Q&A if exists
+            if current_q and current_a:
+                faq_items.append({
+                    'question': current_q,
+                    'answer': ' '.join(current_a)
+                })
+            current_q = line
+            current_a = []
+        else:
+            # This is part of the answer
+            current_a.append(line)
+    
+    # Don't forget the last Q&A pair
+    if current_q and current_a:
+        faq_items.append({
+            'question': current_q,
+            'answer': ' '.join(current_a)
+        })
+    
+    return faq_items
+
+
 def parse_main_content(text):
     """Parse main content text into HTML structure."""
     # Split by section headers (lines that look like headings)
@@ -171,6 +219,26 @@ def generate_main_content_html(sections):
     return '\n'.join(html_parts)
 
 
+def generate_faq_html(faq_items):
+    """Generate HTML for FAQ section."""
+    html_parts = []
+    html_parts.append('<div class="guide__faq-section guide__faq-section--spacious">')
+    html_parts.append('  <h2 class="guide__section-title">Common questions</h2>')
+    
+    for item in faq_items:
+        html_parts.append('  <details class="guide__faq" role="group">')
+        html_parts.append('    <summary class="guide__faq__summary">')
+        html_parts.append(f'      <span class="h6 mb-0 d-inline-block">{item["question"]}</span>')
+        html_parts.append('    </summary>')
+        html_parts.append('    <div class="guide__faq__content">')
+        html_parts.append(f'      {item["answer"]}')
+        html_parts.append('    </div>')
+        html_parts.append('  </details>')
+    
+    html_parts.append('</div>')
+    return '\n'.join(html_parts)
+
+
 def update_guide_html(guide_path, sections):
     """Update guide HTML template with new content from sections."""
     with open(guide_path, 'r', encoding='utf-8') as f:
@@ -205,6 +273,43 @@ def update_guide_html(guide_path, sections):
             flags=re.DOTALL
         )
     
+    # Update FAQ content (visual FAQ section)
+    if 'faq' in sections:
+        faq_items = parse_faq_content(sections['faq'])
+        if faq_items:
+            new_faq_html = generate_faq_html(faq_items)
+            
+            # Check if guide_faq block exists
+            if re.search(r'{% block guide_faq %}', html_content):
+                # Update existing block
+                html_content = re.sub(
+                    r'{% block guide_faq %}.*?{% endblock %}',
+                    lambda m: f'{{% block guide_faq %}}\n{new_faq_html}\n{{% endblock %}}',
+                    html_content,
+                    flags=re.DOTALL
+                )
+            else:
+                # Insert new block before next_links or at the end of the file
+                # Find a good insertion point - after guide_content and before next_links
+                insert_pattern = r'({% endblock %}\s*)({% block next_links %})'
+                if re.search(insert_pattern, html_content):
+                    html_content = re.sub(
+                        insert_pattern,
+                        rf'\1\n{{% block guide_faq %}}\n{new_faq_html}\n{{% endblock %}}\n\n\2',
+                        html_content
+                    )
+                else:
+                    # Try before the final endblock or end of file
+                    # Insert before {% block next_links %}
+                    next_links_match = re.search(r'{% block next_links %}', html_content)
+                    if next_links_match:
+                        pos = next_links_match.start()
+                        html_content = (
+                            html_content[:pos] +
+                            f'{{% block guide_faq %}}\n{new_faq_html}\n{{% endblock %}}\n\n' +
+                            html_content[pos:]
+                        )
+    
     # Update structured FAQ (Schema.org)
     if 'structured_faq' in sections and sections['structured_faq']:
         import json
@@ -225,9 +330,10 @@ def update_guide_html(guide_path, sections):
         # Remove outer array brackets for the template format
         faq_json = faq_json[1:-1]  # Remove [ and ]
         
+        # Use a lambda to avoid regex interpretation of backslashes in the replacement
         html_content = re.sub(
             r'{% block faq_items %}\[.*?\]{% endblock %}',
-            f'{{% block faq_items %}}[{faq_json}]{{% endblock %}}',
+            lambda m: f'{{% block faq_items %}}[{faq_json}]{{% endblock %}}',
             html_content,
             flags=re.DOTALL
         )

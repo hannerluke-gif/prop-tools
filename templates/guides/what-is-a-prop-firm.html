@@ -2,10 +2,10 @@
 
 {% block meta_desc %}{{ meta_desc }}{% endblock %}
 
-{% block guide_title %}What is a Prop Firm?{% endblock %}
+{% block guide_title %}What is a Prop Firm? (Beginner’s Guide to Trading With Firm Capital){% endblock %}
 
 {% block guide_subtitle %}
-A prop firm gives traders access to company capital. After passing an evaluation, you trade under set risk rules and keep a share of profits (often 80–90%).
+Understand how prop firms let you trade larger capital with limited personal risk.
 {% endblock %}
 
 {% block hero_trust %}
@@ -15,50 +15,43 @@ A prop firm gives traders access to company capital. After passing an evaluation
 </div>
 {% endblock %}
 
-{% block faq_items %}[{
-  "@type": "Question",
-  "name": "What is a prop firm?",
-  "acceptedAnswer": {
-    "@type": "Answer",
-    "text": "A proprietary trading firm (prop firm) lets traders use the firm's capital after passing an evaluation. You keep a share of profits (often 80–90%) while following rules on risk and drawdown."
+{% block faq_items %}[
+  {
+    "@type": "Question",
+    "name": "What is the difference between a prop firm and a broker?",
+    "acceptedAnswer": {
+      "@type": "Answer",
+      "text": "A broker lets you trade with your own money, while a prop firm funds you with firm capital once you meet their requirements."
+    }
+  },
+  {
+    "@type": "Question",
+    "name": "Are prop firms good for beginners?",
+    "acceptedAnswer": {
+      "@type": "Answer",
+      "text": "Yes, prop firms can be good for beginners because they provide access to capital without risking personal savings."
+    }
   }
-},{
-  "@type": "Question",
-  "name": "How do prop firm evaluations work?",
-  "acceptedAnswer": {
-    "@type": "Answer",
-    "text": "You trade a demo account aiming to reach a profit target without breaching max daily or total drawdown. Pass the rules and you're approved for a funded or sim-funded account."
-  }
-},{
-  "@type": "Question",
-  "name": "Is sim-funded different from fully funded?",
-  "acceptedAnswer": {
-    "@type": "Answer",
-    "text": "Sim-funded accounts pay you from the firm when you hit payout thresholds, but orders execute on simulated capital. Fully funded accounts place orders against real firm capital. Each firm's policy differs—always read the rules."
-  }
-}]{% endblock %}
+]{% endblock %}
 
 {% block guide_content %}
   <div class="guide__section animation-ready fade-in">
     <div class="guide__card">
-      <h2 class="guide__section-title">How it works</h2>
-      <ol class="guide__steps">
-        <li>Pick an evaluation account (account size, rules, fees).</li>
-        <li>Trade to reach the profit target without breaking drawdown limits.</li>
-        <li>Pass → receive a funded or sim-funded account with a payout schedule.</li>
-      </ol>
+      <h2 class="guide__section-title">What is a Prop Firm?</h2>
+      <ul class="guide__bullets">
+        <li>A proprietary trading firm (prop firm) funds traders to trade financial markets using the firm’s money.</li>
+        <li>Traders share profits with the firm while learning risk management and scaling their skills.</li>
+      </ul>
     </div>
   </div>
-
   <div class="guide__section animation-ready fade-in">
     <div class="guide__card">
-      <h2 class="guide__section-title">Key terms you'll see</h2>
-      <ul class="guide__bullets">
-        <li><strong>Evaluation:</strong> A rules-based test in a demo environment.</li>
-        <li><strong>Drawdown:</strong> Max loss allowed (daily and/or trailing).</li>
-        <li><strong>Sim-funded:</strong> Payout from firm; trades execute on simulated capital.</li>
-        <li><strong>Fully funded:</strong> Trades are placed against real firm capital.</li>
-      </ul>
+      <h2 class="guide__section-title">Why Prop Firms Exist</h2>
+      <ol class="guide__steps">
+        <li>Firms profit by funding skilled traders who can generate consistent returns.</li>
+        <li>Traders get access to larger accounts without risking their personal savings.</li>
+        <li>Evaluations and funded accounts create a low-barrier entry point for new traders.</li>
+      </ol>
     </div>
   </div>
 {% endblock %}
@@ -68,26 +61,18 @@ A prop firm gives traders access to company capital. After passing an evaluation
   <h2 class="guide__section-title">Common questions</h2>
   <details class="guide__faq" role="group">
     <summary class="guide__faq__summary">
-      <span class="h6 mb-0 d-inline-block">What's the difference between evaluation and straight-to-sim funded? </span>
+      <span class="h6 mb-0 d-inline-block">What’s the difference between a prop firm and a broker?</span>
     </summary>
     <div class="guide__faq__content">
-      Straight-to-sim funded skips the evaluation target but still enforces rules and payout thresholds. It's faster to payouts but often costs more up front.
-      <div class="mt-3">
-        <a href="/compare?filter=straight-to-funded" class="btn btn-sm btn-tertiary">Straight to Funded</a>
-      </div>
+      A broker provides you access to markets with your own money. A prop firm funds you with their capital, usually after you pass an evaluation.
     </div>
   </details>
-  
   <details class="guide__faq" role="group">
     <summary class="guide__faq__summary">
-      <span class="h6 mb-0 d-inline-block">Personal account vs. prop account—where should I start?</span>
+      <span class="h6 mb-0 d-inline-block">Are prop firms good for beginners?</span>
     </summary>
     <div class="guide__faq__content">
-      Many beginners start with prop evaluations to practice rule-based risk at lower initial capital. If you already have a tested edge and risk plan, a personal futures account (brokerage account) offers full control but full risk.
-      <div class="mt-3 d-flex flex-wrap gap-3">
-        <a href="/compare?filter=prop" class="btn btn-sm btn-tertiary">Evaluation Accounts</a>
-        <a href="/compare?filter=personal" class="btn btn-sm btn-secondary">Brokerage Accounts</a>
-      </div>
+      Yes, they reduce risk compared to using personal capital, though rules and evaluations can be challenging.
     </div>
   </details>
 </div>

@@ -1,28 +1,80 @@
 {% extends "guides/guide_base.html" %}
 
 {% block meta_desc %}{{ meta_desc }}{% endblock %}
-{% block guide_title %}Personal Account vs Prop Account — Which Should I Start With?{% endblock %}
+{% block guide_title %}Personal Account vs Prop Account — Which Should You Start With?{% endblock %}
 {% block guide_subtitle %}
-Personal accounts offer full control and full risk. Prop accounts add rules and splits but reduce initial capital needs.
+Compare personal trading accounts to prop firm accounts to decide which path is best.
 {% endblock %}
 
-{% block faq_items %}[{
-  "@type":"Question","name":"Which is cheaper to start?",
-  "acceptedAnswer":{"@type":"Answer","text":"Upfront, prop can be cheaper due to smaller fees than cash funding a brokerage account—though ongoing subscriptions and splits apply."}
-},{
-  "@type":"Question","name":"Which is better for learning?",
-  "acceptedAnswer":{"@type":"Answer","text":"Many beginners learn discipline faster under prop rules, then transition or add a personal account later."}
-}]{% endblock %}
+{% block faq_items %}[
+  {
+    "@type": "Question",
+    "name": "Should I start with personal money or a prop account?",
+    "acceptedAnswer": {
+      "@type": "Answer",
+      "text": "Beginners usually start with prop accounts, while experienced traders may use personal funds."
+    }
+  },
+  {
+    "@type": "Question",
+    "name": "Can I trade both at the same time?",
+    "acceptedAnswer": {
+      "@type": "Answer",
+      "text": "Yes, many traders trade both personal and prop accounts."
+    }
+  }
+]{% endblock %}
 
 {% block guide_content %}
-<div class="guide__section">
-  <div class="guide__card">
-    <h2 class="guide__section-title">Side-by-side</h2>
-    <ul class="guide__bullets">
-      <li><strong>Personal:</strong> Full control, no splits, higher capital & emotional risk.</li>
-      <li><strong>Prop:</strong> Lower entry cost, rules & splits, structured discipline.</li>
-    </ul>
+  <div class="guide__section animation-ready fade-in">
+    <div class="guide__card">
+      <h2 class="guide__section-title">Personal Accounts</h2>
+      <ul class="guide__bullets">
+        <li>Funded with your own money.</li>
+        <li>Full freedom but higher risk.</li>
+      </ul>
+    </div>
   </div>
+  <div class="guide__section animation-ready fade-in">
+    <div class="guide__card">
+      <h2 class="guide__section-title">Prop Accounts</h2>
+      <ul class="guide__bullets">
+        <li>Funded by a firm with set rules.</li>
+        <li>Lower personal risk but rule restrictions.</li>
+      </ul>
+    </div>
+  </div>
+  <div class="guide__section animation-ready fade-in">
+    <div class="guide__card">
+      <h2 class="guide__section-title">Which is Better?</h2>
+      <ol class="guide__steps">
+        <li>Beginners often prefer prop accounts for reduced financial risk.</li>
+        <li>Experienced traders may use both depending on goals.</li>
+      </ol>
+    </div>
+  </div>
+{% endblock %}
+
+
+{% block guide_faq %}
+<div class="guide__faq-section guide__faq-section--spacious">
+  <h2 class="guide__section-title">Common questions</h2>
+  <details class="guide__faq" role="group">
+    <summary class="guide__faq__summary">
+      <span class="h6 mb-0 d-inline-block">Should I start with personal money or a prop account?</span>
+    </summary>
+    <div class="guide__faq__content">
+      If you want to reduce risk, a prop account is better. If you want full control, use personal capital.
+    </div>
+  </details>
+  <details class="guide__faq" role="group">
+    <summary class="guide__faq__summary">
+      <span class="h6 mb-0 d-inline-block">Can I trade both at the same time?</span>
+    </summary>
+    <div class="guide__faq__content">
+      Yes, many traders split between personal and prop accounts.
+    </div>
+  </details>
 </div>
 {% endblock %}
 

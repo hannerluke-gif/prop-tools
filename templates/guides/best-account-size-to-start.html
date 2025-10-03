@@ -1,30 +1,63 @@
 {% extends "guides/guide_base.html" %}
 
 {% block meta_desc %}{{ meta_desc }}{% endblock %}
-{% block guide_title %}What Account Size Should I Start With?{% endblock %}
+{% block guide_title %}What Account Size Should I Start With? (Beginner’s Guide){% endblock %}
 {% block guide_subtitle %}
-Choose the smallest size that comfortably fits your stop size, typical drawdown, and trade frequency—then scale on results.
+Learn how to choose the right prop firm account size based on your goals and risk tolerance.
 {% endblock %}
 
-{% block faq_items %}[{
-  "@type":"Question","name":"How do I match size to my stops?",
-  "acceptedAnswer":{"@type":"Answer","text":"Estimate your average stop (ticks × tick value) and max concurrent positions. Ensure daily limit and trailing DD can withstand expected variance."}
-},{
-  "@type":"Question","name":"Start small or big?",
-  "acceptedAnswer":{"@type":"Answer","text":"Start small. Prove consistency, then scale. Oversizing early leads to rule breaches more than faster growth."}
-}]{% endblock %}
+{% block faq_items %}[
+  {
+    "@type": "Question",
+    "name": "Should I start with a 25k or 100k account?",
+    "acceptedAnswer": {
+      "@type": "Answer",
+      "text": "Beginners should start smaller. Move to larger accounts after building consistency."
+    }
+  },
+  {
+    "@type": "Question",
+    "name": "Does account size affect payout speed?",
+    "acceptedAnswer": {
+      "@type": "Answer",
+      "text": "No, payout speed is set by the firm\u2019s payout process, not account size."
+    }
+  }
+]{% endblock %}
 
 {% block guide_content %}
-<div class="guide__section">
-  <div class="guide__card">
-    <h2 class="guide__section-title">Sizing checklist</h2>
-    <ul class="guide__bullets">
-      <li>Typical stop size (ticks) × tick value</li>
-      <li>Max simultaneous trades/contracts</li>
-      <li>Daily loss limit cushion (≥ 2–3× avg risk)</li>
-      <li>Trailing vs static drawdown behavior</li>
-    </ul>
+  <div class="guide__section animation-ready fade-in">
+    <div class="guide__card">
+      <h2 class="guide__section-title">How to Pick Account Size</h2>
+      <ul class="guide__bullets">
+        <li>Smaller accounts ($25k–$50k) are lower cost and easier for beginners.</li>
+        <li>Larger accounts ($100k–$150k) provide more buying power but stricter rules.</li>
+        <li>Match account size to your comfort with drawdowns and daily limits.</li>
+      </ul>
+    </div>
   </div>
+{% endblock %}
+
+
+{% block guide_faq %}
+<div class="guide__faq-section guide__faq-section--spacious">
+  <h2 class="guide__section-title">Common questions</h2>
+  <details class="guide__faq" role="group">
+    <summary class="guide__faq__summary">
+      <span class="h6 mb-0 d-inline-block">Should I start with a 25k or 100k account?</span>
+    </summary>
+    <div class="guide__faq__content">
+      If you’re new, start smaller to learn the rules. Larger accounts are best once you’re consistent.
+    </div>
+  </details>
+  <details class="guide__faq" role="group">
+    <summary class="guide__faq__summary">
+      <span class="h6 mb-0 d-inline-block">Does account size affect payout speed?</span>
+    </summary>
+    <div class="guide__faq__content">
+      No, payout speed depends on the firm, not account size.
+    </div>
+  </details>
 </div>
 {% endblock %}
 
