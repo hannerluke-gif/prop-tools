@@ -1,0 +1,25 @@
+================================================================================
+GUIDE: should-i-skip-evaluation
+================================================================================
+
+TITLE:
+Should I Skip the Evaluation and Go Straight to Sim-Funded?
+
+SUBTITLE:
+Skipping saves time but costs more. It suits traders with a tested plan who value speed over price.
+
+MAIN CONTENT:
+--------------------------------------------------------------------------------
+Quick comparison
+ 
+ Evaluation: cheaper, slower to payouts, good for learning rules.
+ Straight-to-sim: faster, higher upfront cost, still rule-bound.
+
+STRUCTURED FAQ (Schema.org):
+--------------------------------------------------------------------------------
+Q: Who should skip the eval?
+A: Traders with verified stats, rule discipline, and a need to start payouts sooner. New traders usually benefit from an evaluation first.
+
+Q: Any rule differences?
+A: Often similar risk limits apply. Some firms add payout thresholds or time minimums—read specifics.
+

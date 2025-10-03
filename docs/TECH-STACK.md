@@ -22,6 +22,10 @@ This document provides a comprehensive overview of all technologies, tools, and 
 - **Architecture:** BEM (Block Element Modifier) component system
 - **JavaScript:** Vanilla ES6+ with modular components
 - **Build Process:** Sass compilation via npm scripts and VS Code tasks
+- **UI Features:** 
+  - Dynamic footer reveal with scroll-based animations
+  - Responsive component system with mobile-first design
+  - Performance-optimized event handling with `requestAnimationFrame`
 
 ### **Data Management**
 - **Configuration:** JSON-based data files (`firms.json`, `promos.json`)
@@ -97,6 +101,32 @@ This document provides a comprehensive overview of all technologies, tools, and 
   "Flask Dev": "python app.py",
   "Dev: Flask + Sass": "Parallel execution of both"
 }
+```
+
+---
+
+## 🎨 Component Architecture
+
+### **Footer System**
+- **Implementation:** Fixed-position footer with scroll-based reveal animation
+- **CSS:** Located in `static/scss/layout/_footer.scss` with BEM structure
+- **JavaScript:** Modular component in `static/js/components/footer.js`
+- **Features:**
+  - Dynamic height calculation and responsive spacing
+  - Performance-optimized scroll handling with `requestAnimationFrame`
+  - Graceful degradation when JavaScript is disabled
+  - Font-loading aware height recalculation
+- **Animation:** Smooth reveal using `cubic-bezier(0.4, 0, 0.2, 1)` timing
+
+### **Component Loading Pattern**
+```javascript
+// main.js - Centralized component initialization
+import { initFooter } from './components/footer.js';
+
+const components = [
+  { name: 'Footer', init: initFooter }
+  // ... other components
+];
 ```
 
 ---

@@ -1,0 +1,27 @@
+================================================================================
+GUIDE: best-account-size-to-start
+================================================================================
+
+TITLE:
+What Account Size Should I Start With?
+
+SUBTITLE:
+Choose the smallest size that comfortably fits your stop size, typical drawdown, and trade frequency—then scale on results.
+
+MAIN CONTENT:
+--------------------------------------------------------------------------------
+Sizing checklist
+ 
+ Typical stop size (ticks) × tick value
+ Max simultaneous trades/contracts
+ Daily loss limit cushion (≥ 2–3× avg risk)
+ Trailing vs static drawdown behavior
+
+STRUCTURED FAQ (Schema.org):
+--------------------------------------------------------------------------------
+Q: How do I match size to my stops?
+A: Estimate your average stop (ticks × tick value) and max concurrent positions. Ensure daily limit and trailing DD can withstand expected variance.
+
+Q: Start small or big?
+A: Start small. Prove consistency, then scale. Oversizing early leads to rule breaches more than faster growth.
+

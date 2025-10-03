@@ -7,29 +7,27 @@ export function initFooter() {
   const main = document.querySelector('main');
 
   if (!footer || !main) {
-    console.warn('Footer or main element not found');
     return;
   }
 
   let footerHeight = 0;
   let isScrolling = false;
+  let isRevealed = false; // Track current reveal state to prevent flicker on mobile
 
   /**
    * Calculate footer height and set initial positioning
    */
   function updateFooterSpacing() {
-    // Force a reflow to get accurate height measurement
-    footer.style.bottom = '0';
+    // Measure height without forcing a visual jump
     const newHeight = footer.offsetHeight;
     
     if (newHeight !== footerHeight) {
       footerHeight = newHeight;
       main.style.marginBottom = `${footerHeight}px`;
-      console.log(`Footer height updated: ${footerHeight}px`);
     }
     
-    // Initially hide the footer
-    footer.style.bottom = `-${footerHeight}px`;
+    // Respect current reveal state (critical on mobile where resize fires during scroll)
+    footer.style.bottom = isRevealed ? '0' : `-${footerHeight}px`;
   }
 
   /**
@@ -49,19 +47,25 @@ export function initFooter() {
       
       // Reveal footer when within footer height of bottom, or if scrolled past threshold
       const shouldReveal = distanceFromBottom <= footerHeight || scrollY > 100;
-      
-      footer.style.bottom = shouldReveal ? '0' : `-${footerHeight}px`;
+
+      if (shouldReveal !== isRevealed) {
+        isRevealed = shouldReveal;
+        footer.style.bottom = isRevealed ? '0' : `-${footerHeight}px`;
+      }
       isScrolling = false;
     });
   }
 
   // Initial setup
   updateFooterSpacing();
+  // Initialize reveal state based on initial scroll position
+  handleScroll();
 
   // Optimized event listeners
   let resizeTimeout;
   window.addEventListener('resize', () => {
     clearTimeout(resizeTimeout);
+    // Debounced resize: recompute height and re-apply current reveal state
     resizeTimeout = setTimeout(updateFooterSpacing, 150);
   }, { passive: true });
 

@@ -1,0 +1,26 @@
+================================================================================
+GUIDE: what-is-a-sim-account
+================================================================================
+
+TITLE:
+What is a Sim Account?
+
+SUBTITLE:
+A simulated account mirrors live trading without real capital. It’s where you learn rules and test a strategy safely.
+
+MAIN CONTENT:
+--------------------------------------------------------------------------------
+Why sim matters
+ 
+ Build execution discipline
+ Practice risk rules without losses
+ Collect stats to choose account size
+
+STRUCTURED FAQ (Schema.org):
+--------------------------------------------------------------------------------
+Q: Are fills realistic?
+A: They approximate market behavior but won’t match real slippage/liquidity perfectly. Use sim to validate rules and process first.
+
+Q: How long should I stay in sim?
+A: Until you can follow your plan and show stable results across market conditions—often weeks to months.
+

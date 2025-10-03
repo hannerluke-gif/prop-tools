@@ -1,0 +1,43 @@
+================================================================================
+GUIDE: futures-trading-products
+================================================================================
+
+TITLE:
+Futures Trading Products
+
+SUBTITLE:
+Most prop firms allow traders to access a wide range of CME Group products (CME, CBOT, NYMEX, COMEX). Some also support Eurex and crypto futures.
+
+MAIN CONTENT:
+--------------------------------------------------------------------------------
+This page is a reference guide to common futures contracts you'll find across firms.
+ Always check the specific firm's rules before trading — permitted products can change.
+
+{% for category in products['categories'] %}
+
+ {% for item in category['items'] %}
+ 
+ : 
+ {% for symbol in item['symbols'] -%}
+ {% if not loop.last %}, {% endif %}
+ {%- endfor %}
+ {% if item['exchange'] and item['exchange'] != "CME" %} (){% endif %}
+ 
+ {% endfor %}
+
+{% endfor %}
+
+{% if products['disclaimer'] %}
+
+ ⚠️ Disclaimer: 
+
+{% endif %}
+
+STRUCTURED FAQ (Schema.org):
+--------------------------------------------------------------------------------
+Q: Can I trade crypto futures with prop firm capital?
+A: Some prop firms allow CME crypto futures like Micro Bitcoin (MBT) and Micro Ether (MET), but availability varies. Always check with your specific firm.
+
+Q: What are the most popular futures for beginners?
+A: Most beginners start with equity index futures like ES/MES (S&P 500) or NQ/MNQ (Nasdaq) due to their liquidity and smaller contract sizes with micros.
+

@@ -1,7 +1,6 @@
 # Stdlib
 import os, secrets, json
 import datetime
-from datetime import timedelta, timezone
 
 # Third-party
 from flask import Flask, render_template, request, redirect, g, Response, url_for

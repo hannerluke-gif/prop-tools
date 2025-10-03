@@ -5,7 +5,7 @@
 # ensuring consistency across the analytics system, routing, and templates.
 
 # Default update date for all guides (can be overridden per-guide)
-DEFAULT_UPDATED = "Sept 2025"
+DEFAULT_UPDATED = "Oct 2025"
 
 GUIDES_CATALOG = {
     "what-is-a-prop-firm": {

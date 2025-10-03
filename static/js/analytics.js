@@ -7,7 +7,6 @@
 
 const ANALYTICS_CONFIG = {
   GA_ID: 'G-ZEBP98J6ZQ',
-  DEBUG_MODE: false, // Set to true for development, false for production
   RATE_LIMIT: {
     WINDOW_MS: 60 * 1000, // 1 minute
     MAX_CLICKS: 3,
@@ -39,9 +38,7 @@ function gtag() {
 
 // Set up GA4
 gtag('js', new Date());
-gtag('config', ANALYTICS_CONFIG.GA_ID, {
-  'debug_mode': ANALYTICS_CONFIG.DEBUG_MODE
-});
+gtag('config', ANALYTICS_CONFIG.GA_ID);
 
 // Export gtag for use in other modules
 window.gtag = gtag;
@@ -209,11 +206,6 @@ function initGuideTracking() {
       const clicks = JSON.parse(localStorage.getItem(ANALYTICS_CONFIG.STORAGE_KEYS.GUIDE_CLICKS) || '{}');
       clicks[id] = (clicks[id] || 0) + 1;
       localStorage.setItem(ANALYTICS_CONFIG.STORAGE_KEYS.GUIDE_CLICKS, JSON.stringify(clicks));
-      
-      // Optional: Log for debugging (only in debug mode)
-      if (ANALYTICS_CONFIG.DEBUG_MODE) {
-        console.log(`📊 Guide click: ${id} (${clicks[id]} total)`);
-      }
     } catch (error) {
       // Handle localStorage errors (private browsing, etc.)
       reportAnalyticsError(error, 'guide_tracking_localStorage');
@@ -237,9 +229,6 @@ function initGuideTracking() {
       if (navigator.sendBeacon) {
         const blob = new Blob([payload], { type: 'application/json' });
         navigator.sendBeacon(endpoint, blob);
-        if (ANALYTICS_CONFIG.DEBUG_MODE) {
-          console.log(`📊 Analytics beacon sent: ${id} (${eventType})`);
-        }
       } else {
         fetch(endpoint, {
           method: 'POST',
@@ -249,12 +238,7 @@ function initGuideTracking() {
         }).catch((error) => {
           reportAnalyticsError(error, 'analytics_fetch');
         });
-        if (ANALYTICS_CONFIG.DEBUG_MODE) {
-          console.log(`📊 Analytics fetch sent: ${id} (${eventType})`);
-        }
       }
-    } else if (ANALYTICS_CONFIG.DEBUG_MODE) {
-      console.log(`📊 Analytics rate limited for: ${id}`);
     }
 
     // Optional: also fire GA4
@@ -264,9 +248,6 @@ function initGuideTracking() {
         event_label: id,
         value: 1
       });
-      if (ANALYTICS_CONFIG.DEBUG_MODE) {
-        console.log(`📈 GA4 event sent: ${eventType} for ${id}`);
-      }
     }
 
     // Don't prevent navigation - let the click go through
@@ -322,10 +303,6 @@ function initPopularityReordering() {
         }
       });
     });
-
-    if (ANALYTICS_CONFIG.DEBUG_MODE) {
-      console.log('📈 Guide lists reordered by local popularity');
-    }
   } catch (error) {
     reportAnalyticsError(error, 'popularity_reordering');
   }
@@ -358,10 +335,6 @@ function initAnalytics() {
   // Initialize tracking and popularity features
   initGuideTracking();
   initPopularityReordering();
-  
-  if (ANALYTICS_CONFIG.DEBUG_MODE) {
-    console.log('📊 Analytics system initialized');
-  }
 }
 
 // Auto-initialize when DOM is ready

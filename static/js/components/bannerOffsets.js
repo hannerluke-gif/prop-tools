@@ -28,11 +28,6 @@ export function initBannerOffsets(root = document.querySelector('.site-banner'))
     // bottom relative to viewport top -> number of pixels the banner occupies
     const offset = Math.max(0, Math.round(rect.bottom));
     banner.style.setProperty('--mobile-menu-top', `${offset}px`);
-    
-    // Debug logging (can be removed in production)
-    if (window.innerWidth < MOBILE_BREAKPOINT) {
-      console.log(`📐 Mobile menu offset set to: ${offset}px (banner bottom: ${rect.bottom})`);
-    }
   }
 
   function onScrollOrResize() {

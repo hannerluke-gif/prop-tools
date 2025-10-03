@@ -10,7 +10,7 @@ The update date appears on individual guide pages only, positioned after the dis
 ```
 Disclosure: Prop Tools partners with select firms...
 
-Last updated: Sept 2025
+Last updated: Oct 2025
 ```
 
 ## How to Update Dates

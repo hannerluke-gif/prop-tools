@@ -1,0 +1,26 @@
+================================================================================
+GUIDE: what-is-straight-to-sim-funded
+================================================================================
+
+TITLE:
+What is a Straight-to-Sim-Funded Account?
+
+SUBTITLE:
+A plan that skips the evaluation phase. You begin in a sim-funded account with payout thresholds and rules from day one.
+
+MAIN CONTENT:
+--------------------------------------------------------------------------------
+When it makes sense
+ 
+ You already trade a tested plan
+ You value speed to payouts over cost
+ You understand and accept the rules
+
+STRUCTURED FAQ (Schema.org):
+--------------------------------------------------------------------------------
+Q: How do payouts work?
+A: You trade simulated capital but can request payouts once you meet thresholds and time requirements defined by the firm.
+
+Q: Any hidden trade-offs?
+A: Usually higher upfront fees and similar (or stricter) rules. Confirm news trading, scaling, and daily loss details.
+

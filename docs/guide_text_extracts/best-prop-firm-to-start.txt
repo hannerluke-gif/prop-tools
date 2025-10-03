@@ -1,0 +1,32 @@
+================================================================================
+GUIDE: best-prop-firm-to-start
+================================================================================
+
+TITLE:
+Best Prop Firm to Start With
+
+SUBTITLE:
+Pick beginner-friendly rules, clear payout terms, and fair pricing. Avoid hidden constraints that conflict with your style.
+
+MAIN CONTENT:
+--------------------------------------------------------------------------------
+What to compare first
+ 
+ Profit target vs max drawdown (risk-adjusted)
+ Trailing vs static drawdown mechanics
+ Daily loss limits and trade time restrictions
+ Payout schedule, splits, and fees
+
+ Compare beginner-friendly firms
+ Side-by-side rules, costs, and current promos.
+ 
+ See Top Picks
+
+STRUCTURED FAQ (Schema.org):
+--------------------------------------------------------------------------------
+Q: What makes a firm beginner-friendly?
+A: Transparent rules, reasonable drawdown, realistic targets, and responsive support. Promotions help, but rules matter most.
+
+Q: How important are discounts?
+A: They reduce cost to try, but should not outweigh rule quality and payout reliability.
+

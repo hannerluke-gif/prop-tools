@@ -31,8 +31,7 @@ export function initHero() {
       dynSheet.insertRule(sig, dynSheet.cssRules.length);
       insertedRules.add(sig);
     } catch (err) {
-      // eslint-disable-next-line no-console
-      console.warn('Failed to insert rule', sig, err);
+      // CSS rule insertion failed, but continue silently
     }
   }
 
@@ -228,8 +227,6 @@ export function initHero() {
         }
       });
     }
-    // debug
-    // console.debug && console.debug('hero:updateActiveSlide', currentSlideIndex);
   }
 
   /**

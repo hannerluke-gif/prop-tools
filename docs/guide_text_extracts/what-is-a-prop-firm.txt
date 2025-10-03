@@ -1,0 +1,57 @@
+================================================================================
+GUIDE: what-is-a-prop-firm
+================================================================================
+
+TITLE:
+What is a Prop Firm?
+
+SUBTITLE:
+A prop firm gives traders access to company capital. After passing an evaluation, you trade under set risk rules and keep a share of profits (often 80–90%).
+
+TRUST BADGE:
+⭐
+ 10+ firms tracked and updated daily
+
+MAIN CONTENT:
+--------------------------------------------------------------------------------
+How it works
+ 
+ Pick an evaluation account (account size, rules, fees).
+ Trade to reach the profit target without breaking drawdown limits.
+ Pass → receive a funded or sim-funded account with a payout schedule.
+
+ Key terms you'll see
+ 
+ Evaluation: A rules-based test in a demo environment.
+ Drawdown: Max loss allowed (daily and/or trailing).
+ Sim-funded: Payout from firm; trades execute on simulated capital.
+ Fully funded: Trades are placed against real firm capital.
+
+FAQ SECTION:
+--------------------------------------------------------------------------------
+Common questions
+
+ What's the difference between evaluation and straight-to-sim funded? 
+
+ Straight-to-sim funded skips the evaluation target but still enforces rules and payout thresholds. It's faster to payouts but often costs more up front.
+ 
+ Straight to Funded
+
+ Personal account vs. prop account—where should I start?
+
+ Many beginners start with prop evaluations to practice rule-based risk at lower initial capital. If you already have a tested edge and risk plan, a personal futures account (brokerage account) offers full control but full risk.
+ 
+ Evaluation Accounts
+ Brokerage Accounts
+
+STRUCTURED FAQ (Schema.org):
+--------------------------------------------------------------------------------
+Q: What is a prop firm?
+A: A proprietary trading firm (prop firm) lets traders use the firm's capital after passing an evaluation. You keep a share of profits (often 80–90%) while following rules on risk and drawdown.
+
+Q: How do prop firm evaluations work?
+A: You trade a demo account aiming to reach a profit target without breaching max daily or total drawdown. Pass the rules and you're approved for a funded or sim-funded account.
+
+Q: Is sim-funded different from fully funded?
+A: Sim-funded accounts pay you from the firm when you hit payout thresholds, but orders execute on simulated capital. Fully funded accounts place orders against real firm capital. Each firm's policy differs—always read the rules.
+

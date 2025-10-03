@@ -1,0 +1,34 @@
+================================================================================
+GUIDE: what-is-futures-trading
+================================================================================
+
+TITLE:
+What is Futures Trading?
+
+SUBTITLE:
+Futures are standardized contracts to buy or sell an asset at a set price on a future date. Traders use them for speculation, hedging, and diversification.
+
+MAIN CONTENT:
+--------------------------------------------------------------------------------
+Quick overview
+ 
+ Standardized: Traded on exchanges (e.g., CME).
+ Leverage: Small margin controls larger notional value.
+ Two-way: Go long or short with equal ease.
+
+ Common futures for new traders
+ 
+ Equity index minis & micros (e.g., ES/MES, NQ/MNQ)
+ Crude oil (CL) and gold (GC)
+ Currency futures (e.g., Euro FX 6E, Japanese Yen 6J)
+ 
+ View All Futures Trading Products
+
+STRUCTURED FAQ (Schema.org):
+--------------------------------------------------------------------------------
+Q: What is a futures contract?
+A: A futures contract obligates buyer and seller to transact an asset at a set price on a future date. Most retail traders close the position before expiration.
+
+Q: How does margin work in futures?
+A: Futures use performance bonds (margin) instead of paying full value. This creates leverage—small price moves can create large gains or losses.
+

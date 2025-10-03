@@ -23,9 +23,7 @@ document.addEventListener('DOMContentLoaded', () => {
   components.forEach(({ name, init }) => {
     try {
       init();
-      console.log(`✅ ${name} initialized successfully`);
     } catch (error) {
-      console.error(`❌ Failed to initialize ${name}:`, error);
       failedComponents.push(name);
       
       // Report to analytics if available
@@ -34,13 +32,6 @@ document.addEventListener('DOMContentLoaded', () => {
       }
     }
   });
-
-  // Log initialization summary
-  if (failedComponents.length === 0) {
-    console.log('🚀 All components initialized successfully');
-  } else {
-    console.warn(`⚠️ ${failedComponents.length} component(s) failed to initialize: ${failedComponents.join(', ')}`);
-  }
   
   // Analytics is now auto-initialized in analytics.js
   // No manual initialization needed here

@@ -1,0 +1,25 @@
+================================================================================
+GUIDE: personal-vs-prop-account
+================================================================================
+
+TITLE:
+Personal Account vs Prop Account — Which Should I Start With?
+
+SUBTITLE:
+Personal accounts offer full control and full risk. Prop accounts add rules and splits but reduce initial capital needs.
+
+MAIN CONTENT:
+--------------------------------------------------------------------------------
+Side-by-side
+ 
+ Personal: Full control, no splits, higher capital & emotional risk.
+ Prop: Lower entry cost, rules & splits, structured discipline.
+
+STRUCTURED FAQ (Schema.org):
+--------------------------------------------------------------------------------
+Q: Which is cheaper to start?
+A: Upfront, prop can be cheaper due to smaller fees than cash funding a brokerage account—though ongoing subscriptions and splits apply.
+
+Q: Which is better for learning?
+A: Many beginners learn discipline faster under prop rules, then transition or add a personal account later.
+

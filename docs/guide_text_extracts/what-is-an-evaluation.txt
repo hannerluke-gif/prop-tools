@@ -1,0 +1,26 @@
+================================================================================
+GUIDE: what-is-an-evaluation
+================================================================================
+
+TITLE:
+What is a Prop Firm Evaluation?
+
+SUBTITLE:
+An evaluation is a rules-based test in a demo account. Hit the profit target without breaking drawdown or time rules to pass.
+
+MAIN CONTENT:
+--------------------------------------------------------------------------------
+Pass checklist
+ 
+ Define trade plan and max daily loss
+ Know your drawdown math (trailing/static)
+ Track adherence every session
+
+STRUCTURED FAQ (Schema.org):
+--------------------------------------------------------------------------------
+Q: Typical rules?
+A: Profit target, trailing or static drawdown, daily loss limits, and sometimes time or news restrictions.
+
+Q: One-phase vs two-phase?
+A: Two-phase splits the target across steps; one-phase is faster but may cost more. Choose what fits your style and budget.
+
