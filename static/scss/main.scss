@@ -58,36 +58,6 @@
 	}
 }
 
-// Page content wrapper for theater curtain footer reveal effect
-.page-content-wrapper {
-	position: relative;
-	z-index: 10; // Above footer
-	background-color: $base-html-bg; // Match body background
-	min-height: 100vh;
-	// Reduced padding for compact footer - ensures smooth footer reveal transition
-	padding-bottom: 60px; // Reduced from 100px to accommodate smaller footer
-	transition: transform 0.3s cubic-bezier(0.4, 0, 0.2, 1);
-	will-change: transform;
-	
-	// Add subtle shadow when lifted
-	&.footer-revealing {
-		box-shadow: 0 -10px 40px rgba(0, 0, 0, 0.5);
-	}
-	
-	// CSP-compliant transform using CSS custom property
-	// Set via JavaScript: element.style.setProperty('--footer-reveal-offset', '100px')
-	&.footer-reveal-active {
-		transform: var(--footer-reveal-offset, translateY(0));
-	}
-	
-	// Override for pages without footer (e.g., dashboard)
-	// Removes extra padding and sets min-height to auto to prevent unnecessary scrolling
-	&--no-footer {
-		min-height: auto;
-		padding-bottom: 0;
-	}
-}
-
 // Mobile browser bottom navigation bar styling
 // Ensures browser chrome matches dark theme with glassmorphism
 .bottom-nav {
@@ -99,3 +69,16 @@
 
 // NOTE: Button tokens ($btn-*) are available in _variables.scss for consistent
 // styling across components. Use these variables to maintain design system consistency.
+
+// Main content area
+// Footer JavaScript will dynamically set margin-bottom based on footer height
+main {
+	position: relative;
+	display: block;
+	z-index: 2;
+	background: $base-html-bg;
+	padding-bottom: 1.5rem;
+	border-radius: 0 0 10px 10px;
+}
+
+

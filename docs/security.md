@@ -212,11 +212,6 @@ element.dataset.position = 'top';
 **Implementation Examples from Codebase:**
 
 ```javascript
-// Footer reveal animation (footerReveal.js)
-// ✅ Uses CSS custom property for dynamic transform
-pageWrapper.style.setProperty('--footer-reveal-offset', `translateY(${translateY}px)`);
-pageWrapper.classList.add('footer-reveal-active');
-
 // Mobile menu scroll lock (hamburgerMenu.js)
 // ✅ Uses class toggle instead of style.overflow
 document.body.classList.add('mobile-menu-open');

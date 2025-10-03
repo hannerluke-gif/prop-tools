@@ -4,7 +4,7 @@ import { initHamburgerMenu } from './components/hamburgerMenu.js';
 import { initHero } from './components/hero.js';
 import { initBannerOffsets } from './components/bannerOffsets.js';
 import { initGuideAnimations } from './components/guideAnimations.js';
-import { initFooterReveal } from './components/footerReveal.js';
+import { initFooter } from './components/footer.js';
 
 document.addEventListener('DOMContentLoaded', () => {
   // Component initialization with error handling
@@ -15,7 +15,7 @@ document.addEventListener('DOMContentLoaded', () => {
     { name: 'BannerOffsets', init: initBannerOffsets },
     { name: 'Hero', init: initHero },
     { name: 'GuideAnimations', init: initGuideAnimations },
-    { name: 'FooterReveal', init: initFooterReveal }
+    { name: 'Footer', init: initFooter }
   ];
 
   const failedComponents = [];

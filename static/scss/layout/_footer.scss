@@ -15,7 +15,6 @@
 
 .site-footer {
   position: fixed;
-  bottom: 0;
   left: 0;
   width: 100%;
   z-index: 1; // Behind page content
@@ -28,6 +27,10 @@
   );
   border-top: 1px solid rgba(255, 107, 154, 0.4);
   backdrop-filter: blur(10px);
+  transition: bottom 0.3s cubic-bezier(0.4, 0, 0.2, 1); // Smooth reveal animation
+  
+  // Initially hidden - JavaScript will set bottom position dynamically
+  // based on calculated footer height
   
   // Upper section: main content, links, descriptions
   &__upper {

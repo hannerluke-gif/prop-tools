@@ -95,13 +95,13 @@
   &.active,
   &:not(.disabled):not(:disabled).active,
   &:not(.disabled):not(:disabled):active {
-    background-color: $btn-primary-hover-bg;
-    border-color: $btn-primary-hover-bg;
-    color: $btn-primary-color;
+    background-color: $btn-primary-hover-bg !important;
+    border-color: $btn-primary-hover-bg !important;
+    color: $btn-primary-color !important;
   }
 }
 
-// Secondary button: black background, white text; hover changes text + border to cyan
+// Secondary button: transparent background, white text; hover changes text/border to cyan
 .btn-secondary {
   background-color: $btn-secondary-bg;
   border: 1px solid $btn-secondary-border-color;
@@ -111,9 +111,10 @@
   &:focus,
   &:active,
   &.active {
-    background-color: $btn-secondary-bg;
-    border-color: $btn-secondary-hover-color;
-    color: $btn-secondary-hover-color;
+    background-color: $btn-secondary-hover-bg !important;
+    border-color: $btn-secondary-hover-border-color !important;
+    color: $btn-secondary-hover-color !important;
+    box-shadow: none !important; // Remove Bootstrap's default active box-shadow
   }
 
   &:focus-visible {
@@ -131,9 +132,9 @@
   &:focus,
   &:active,
   &.active {
-    background-color: $btn-tertiary-hover-bg;
-    border-color: $btn-tertiary-hover-bg;
-    color: $btn-tertiary-color;
+    background-color: $btn-tertiary-hover-bg !important;
+    border-color: $btn-tertiary-hover-bg !important;
+    color: $btn-tertiary-color !important;
   }
 
   &:focus-visible {

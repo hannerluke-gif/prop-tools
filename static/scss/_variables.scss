@@ -315,10 +315,12 @@ $btn-primary-border-color: $btn-bg !default;                      // Border matc
 $btn-primary-hover-bg: $brand-primary !default;                   // Hover: lighter pink (#ff6b9a)
 
 // Secondary button variant (alternative CTAs)
-$btn-secondary-bg: #000000 !default;                              // Black background
-$btn-secondary-color: $btn-color !default;                        // White text color
+$btn-secondary-bg: transparent !default;                          // Transparent background
+$btn-secondary-color: $text-color !default;                       // White text color
+$btn-secondary-hover-bg: transparent !default;                    // Hover: keep transparent background
 $btn-secondary-hover-color: $accent-cyan !default;                // Hover: cyan text
-$btn-secondary-border-color: $btn-secondary-color !default;       // White border
+$btn-secondary-border-color: $text-color !default;                // White border
+$btn-secondary-hover-border-color: $accent-cyan !default;         // Hover: cyan border
 
 // Tertiary button variant (subtle actions)
 $btn-tertiary-bg: $btn-color !default;                            // White background
