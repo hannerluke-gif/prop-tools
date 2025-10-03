@@ -244,16 +244,14 @@
             <!-- Upper Footer Section: Links and Content -->
             <div class="site-footer__upper">
                 <div class="container">
-                    <div class="row gy-4 gy-sm-5 gy-md-4">
-                        <div class="col-12 col-md-6 col-lg-4">
+                    <div class="row gy-4 gy-md-3">
+                        <div class="col-12 col-md-6">
                             <h3 class="site-footer__section-title">Popular Guides</h3>
                             <ul class="site-footer__link-list">
                                 {% set default_popular = [
                                     ("/guides/what-is-a-prop-firm","What is a Prop Firm?"),
                                     ("/guides/best-account-size-to-start","What Account Size Should I Start With?"),
-                                    ("/guides/personal-vs-prop-account","Personal vs Prop Account"),
-                                    ("/guides/what-is-futures-trading","What is Futures Trading?"),
-                                    ("/guides/best-prop-firm-to-start","Best Prop Firm to Start With")
+                                    ("/guides/personal-vs-prop-account","Personal vs Prop Account")
                                 ] %}
                                 {% if global_popular_guides %}
                                     {% for guide in global_popular_guides %}
@@ -266,20 +264,14 @@
                                 {% endif %}
                             </ul>
                         </div>
-                        <div class="col-12 col-md-6 col-lg-4">
+                        <div class="col-12 col-md-6">
                             <h3 class="site-footer__section-title">Resources</h3>
                             <ul class="site-footer__link-list">
                                 <li><a class="footer-link" href="/guides">All Guides</a></li>
                                 <li><a class="footer-link" href="/">Compare Firms</a></li>
+                                <li><a class="footer-link" href="/about">About</a></li>
                                 <li><a class="footer-link" href="#contact">Contact Us</a></li>
                             </ul>
-                        </div>
-                        <div class="col-12 col-lg-4">
-                            <h3 class="site-footer__section-title">About Prop Tools</h3>
-                            <p class="site-footer__description">
-                                Compare top futures prop firms and find the perfect match for your trading goals. 
-                                Our platform helps traders make informed decisions with comprehensive comparisons and expert guides.
-                            </p>
                         </div>
                     </div>
                 </div>

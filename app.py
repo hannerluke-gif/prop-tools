@@ -88,7 +88,7 @@ def _inject_guide_back():
 def _inject_global_popular_guides():
     """Make popular guides available in all templates for footer/sidebar use"""
     try:
-        return {"global_popular_guides": get_popular_guides_widget(days=30, limit=4)}
+        return {"global_popular_guides": get_popular_guides_widget(days=30, limit=3)}
     except Exception:
         return {"global_popular_guides": []}
 

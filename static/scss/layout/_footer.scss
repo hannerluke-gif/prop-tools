@@ -61,22 +61,17 @@
   
   // Lower section: logo, copyright, legal
   &__lower {
-    background: rgba(255, 255, 255, 0.01);
+    background: rgba(0, 0, 0, 0.6); // Much darker overlay to distinguish from upper section
     padding-top: $footer-lower-padding;
     padding-bottom: $footer-lower-padding;
   }
   
   // Section titles in upper footer
   &__section-title {
-    font-size: $footer-section-title-size-xs;
+    font-size: $footer-section-title-size-mobile;
     font-weight: $footer-section-title-font-weight;
-    margin-bottom: $footer-section-title-margin-bottom-xs;
+    margin-bottom: $footer-section-title-margin-bottom-mobile;
     color: $footer-section-title-color;
-    
-    @include media-breakpoint-up(sm) {
-      font-size: $footer-section-title-size-mobile;
-      margin-bottom: $footer-section-title-margin-bottom-mobile;
-    }
     
     @include media-breakpoint-up(lg) {
       font-size: $footer-section-title-size-desktop;
@@ -91,11 +86,7 @@
     margin: 0;
     
     li {
-      margin-bottom: $footer-link-spacing-xs;
-      
-      @include media-breakpoint-up(sm) {
-        margin-bottom: $footer-link-spacing;
-      }
+      margin-bottom: $footer-link-spacing;
       
       &:last-child {
         margin-bottom: 0;
@@ -125,12 +116,7 @@
   &__logo {
     height: 2.75rem;
     width: auto;
-    opacity: 0.9;
-    transition: opacity 0.2s ease;
-    
-    &:hover {
-      opacity: 1;
-    }
+    opacity: 1;
     
     @include media-breakpoint-up(md) {
       height: 3.25rem;
@@ -168,12 +154,8 @@
   text-decoration: $text-link-decoration;
   text-decoration-color: transparent;
   transition: color $transition-duration ease, text-decoration-color $transition-duration ease;
-  font-size: $footer-link-size-xs;
+  font-size: $footer-link-size;
   font-weight: $footer-link-font-weight;
-  
-  @include media-breakpoint-up(sm) {
-    font-size: $footer-link-size;
-  }
   
   &:hover,
   &:focus {

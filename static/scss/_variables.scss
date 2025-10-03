@@ -1,312 +1,327 @@
 // ============================================================
 // PROJECT DESIGN TOKENS
 // 
-// Global overrides for Bootstrap and site components.
-// All component-specific variables should be defined here for centralized theming.
-// Variables are organized by category and follow consistent naming conventions.
+// Centralized SCSS variables for PropTools Bootstrap site.
+// This file contains all design tokens including typography, colors, 
+// spacing, and component-specific styling variables.
 //
-// Usage: Import this file BEFORE Bootstrap to override defaults
-// Organization: Typography → Colors → Components (alphabetical)
+// USAGE: Import this file BEFORE Bootstrap to override defaults
+//        @import 'variables';
+//        @import '~bootstrap/scss/bootstrap';
+//
+// ORGANIZATION: Typography → Colors → Global Tokens → Components (A-Z)
+// NAMING: Follow BEM-like convention: $component-element-modifier
 // ============================================================
 
 // ============================================================
-// TYPOGRAPHY
-// Font families and text styling (must be defined before Bootstrap import)
+// TYPOGRAPHY SYSTEM
+// Font stacks and weight tokens used throughout the application
+// NOTE: These must be defined before Bootstrap import to override defaults
 // ============================================================
 
+// Primary font stack with system fallbacks
 $font-family-sans-serif: "Manrope", system-ui, -apple-system, "Segoe UI", Roboto, Arial, sans-serif !default;
 $font-family-base: $font-family-sans-serif !default;
 
-// Font weight tokens (mapped to Manrope's variable axis)
-$weight-regular: 400 !default;
-$weight-medium: 500 !default;
-$weight-semibold: 600 !default;
-$weight-bold: 700 !default;
-$weight-extrabold: 800 !default;
-$weight-black: 900 !default;
+// Font weight scale (optimized for Manrope variable font)
+// These values correspond to common UI hierarchy needs
+$weight-regular: 400 !default;    // Body text, paragraphs
+$weight-medium: 500 !default;     // Subtle emphasis, navigation
+$weight-semibold: 600 !default;   // Section headings, strong emphasis
+$weight-bold: 700 !default;       // Page titles, primary buttons
+$weight-extrabold: 800 !default;  // Hero text, major headings
+$weight-black: 900 !default;      // Display text, logos
 
 // ============================================================
-// COLOR PALETTE
-// Brand colors and accent tokens used throughout the site
+// COLOR SYSTEM
+// Brand colors and semantic tokens for consistent theming
+// Colors follow fintech design patterns with dark theme base
 // ============================================================
 
-// Primary brand colors
-$brand-primary: #ff6b9a !default; // Primary brand color (pink)
-$accent-cyan: #22d3ee !default; // Global accent color
+// Brand identity colors
+$brand-primary: #ff6b9a !default;   // Primary brand pink - buttons, CTAs, highlights
+$accent-cyan: #22d3ee !default;     // Secondary accent - hover states, links, icons
 
-// Base layout colors
-$base-html-bg: #0a0b0f !default; // Overall page background
-$text-color: #f5f5f5 !default; // Default text color for the project
-
-// ============================================================
-// TRANSITIONS
-// Global transition timing for all interactive elements
-// ============================================================
-
-$transition-duration: 0.3s !default; // Standard transition timing for all components
+// Foundation colors
+$base-html-bg: #0a0b0f !default;    // Root background - deep dark blue
+$text-color: #f5f5f5 !default;      // Primary text - high contrast light gray
 
 // ============================================================
-// LINK UNDERLINE ANIMATION SYSTEM
-// Reusable tokens for smooth animated underlines on links
+// ANIMATION & TRANSITIONS
+// Consistent timing for smooth interactive experiences
 // ============================================================
 
-// Default state: underline present but invisible
+$transition-duration: 0.3s !default;   // Standard easing duration for hover/focus states
+
+// ============================================================
+// LINK UNDERLINE ANIMATION TOKENS
+// System for smooth animated underlines across link components
+// Creates consistent hover effects with CSS text-decoration
+// ============================================================
+
+// Default state: underline exists but is transparent (invisible)
 $link-underline-default: underline !default;
 $link-underline-color-default: transparent !default;
 
-// Hover state: underline visible with current text color
+// Hover state: underline becomes visible using current text color
 $link-underline-color-hover: currentColor !default;
 
 // ============================================================
 // SITE BANNER COMPONENT
-// Global sticky banner with search functionality
+// Global navigation header with search and responsive mobile menu
+// Sticky positioned banner that adapts to different screen sizes
 // ============================================================
 
-// Background and borders
-$site-banner-bg: #000 !default;
-$site-banner-border-color: rgba(255, 255, 255, 0.05) !default;
+// Banner container styling
+$site-banner-bg: #000 !default;                                    // Pure black background
+$site-banner-border-color: rgba(255, 255, 255, 0.05) !default;     // Subtle bottom border
 
-// Search input styling
-$site-banner-input-bg: #2f3438 !default;
-$site-banner-input-placeholder: #d1d5db !default;
-$site-banner-input-height: 40px !default;
+// Search input field
+$site-banner-input-bg: #2f3438 !default;                           // Dark gray input background
+$site-banner-input-placeholder: #d1d5db !default;                  // Medium gray placeholder text
+$site-banner-input-height: 40px !default;                          // Fixed height for consistency
 
-// Icon colors
-$site-banner-icon-color: #d1d5db !default;
-$site-banner-icon-hover: $accent-cyan !default;
+// Interactive icons (search, menu toggles)
+$site-banner-icon-color: #d1d5db !default;                         // Default icon color
+$site-banner-icon-hover: $accent-cyan !default;                    // Cyan hover state
 
-// Logo sizing
-$site-banner-logo-height-desktop: 175px !default;
-$site-banner-logo-height-mobile: 150px !default;
+// Logo responsive sizing
+$site-banner-logo-height-desktop: 175px !default;                  // Large desktop logo
+$site-banner-logo-height-mobile: 150px !default;                   // Smaller mobile logo
 
-// Mobile hamburger menu
-$site-banner-hamburger-color: $text-color !default;
-$site-banner-hamburger-size: 24px !default;
-$site-banner-menu-bg: $base-html-bg !default;
-$site-banner-menu-width: 280px !default;
-$site-banner-menu-link-color: $text-color !default;
+// Mobile hamburger menu system
+$site-banner-hamburger-color: $text-color !default;                // Hamburger icon color
+$site-banner-hamburger-size: 24px !default;                        // Touch-friendly size
+$site-banner-menu-bg: $base-html-bg !default;                      // Slide-out menu background
+$site-banner-menu-width: 280px !default;                           // Mobile menu panel width
+$site-banner-menu-link-color: $text-color !default;                // Menu navigation link color
 
 // ============================================================
 // GUIDE PAGES COMPONENT SYSTEM
-// Comprehensive tokens for landing/guide pages to ensure consistency
+// Comprehensive design tokens for educational content pages
+// Ensures visual consistency across all guide/landing page layouts
 // ============================================================
 
-// Visual elements
-$guide-divider-color: rgba(255, 255, 255, 0.25) !default;
-$guide-divider-subtle: rgba(255, 255, 255, 0.15) !default;
-$guide-background-subtle: rgba(255, 255, 255, 0.03) !default;
+// Base visual elements for content separation
+$guide-divider-color: rgba(255, 255, 255, 0.25) !default;          // Primary section dividers
+$guide-divider-subtle: rgba(255, 255, 255, 0.15) !default;         // Subtle content separators
+$guide-background-subtle: rgba(255, 255, 255, 0.03) !default;      // Light background tint
 
-// Layout spacing (3rem rhythm for major sections)
-$guide-section-spacing: 3rem !default;
+// Layout rhythm system (consistent vertical spacing)
+$guide-section-spacing: 3rem !default;                             // Major section spacing (48px)
 
-// Hero-style header for guide pages
-$guide-hero-bg-base: linear-gradient(135deg, #1a1b26 0%, #202a3a 100%) !default;
-$guide-hero-padding-mobile: 3rem 1rem !default;
-$guide-hero-padding-desktop: 4rem 2rem !default;
-$guide-hero-min-height: 50vh !default; // 45-55vh range for hero presence without pushing content
-$guide-hero-content-max-width: 720px !default; // Left-aligned text block max width
-$guide-content-spacing: 1.5rem !default;
+// Hero section styling (prominent page headers)
+$guide-hero-bg-base: linear-gradient(135deg, #1a1b26 0%, #202a3a 100%) !default; // Gradient background
+$guide-hero-padding-mobile: 3rem 1rem !default;                    // Mobile padding (vertical horizontal)
+$guide-hero-padding-desktop: 4rem 2rem !default;                   // Desktop padding (more generous)
+$guide-hero-min-height: 50vh !default;                             // Minimum height for visual impact
+$guide-hero-content-max-width: 900px !default;                     // Content width for optimal readability
+$guide-content-spacing: 1.5rem !default;                           // Standard content element spacing
 
-// Guide title (H1) styling - Big & Soft design
-$guide-title-size-mobile: 1.75rem !default; // 28px mobile
-$guide-title-size-desktop-min: 2rem !default; // 32px desktop minimum
-$guide-title-size-desktop-max: 2.5rem !default; // 40px desktop maximum
-$guide-title-font-weight: $weight-semibold !default; // 600 for soft, modern look
-$guide-title-letter-spacing: -0.02em !default; // Tight modern spacing
-$guide-title-color: $text-color !default; // Inherit project text color
+// Primary page title (H1) - Bold hierarchy with responsive sizing
+$guide-title-size-mobile: 1.8rem !default;                        // 28.8px mobile - readable on small screens
+$guide-title-size-desktop-min: 2.2rem !default;                   // 35.2px desktop minimum
+$guide-title-size-desktop-max: 2.5rem !default;                   // 40px desktop maximum
+$guide-title-font-weight: $weight-bold !default;                  // Bold weight for hierarchy
+$guide-title-letter-spacing: -0.02em !default;                    // Tight letter spacing for modern feel
+$guide-title-color: $text-color !default;                         // High contrast white text
 
-// Guide subtitle styling - Enhanced readability with muted appearance
-$guide-subtitle-size-mobile: 1rem !default; // 16px mobile (good for smaller screens)
-$guide-subtitle-size-desktop: 1.125rem !default; // 18px desktop (enhanced readability)
-$guide-subtitle-font-weight: $weight-regular !default; // 400 for regular, soft look
-$guide-subtitle-line-height-mobile: 1.6 !default; // Improved readability on mobile
-$guide-subtitle-line-height-desktop: 1.75 !default; // Optimal readability on desktop
-$guide-subtitle-color: #c9ccd1 !default; // Muted gray for professional appearance
-$guide-subtitle-max-width: 65ch !default; // Optimal reading line length
+// Page subtitle/description - Supporting text with optimal readability
+$guide-subtitle-size-mobile: 1.1rem !default;                     // 17.6px mobile - comfortable reading
+$guide-subtitle-size-desktop: 1.25rem !default;                   // 20px desktop - enhanced visibility
+$guide-subtitle-font-weight: $weight-medium !default;             // Medium weight for subtle emphasis
+$guide-subtitle-line-height-mobile: 1.6 !default;                 // Mobile line height for readability
+$guide-subtitle-line-height-desktop: 1.75 !default;               // Desktop line height for scanning
+$guide-subtitle-color: #c9ccd1 !default;                          // Muted gray for hierarchy
+$guide-subtitle-max-width: 65ch !default;                         // Optimal line length (45-75 characters)
 
-// Guide section titles (H2) styling - Strong second-tier hierarchy
-$guide-section-title-size-mobile: 1.5rem !default; // 24px mobile
-$guide-section-title-size-desktop: 1.75rem !default; // 28px desktop
-$guide-section-title-font-weight: $weight-medium !default; // 500 for strong but not too heavy
-$guide-section-title-margin-top: 2.5rem !default; // Clear section separation
-$guide-section-title-margin-bottom: 1rem !default; // Comfortable content spacing
-$guide-section-title-color: $text-color !default; // Full contrast for clarity
+// Section headings (H2) - Clear content organization
+$guide-section-title-size-mobile: 1.25rem !default;               // 20px mobile - clear hierarchy
+$guide-section-title-size-desktop: 1.5rem !default;               // 24px desktop - prominent sections
+$guide-section-title-font-weight: $weight-medium !default;        // Medium weight for balance
+$guide-section-title-margin-top: 2.5rem !default;                 // Section separation spacing
+$guide-section-title-margin-bottom: 1rem !default;                // Content relationship spacing
+$guide-section-title-color: $text-color !default;                 // High contrast for scanning
 
-// Guide content elements styling - Steps, bullets, FAQ, links
-$guide-content-element-size: 1.25rem !default; // 20px for enhanced readability
-$guide-content-element-font-weight: $weight-medium !default; // 500 for refined appearance
-$guide-content-element-color: #eaebe5 !default; // Softer gray for elegant contrast
-$guide-content-element-line-height: 1.6 !default; // Comfortable reading line height
+// Body content elements - Paragraphs, lists, and general text
+$guide-content-element-size: 1.05rem !default;                    // 16.8px - enhanced readability
+$guide-content-element-font-weight: $weight-regular !default;     // Regular weight for body text
+$guide-content-element-color: #eaebe5 !default;                   // Soft gray for comfortable reading
+$guide-content-element-line-height: 1.6 !default;                 // Optimal line height for scanning
 
-// CTA card component - Enhanced glassmorphism with brand gradient
-$guide-cta-bg: linear-gradient(135deg, rgba(255, 107, 154, 0.15) 0%, rgba(34, 211, 238, 0.12) 100%) !default; // Stronger brand gradient
-$guide-cta-border: 1px solid rgba(255, 107, 154, 0.25) !default; // Pink accent border for emphasis
-$guide-cta-border-radius: 1rem !default; // 16px rounded corners to match card style
-$guide-cta-padding: 1.5rem !default; // 24px internal spacing
-$guide-cta-spacing: $guide-section-spacing !default;
-$guide-cta-shadow: 0 4px 20px rgba(255, 107, 154, 0.15) !default; // Pink glow for emphasis
-$guide-cta-backdrop-filter: blur(12px) !default; // Stronger blur for CTA prominence
+// Call-to-action cards - Prominent conversion elements with glassmorphism
+$guide-cta-bg: linear-gradient(135deg, rgba(255, 107, 154, 0.15) 0%, rgba(34, 211, 238, 0.12) 100%) !default; // Brand gradient background
+$guide-cta-border: 1px solid rgba(255, 107, 154, 0.25) !default;  // Pink accent border
+$guide-cta-border-radius: 1rem !default;                          // 16px rounded corners
+$guide-cta-padding: 1.5rem !default;                              // 24px internal padding
+$guide-cta-spacing: $guide-section-spacing !default;              // Consistent section spacing
+$guide-cta-shadow: 0 4px 20px rgba(255, 107, 154, 0.15) !default; // Pink glow effect
+$guide-cta-backdrop-filter: blur(12px) !default;                  // Glass blur effect
 
-// CTA title styling
-$guide-cta-title-size: 1.25rem !default; // 20px - prominent but not overwhelming
-$guide-cta-title-font-weight: $weight-semibold !default; // 600 for emphasis
-$guide-cta-title-color: $text-color !default; // Full contrast white
-$guide-cta-title-margin-bottom: 0.25rem !default; // Tight spacing to text
+// CTA card title styling
+$guide-cta-title-size-mobile: 1.25rem !default;                   // 20px mobile - attention-grabbing
+$guide-cta-title-size-desktop: 1.5rem !default;                   // 24px desktop - clear hierarchy
+$guide-cta-title-font-weight: $weight-medium !default;            // Medium weight for emphasis
+$guide-cta-title-color: $text-color !default;                     // High contrast white
+$guide-cta-title-margin-bottom: 0.25rem !default;                 // Tight spacing to description
 
-// CTA text/description styling
-$guide-cta-text-size: 1rem !default; // 16px - comfortable reading size
-$guide-cta-text-font-weight: $weight-regular !default; // 400 for body text
-$guide-cta-text-color: rgba(255, 255, 255, 0.85) !default; // Slightly muted for hierarchy
-$guide-cta-text-line-height: 1.5 !default; // Comfortable line spacing
-$guide-cta-text-margin-bottom: 0 !default; // No bottom margin
+// CTA card description styling
+$guide-cta-text-size: 1.05rem !default;                           // 16.8px - readable description
+$guide-cta-text-font-weight: $weight-regular !default;            // Regular weight for body text
+$guide-cta-text-color: rgba(255, 255, 255, 0.85) !default;        // Slightly muted for hierarchy
+$guide-cta-text-line-height: 1.5 !default;                        // Comfortable line spacing
+$guide-cta-text-margin-bottom: 0 !default;                        // No bottom margin
 
-// FAQ component
-$guide-faq-question-size: 1.1rem !default; // 17.6px - between content elements and navigation
-$guide-faq-question-font-weight: $weight-medium !default; // 500 for refined, softer than semibold
-$guide-faq-question-color: $guide-content-element-color !default; // Match content elements for consistency
-$guide-faq-question-hover-color: $accent-cyan !default; // Cyan hover for interactive consistency
-$guide-faq-padding: 1.25rem !default;
-$guide-faq-spacing: 1.25rem !default;
-$guide-faq-divider: $guide-divider-color !default;
-$guide-faq-hover-color: $accent-cyan !default;
+// FAQ component - Interactive question/answer sections
+$guide-faq-question-size: 1.05rem !default;                       // 16.8px - readable question text
+$guide-faq-question-font-weight: $weight-regular !default;        // Regular weight for questions
+$guide-faq-question-color: $guide-content-element-color !default; // Match body content color
+$guide-faq-question-hover-color: $accent-cyan !default;           // Cyan hover state
+$guide-faq-padding: 1.25rem !default;                             // Internal FAQ item padding
+$guide-faq-spacing: 1.25rem !default;                             // Spacing between FAQ items
+$guide-faq-divider: $guide-divider-color !default;                // Divider between questions
+$guide-faq-hover-color: $accent-cyan !default;                    // Interactive hover color
 
-// Keep Learning component - Fintech tile-style links
-$guide-next-spacing-top: $guide-section-spacing !default;
-$guide-next-link-padding: 1rem 1.25rem !default; // More generous padding for tile feel
-$guide-next-link-radius: 0.75rem !default; // Match card border radius
-$guide-next-link-bg: rgba(255, 255, 255, 0.03) !default; // Subtle background like cards
-$guide-next-link-border: 1px solid rgba(255, 255, 255, 0.08) !default; // Border like cards
-$guide-next-link-hover-bg: rgba(255, 255, 255, 0.06) !default; // Slightly brighter on hover
-$guide-next-link-hover-border: 1px solid rgba(34, 211, 238, 0.3) !default; // Cyan border on hover
-$guide-next-link-hover-color: $accent-cyan !default;
+// "Keep Learning" navigation links - Related content suggestions
+$guide-next-spacing-top: $guide-section-spacing !default;                    // Section spacing from content
+$guide-next-link-padding: 1rem 1.25rem !default;                            // Generous padding for touch targets
+$guide-next-link-radius: 0.75rem !default;                                  // 12px rounded corners
+$guide-next-link-bg: rgba(255, 255, 255, 0.03) !default;                    // Subtle card-like background
+$guide-next-link-border: 1px solid rgba(255, 255, 255, 0.08) !default;      // Subtle border definition
+$guide-next-link-hover-bg: rgba(255, 255, 255, 0.06) !default;              // Brighter hover background
+$guide-next-link-hover-border: 1px solid rgba(34, 211, 238, 0.3) !default;  // Cyan accent border
+$guide-next-link-hover-color: $accent-cyan !default;                        // Cyan text on hover
 
-// Guide back navigation styling - Subtle navigation element
-$guide-back-nav-size: 0.9rem !default; // 14.4px - smaller than content, larger than disclaimer
-$guide-back-nav-font-weight: $weight-regular !default; // 400 for lightweight, unobtrusive feel
-$guide-back-nav-color: rgba(255, 255, 255, 0.75) !default; // Muted but readable navigation color
-$guide-back-nav-hover-color: $accent-cyan !default;
+// Back navigation links - Subtle breadcrumb-style navigation
+$guide-back-nav-size: 0.95rem !default;                           // 15.2px - smaller than content
+$guide-back-nav-font-weight: $weight-regular !default;            // Regular weight for subtlety
+$guide-back-nav-color: rgba(255, 255, 255, 0.75) !default;        // Muted navigation color
+$guide-back-nav-hover-color: $accent-cyan !default;               // Cyan hover state
 
-// Guide disclaimer/disclosure styling - Subdued fine print
-$guide-disclaimer-size: 0.875rem !default; // 14px for subtle appearance
-$guide-disclaimer-line-height: 1.4 !default; // Compact but readable line height
-$guide-disclaimer-color: rgba(255, 255, 255, 0.6) !default; // Very subdued for legal/fine print
+// Legal disclaimers and fine print
+$guide-disclaimer-size: 0.875rem !default;                        // 14px - fine print size
+$guide-disclaimer-line-height: 1.4 !default;                      // Compact but readable spacing
+$guide-disclaimer-color: rgba(255, 255, 255, 0.6) !default;       // Very subdued color
 
-// Guide card component - Fintech-style glassmorphism cards (lighter glass effect)
-$guide-card-bg: rgba(255, 255, 255, 0.08) !default; // Lighter glass effect - subtly brighter than background
-$guide-card-border: 1px solid rgba(255, 255, 255, 0.12) !default; // Thin border to reinforce edges
-$guide-card-border-radius: 1rem !default; // 16px rounded corners for modern Fintech feel
-$guide-card-padding: 1.5rem !default; // 24px internal spacing for comfortable content
-$guide-card-shadow: 0 2px 12px rgba(0, 0, 0, 0.2) !default; // Moderate shadow for subtle elevation
-$guide-card-margin-bottom: $guide-content-spacing !default; // Spacing between cards
-$guide-card-backdrop-filter: blur(8px) !default; // Lighter glassmorphism blur
+// Content cards - Glassmorphism style containers for grouped information
+$guide-card-bg: rgba(255, 255, 255, 0.08) !default;               // Subtle glass background effect
+$guide-card-border: 1px solid rgba(255, 255, 255, 0.12) !default; // Fine border for definition
+$guide-card-border-radius: 1rem !default;                         // 16px modern rounded corners
+$guide-card-padding: 1.5rem !default;                             // 24px internal content padding
+$guide-card-shadow: 0 2px 12px rgba(0, 0, 0, 0.2) !default;       // Subtle elevation shadow
+$guide-card-margin-bottom: $guide-content-spacing !default;       // Consistent spacing between cards
+$guide-card-backdrop-filter: blur(8px) !default;                  // Glass blur effect
 
 // ============================================================
 // FOOTER COMPONENT SYSTEM
-// Site-wide footer styling aligned with guide page design tokens
+// Site-wide footer with responsive typography and navigation
+// Harmonized with guide page design tokens for consistency
 // ============================================================
 
-// Footer section titles (H3) - Aligned with guide section titles
-$footer-section-title-size-xs: 1.125rem !default; // 18px extra-small screens (< 576px)
-$footer-section-title-size-mobile: 1.25rem !default; // 20px mobile - slightly smaller than guide H2
-$footer-section-title-size-desktop: 1.375rem !default; // 22px desktop - proportional scale
-$footer-section-title-font-weight: $weight-semibold !default; // 600 for modern, soft hierarchy
-$footer-section-title-color: $text-color !default; // Full contrast for clarity
-$footer-section-title-margin-bottom-xs: 1rem !default; // Tighter spacing on extra-small screens
-$footer-section-title-margin-bottom-mobile: 1.25rem !default; // Comfortable spacing on mobile
-$footer-section-title-margin-bottom-desktop: 1.5rem !default; // Slightly more space on desktop
+// Footer section headings (H3) - Navigation categories
+$footer-section-title-size-xs: 1.125rem !default;                 // 18px extra-small screens (<576px)
+$footer-section-title-size-mobile: 1.25rem !default;              // 20px mobile screens
+$footer-section-title-size-desktop: 1.375rem !default;            // 22px desktop screens
+$footer-section-title-font-weight: $weight-semibold !default;     // Semibold for clear hierarchy
+$footer-section-title-color: $text-color !default;                // High contrast white
+$footer-section-title-margin-bottom-xs: 0.75rem !default;          // Compact spacing (xs) - reduced from 1rem
+$footer-section-title-margin-bottom-mobile: 0.875rem !default;    // Standard spacing (mobile) - reduced from 1.25rem
+$footer-section-title-margin-bottom-desktop: 1rem !default;       // Generous spacing (desktop) - reduced from 1.5rem
 
-// Footer links - Aligned with guide navigation and content elements
-$footer-link-size-xs: 0.9375rem !default; // 15px on extra-small screens
-$footer-link-size: 1rem !default; // 16px - comfortable reading size
-$footer-link-font-weight: $weight-regular !default; // 400 for clean, readable links
-$footer-link-color: $guide-content-element-color !default; // Match guide content color (#eaebe5)
-$footer-link-spacing-xs: 0.625rem !default; // Tighter spacing on extra-small screens
-$footer-link-spacing: 0.75rem !default; // Spacing between links in list
+// Footer navigation links - Secondary site navigation
+$footer-link-size-xs: 0.9375rem !default;                         // 15px extra-small screens
+$footer-link-size: 1rem !default;                                 // 16px standard screens
+$footer-link-font-weight: $weight-regular !default;               // Regular weight for readability
+$footer-link-color: $guide-content-element-color !default;        // Consistent with body content
+$footer-link-spacing-xs: 0.5rem !default;                         // Compact link spacing (xs) - reduced from 0.625rem
+$footer-link-spacing: 0.5rem !default;                            // Standard link spacing - reduced from 0.75rem
 
-// Footer description text - Aligned with guide body content
-$footer-description-size-mobile: 1rem !default; // 16px mobile
-$footer-description-size-desktop: 1rem !default; // 16px desktop (consistent)
-$footer-description-font-weight: $weight-regular !default; // 400 for body text
-$footer-description-color: $guide-content-element-color !default; // Match guide content color (#eaebe5)
-$footer-description-line-height: 1.6 !default; // Comfortable reading rhythm
+// Footer description text - Brand/company information
+$footer-description-size-mobile: 1rem !default;                   // 16px mobile
+$footer-description-size-desktop: 1rem !default;                  // 16px desktop (consistent)
+$footer-description-font-weight: $weight-regular !default;        // Regular weight for body text
+$footer-description-color: $guide-content-element-color !default; // Match content element color
+$footer-description-line-height: 1.6 !default;                    // Comfortable reading rhythm
 
-// Footer legal/copyright text - Aligned with guide disclaimer styling
-$footer-legal-size: $guide-disclaimer-size !default; // 0.875rem (14px) - fine print
-$footer-legal-font-weight: $weight-regular !default; // 400 for subtle appearance
-$footer-legal-color: $guide-disclaimer-color !default; // rgba(255,255,255,0.6) - muted
-$footer-legal-link-size: $guide-disclaimer-size !default; // Match legal text size
+// Footer legal text - Copyright and terms
+$footer-legal-size: $guide-disclaimer-size !default;              // 14px fine print size
+$footer-legal-font-weight: $weight-regular !default;              // Regular weight, subtle appearance
+$footer-legal-color: $guide-disclaimer-color !default;            // Muted color for legal text
+$footer-legal-link-size: $guide-disclaimer-size !default;         // Consistent with legal text
 
-// Footer layout spacing
-$footer-upper-padding-xs: 2rem !default; // Tighter padding on extra-small screens
-$footer-upper-padding-mobile: 3rem !default; // Align with guide section spacing
-$footer-upper-padding-desktop: 4rem !default; // More generous on larger screens
-$footer-lower-padding: 1.5rem !default; // Tighter spacing for legal section
+// Footer layout spacing system - Compact for viewport visibility
+$footer-upper-padding-xs: 1.25rem !default;                       // 20px padding (xs screens) - reduced from 32px
+$footer-upper-padding-mobile: 1.5rem !default;                    // 24px padding (mobile) - reduced from 48px  
+$footer-upper-padding-desktop: 2rem !default;                     // 32px padding (desktop) - reduced from 64px
+$footer-lower-padding: 1rem !default;                             // 16px legal section padding - reduced from 24px
 
 // ============================================================
 // TEXT LINK SYSTEM
-// Comprehensive tokens for inline text links (body content, guides, etc.)
+// Multiple link style variants for different content contexts
+// Provides consistent interactive states across all text links
 // ============================================================
 
-// Option 1: Default text links (body color, no underline -> cyan on hover, add underline on hover)
-$text-link-color: $text-color !default;
-$text-link-decoration: none !default;
-$text-link-hover-color: $accent-cyan !default;
-$text-link-hover-decoration: underline !default;
+// Default text links - Standard body content links
+$text-link-color: $text-color !default;                           // Default: body text color
+$text-link-decoration: none !default;                             // Default: no underline
+$text-link-hover-color: $accent-cyan !default;                    // Hover: cyan color
+$text-link-hover-decoration: underline !default;                  // Hover: add underline
 
-// Option 2: Alt text links (body color, no underline -> cyan on hover, no underline on hover)
-$text-link-alt-color: $text-color !default;
-$text-link-alt-decoration: none !default;
-$text-link-alt-hover-color: $accent-cyan !default;
-$text-link-alt-hover-decoration: none !default;
+// Alternative text links - Clean style without hover underline
+$text-link-alt-color: $text-color !default;                       // Default: body text color  
+$text-link-alt-decoration: none !default;                         // Default: no underline
+$text-link-alt-hover-color: $accent-cyan !default;                // Hover: cyan color
+$text-link-alt-hover-decoration: none !default;                   // Hover: no underline
 
-// Option 3: Inline text links (cyan text, no underline -> add underline on hover)
-$text-link-inline-color: $accent-cyan !default;
-$text-link-inline-decoration: none !default;
-$text-link-inline-hover-color: $accent-cyan !default;
-$text-link-inline-hover-decoration: underline !default;
+// Inline accent links - Pre-styled cyan links with hover underline
+$text-link-inline-color: $accent-cyan !default;                   // Default: cyan color
+$text-link-inline-decoration: none !default;                      // Default: no underline
+$text-link-inline-hover-color: $accent-cyan !default;             // Hover: maintain cyan
+$text-link-inline-hover-decoration: underline !default;           // Hover: add underline
 
 // ============================================================
 // BUTTON SYSTEM
-// Comprehensive button styling tokens (inherits Bootstrap variables)
+// Bootstrap-compatible button tokens with fintech styling
+// Supports primary, secondary, and tertiary button variants
 // ============================================================
 
-// Base button properties
-$btn-border-radius: 9999px !default; // Fintech-style pill buttons
-$btn-font-weight: $weight-extrabold !default;
-$btn-font-size: 1rem !default;
-$btn-color: $text-color !default;
-$btn-bg: $brand-primary !default;
+// Base button styling properties
+$btn-border-radius: 9999px !default;                              // Pill-shaped buttons (infinite radius)
+$btn-font-weight: $weight-bold !default;                          // Bold weight for button text
+$btn-font-size: 1rem !default;                                    // 16px base button text size
+$btn-color: $text-color !default;                                 // Default button text color
+$btn-bg: #e54c7a !default;                                        // Default button background
 
-// Button transition timing
-$btn-transition-duration: 0.3s !default;
+// Button interaction timing
+$btn-transition-duration: 0.3s !default;                          // Smooth hover/focus transitions
 
-// Button padding (makes buttons taller and more generous)
-$btn-padding-y: 0.75rem !default;
-$btn-padding-x: 1.5rem !default;
+// Button spacing (creates comfortable touch targets)
+$btn-padding-y: 0.75rem !default;                                 // 12px vertical padding
+$btn-padding-x: 1.5rem !default;                                  // 24px horizontal padding
 
-// Bootstrap size variants (automatically calculated from base)
-$btn-padding-y-sm: $btn-padding-y * 0.5 !default;
-$btn-padding-x-sm: $btn-padding-x * 0.75 !default;
-$btn-font-size-sm: $btn-font-size * 0.875 !default;
+// Bootstrap size variants (calculated proportionally from base)
+$btn-padding-y-sm: $btn-padding-y * 0.5 !default;                 // Small: 6px vertical
+$btn-padding-x-sm: $btn-padding-x * 0.75 !default;                // Small: 18px horizontal  
+$btn-font-size-sm: $btn-font-size * 0.875 !default;               // Small: 14px text
 
-$btn-padding-y-lg: $btn-padding-y * 1.5 !default;
-$btn-padding-x-lg: $btn-padding-x * 1.25 !default;
-$btn-font-size-lg: $btn-font-size * 1.125 !default;
+$btn-padding-y-lg: $btn-padding-y * 1.5 !default;                 // Large: 18px vertical
+$btn-padding-x-lg: $btn-padding-x * 1.25 !default;                // Large: 30px horizontal
+$btn-font-size-lg: $btn-font-size * 1.125 !default;               // Large: 18px text
 
-// Primary button variants
-$btn-primary-bg: $btn-bg !default;
-$btn-primary-color: $btn-color !default;
-$btn-primary-border-color: $btn-bg !default;
-$btn-primary-hover-bg: #e54c7a !default; // Darker pink on hover for more depth
+// Primary button variant (main brand CTAs)
+$btn-primary-bg: $btn-bg !default;                                // Default: pink background
+$btn-primary-color: $btn-color !default;                          // Default: white text
+$btn-primary-border-color: $btn-bg !default;                      // Border matches background
+$btn-primary-hover-bg: $brand-primary !default;                   // Hover: lighter pink (#ff6b9a)
 
-// Secondary button (black bg, white text -> cyan text on hover)
-$btn-secondary-bg: #000000 !default;
-$btn-secondary-color: $btn-color !default;
-$btn-secondary-hover-color: $accent-cyan !default;
-$btn-secondary-border-color: $btn-secondary-color !default;
+// Secondary button variant (alternative CTAs)
+$btn-secondary-bg: #000000 !default;                              // Black background
+$btn-secondary-color: $btn-color !default;                        // White text color
+$btn-secondary-hover-color: $accent-cyan !default;                // Hover: cyan text
+$btn-secondary-border-color: $btn-secondary-color !default;       // White border
 
-// Tertiary button (white bg, black text -> cyan background on hover)
-$btn-tertiary-bg: $btn-color !default;
-$btn-tertiary-color: #000000 !default;
-$btn-tertiary-border-color: $btn-tertiary-bg !default;
-$btn-tertiary-hover-bg: $accent-cyan !default;
+// Tertiary button variant (subtle actions)
+$btn-tertiary-bg: $btn-color !default;                            // White background
+$btn-tertiary-color: #000000 !default;                            // Black text color
+$btn-tertiary-border-color: $btn-tertiary-bg !default;            // White border
+$btn-tertiary-hover-bg: $accent-cyan !default;                    // Hover: cyan background

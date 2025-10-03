@@ -64,9 +64,8 @@
 	z-index: 10; // Above footer
 	background-color: $base-html-bg; // Match body background
 	min-height: 100vh;
-	// Padding must be at least footer height to fully hide footer initially
-	// Footer is ~500-600px tall, so we use 650px to ensure complete coverage
-	padding-bottom: 650px;
+	// Reduced padding for compact footer - ensures smooth footer reveal transition
+	padding-bottom: 60px; // Reduced from 100px to accommodate smaller footer
 	transition: transform 0.3s cubic-bezier(0.4, 0, 0.2, 1);
 	will-change: transform;
 	

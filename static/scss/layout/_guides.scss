@@ -9,7 +9,7 @@
   min-height: $guide-hero-min-height;
   padding: $guide-hero-padding-mobile;
   margin-top: 0; // Remove any top margin to sit flush against site banner
-  margin-bottom: $guide-content-spacing;
+  margin-bottom: 0; // No margin - divider handles spacing
   
   // Vignette overlay, grid pattern with gradient accents
   background: 
@@ -29,22 +29,10 @@
     padding: $guide-hero-padding-desktop;
   }
   
-  // Container to constrain content within standard layout
-  &__container {
-    max-width: 1320px; // Bootstrap container-xl width
-    margin: 0 auto;
-    padding: 0 1rem;
-    
-    @media (min-width: 768px) {
-      padding: 0 2rem;
-    }
-  }
-  
-  // Inner content wrapper with left alignment
+  // Inner content wrapper - now uses Bootstrap grid for perfect alignment with content below
   &__inner {
     position: relative;
     z-index: 2;
-    max-width: $guide-hero-content-max-width;
     text-align: left; // Left-aligned content
     display: flex;
     flex-direction: column;
@@ -280,10 +268,14 @@
     position: relative;
     
     &__title {
-      font-size: $guide-cta-title-size;
-      font-weight: $guide-cta-title-font-weight;
+      font-size: $guide-cta-title-size-mobile !important;
+      font-weight: $guide-cta-title-font-weight !important;
       color: $guide-cta-title-color;
       margin-bottom: $guide-cta-title-margin-bottom;
+      
+      @media (min-width: 768px) {
+        font-size: $guide-cta-title-size-desktop !important;
+      }
     }
     
     &__text {
@@ -457,8 +449,8 @@
       }
     }
     &__link {
-      font-size: 1rem;
-      font-weight: $weight-medium;
+      font-size: $guide-content-element-size;
+      font-weight: $guide-content-element-font-weight;
       color: $guide-content-element-color;
       line-height: 1.4;
       text-decoration: none;
