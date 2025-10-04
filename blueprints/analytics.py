@@ -646,3 +646,58 @@ def test_count():
         return jsonify({"total_clicks": count})
     except Exception as e:
         return jsonify({"error": str(e)}), 500
+
+@analytics_bp.route('/test/recent', methods=['GET'])
+def test_recent():
+    """Test endpoint to see recent clicks and their timestamps"""
+    try:
+        db = get_db()
+        if isinstance(db, sqlite3.Connection):
+            cursor = db.execute("SELECT guide_id, ts_utc FROM guide_clicks ORDER BY ts_utc DESC LIMIT 5")
+            rows = cursor.fetchall()
+        else:
+            with db.cursor() as cur:
+                cur.execute("SELECT guide_id, ts_utc FROM guide_clicks ORDER BY ts_utc DESC LIMIT 5")
+                rows = cur.fetchall()
+        
+        return jsonify({
+            "recent_clicks": [{"guide_id": row[0], "ts_utc": str(row[1])} for row in rows]
+        })
+    except Exception as e:
+        return jsonify({"error": str(e)}), 500
+
+@analytics_bp.route('/test/raw-query', methods=['GET'])
+def test_raw_query():
+    """Test the actual query used by popular endpoint"""
+    days = request.args.get('days', 30, type=int)
+    try:
+        db = get_db()
+        if isinstance(db, sqlite3.Connection):
+            cursor = db.execute("""
+                SELECT guide_id, COUNT(*) AS c
+                FROM guide_clicks
+                WHERE ts_utc >= datetime('now', '-30 day')
+                AND guide_id NOT LIKE 'back_%'
+                GROUP BY guide_id
+                ORDER BY c DESC
+                LIMIT 10
+            """)
+            rows = cursor.fetchall()
+        else:
+            with db.cursor() as cur:
+                cur.execute("""
+                    SELECT guide_id, COUNT(*) AS c
+                    FROM guide_clicks
+                    WHERE ts_utc >= NOW() - INTERVAL %s
+                    AND guide_id NOT LIKE 'back_%%'
+                    GROUP BY guide_id
+                    ORDER BY c DESC
+                    LIMIT 10
+                """, (f"{days} days",))
+                rows = cur.fetchall()
+        
+        return jsonify({
+            "results": [{"guide_id": row[0], "clicks": int(row[1])} for row in rows]
+        })
+    except Exception as e:
+        return jsonify({"error": str(e)}), 500
