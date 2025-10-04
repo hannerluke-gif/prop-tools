@@ -114,13 +114,6 @@
       </div>
       {% endblock %}
 
-      {# Bottom Back Link - Always goes to Guides index #}
-      <nav class="guide__back-nav-bottom mt-4 mb-4 animation-ready fade-in">
-        <a href="{{ url_for('guides_index') }}" class="guide__back-link guide-back__link text-decoration-none" data-back-type="index">
-          ← Back to Guides
-        </a>
-      </nav>
-
       {# Divider before FAQ Section #}
       <div class="guide-content__divider"></div>
 
@@ -148,6 +141,13 @@
         </ul>
       </nav>
       {% endblock %}
+
+      {# Bottom Back Link - Always goes to Guides index #}
+      <nav class="guide__back-nav-bottom mt-4 mb-4 animation-ready fade-in">
+        <a href="{{ url_for('guides_index') }}" class="guide__back-link guide-back__link text-decoration-none" data-back-type="index">
+          ← Back to Guides
+        </a>
+      </nav>
 
       {# Divider before Disclosure #}
       <div class="guide-content__divider"></div>
