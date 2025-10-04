@@ -6,6 +6,9 @@ __pycache__/
 *.py[cod]
 *$py.class
 
+# Local database files
+instance/
+
 # VS Code settings (optional; keep if you want to share tasks)
 #.vscode/
 

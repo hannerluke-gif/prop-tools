@@ -130,6 +130,12 @@ def _validate_guide_data(data: dict) -> tuple[str, str]:
     guide_title = (data.get('guide_title') or '').strip()
     href = (data.get('href') or '').strip()
     
+    # Normalize guide_id - strip /guides/ prefix if present
+    if guide_id.startswith('/guides/'):
+        guide_id = guide_id[8:]  # Remove '/guides/'
+    elif guide_id.startswith('guides/'):
+        guide_id = guide_id[7:]  # Remove 'guides/'
+    
     # Validate guide_id
     if not guide_id:
         return "missing_guide_id", ""
