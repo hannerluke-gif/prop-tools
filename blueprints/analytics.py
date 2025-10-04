@@ -463,18 +463,18 @@ def top_guides_simple(days: int = 30, limit: int = 5):
                 has_summary = result is not None and result[0] is not None
 
                 # Use simple working query for PostgreSQL, filter only back navigation
-                # Use the same pattern as the working raw query in debug endpoint
+                # Fixed: PostgreSQL INTERVAL syntax requires literal string or proper casting
                 cur.execute(
                     """
                     SELECT guide_id, COUNT(*) AS c
                     FROM guide_clicks
-                    WHERE ts_utc >= NOW() - INTERVAL %s
+                    WHERE ts_utc >= NOW() - CAST(%s || ' days' AS INTERVAL)
                     AND guide_id NOT LIKE 'back_%%'
                     GROUP BY guide_id
                     ORDER BY c DESC
                     LIMIT %s
                     """,
-                    (f"{days} days", limit)
+                    (str(days), limit)
                 )
 
                 rows = cur.fetchall()
@@ -688,12 +688,12 @@ def test_raw_query():
                 cur.execute("""
                     SELECT guide_id, COUNT(*) AS c
                     FROM guide_clicks
-                    WHERE ts_utc >= NOW() - INTERVAL %s
+                    WHERE ts_utc >= NOW() - CAST(%s || ' days' AS INTERVAL)
                     AND guide_id NOT LIKE 'back_%%'
                     GROUP BY guide_id
                     ORDER BY c DESC
                     LIMIT 10
-                """, (f"{days} days",))
+                """, (str(days),))
                 rows = cur.fetchall()
         
         return jsonify({
