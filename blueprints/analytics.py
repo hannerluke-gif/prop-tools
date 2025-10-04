@@ -627,3 +627,22 @@ def rollup():
     except Exception as e:
         current_app.logger.error(f"Rollup failed: {e}")
         return jsonify({"ok": False, "error": "rollup_failed"}), 500
+
+@analytics_bp.route('/test/count', methods=['GET'])
+def test_count():
+    """Test endpoint to check raw click count in database"""
+    try:
+        db = get_db()
+        if isinstance(db, sqlite3.Connection):
+            cursor = db.execute("SELECT COUNT(*) FROM guide_clicks")
+            result = cursor.fetchone()
+            count = result[0] if result else 0
+        else:
+            with db.cursor() as cur:
+                cur.execute("SELECT COUNT(*) FROM guide_clicks")
+                result = cur.fetchone()
+                count = result[0] if result else 0
+        
+        return jsonify({"total_clicks": count})
+    except Exception as e:
+        return jsonify({"error": str(e)}), 500
